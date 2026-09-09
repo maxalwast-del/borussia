@@ -28,7 +28,7 @@ export function matchZone(zip: string): ZoneMatch {
     return {
       id: 'outside',
       label: 'Außerhalb des regulären Einsatzgebiets',
-      note: 'Wir prüfen die Anfrage trotzdem – ab einer gewissen Projektgröße fahren wir weiter.',
+      note: 'Wir sehen uns die Anfrage trotzdem an. Ab einer gewissen Projektgröße fahren wir auch weiter.',
       surcharge: 'auf Anfrage',
       inside: false,
     };

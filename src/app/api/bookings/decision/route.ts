@@ -85,8 +85,8 @@ export async function GET(request: Request) {
     accept ? 'Termin bestätigen' : 'Termin absagen',
     `<h1>${accept ? 'Termin bestätigen?' : 'Termin absagen?'}</h1>
      <p>${accept
-       ? 'Der Termin wird im Kalender auf „bestätigt“ gesetzt und der Kunde erhält automatisch die Bestätigungsmail.'
-       : 'Der Termin wird aus dem Kalender entfernt und der Kunde erhält eine Absage mit Link auf neue Termine.'}</p>
+       ? 'Der Termin wird im Kalender auf „bestätigt“ gesetzt. Der Kunde bekommt automatisch die Bestätigungsmail.'
+       : 'Der Termin wird aus dem Kalender entfernt. Der Kunde bekommt eine Absage mit Link auf neue Termine.'}</p>
      ${meta}
      <form method="post"><input type="hidden" name="token" value="${token.replace(/"/g, '&quot;')}">
      <button class="${accept ? 'accept' : 'decline'}" type="submit">${accept ? 'Ja, bestätigen' : 'Ja, absagen'}</button></form>`,

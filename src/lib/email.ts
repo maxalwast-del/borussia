@@ -76,7 +76,7 @@ function detailBlock(booking: BookingDetails): string {
   </div>`;
 }
 
-/** Anfrage-Mail an den Betrieb – mit den beiden Entscheidungs-Buttons. */
+/** Anfrage-Mail an den Betrieb, mit den beiden Entscheidungs-Buttons. */
 export async function sendOwnerRequestMail(
   booking: BookingDetails,
   acceptUrl: string,
@@ -84,8 +84,8 @@ export async function sendOwnerRequestMail(
 ) {
   const html = shell(`
     <h1 style="${styles.h1}">Neue Terminanfrage über die Website</h1>
-    <p style="${styles.p}">Der Slot ist im Kalender bereits vorgemerkt und für andere Anfragen gesperrt.
-    Mit einem Klick bestätigen oder absagen – der Kunde bekommt automatisch Bescheid.</p>
+    <p style="${styles.p}">Der Termin ist im Kalender vorgemerkt und für andere Anfragen gesperrt.
+    Bestätigen oder absagen, der Kunde bekommt automatisch Bescheid.</p>
     ${detailBlock(booking)}
     <p style="margin:24px 0 0;">
       <a href="${acceptUrl}" style="${styles.buttonAccept}">Termin bestätigen</a>
@@ -109,9 +109,8 @@ export async function sendCustomerReceivedMail(booking: BookingDetails) {
   const html = shell(`
     <h1 style="${styles.h1}">Ihre Terminanfrage ist eingegangen</h1>
     <p style="${styles.p}">Guten Tag ${escapeHtml(booking.name)},<br>
-    vielen Dank für Ihre Anfrage. Wir haben den Wunschtermin vorgemerkt und prüfen ihn.
-    ${escapeHtml(company.name)} meldet sich mit einer verbindlichen Bestätigung – in der Regel
-    innerhalb eines Werktages.</p>
+    vielen Dank für Ihre Anfrage. Wir haben den Wunschtermin vorgemerkt und sehen ihn uns an.
+    Sie bekommen von uns eine verbindliche Bestätigung, meist innerhalb eines Werktages.</p>
     ${detailBlock(booking)}
     <p style="${styles.p}">Sie möchten etwas ergänzen? Antworten Sie einfach auf diese E-Mail
     oder rufen Sie an: ${escapeHtml(company.phone)}.</p>
@@ -131,10 +130,10 @@ export async function sendCustomerConfirmedMail(booking: BookingDetails) {
   const html = shell(`
     <h1 style="${styles.h1}">Ihr Termin ist bestätigt</h1>
     <p style="${styles.p}">Guten Tag ${escapeHtml(booking.name)},<br>
-    der Termin steht fest. Wir freuen uns auf Sie.</p>
+    der Termin steht fest.</p>
     ${detailBlock(booking)}
-    <p style="${styles.p}"><strong>Damit es zügig geht:</strong> Halten Sie – falls vorhanden –
-    Grundrisse oder Fotos bereit, und sorgen Sie dafür, dass die betroffenen Räume zugänglich sind.</p>
+    <p style="${styles.p}"><strong>Damit es zügig geht:</strong> Legen Sie Grundrisse oder Fotos
+    bereit, falls Sie welche haben, und sorgen Sie dafür, dass wir in die betroffenen Räume kommen.</p>
     <p style="${styles.p}">Sollte etwas dazwischenkommen, sagen Sie uns bitte bis spätestens 24 Stunden
     vorher Bescheid: ${escapeHtml(company.phone)}.</p>
     <p style="${styles.footer}">Alle Leistungen im Überblick: ${siteUrl}/leistungen</p>
@@ -154,19 +153,19 @@ export async function sendCustomerDeclinedMail(booking: BookingDetails) {
   const html = shell(`
     <h1 style="${styles.h1}">Ihr Wunschtermin ist leider nicht möglich</h1>
     <p style="${styles.p}">Guten Tag ${escapeHtml(booking.name)},<br>
-    der angefragte Termin lässt sich bei uns nicht einrichten. Das liegt meist an der
-    Auslastung oder der Anfahrt an diesem Tag – nicht an Ihrem Projekt.</p>
+    der angefragte Termin lässt sich bei uns nicht einrichten. Meistens liegt das an der
+    Auslastung oder an der Anfahrt an diesem Tag, nicht an Ihrem Projekt.</p>
     ${detailBlock(booking)}
-    <p style="${styles.p}">Suchen Sie sich gern direkt einen neuen Termin aus:
+    <p style="${styles.p}">Suchen Sie sich gern gleich einen neuen Termin aus:
     <a href="${siteUrl}/termin" style="color:#1F6FB2;">${siteUrl}/termin</a><br>
-    Oder rufen Sie an, dann finden wir kurzfristig etwas: ${escapeHtml(company.phone)}.</p>
+    Oder rufen Sie an, dann finden wir meistens kurzfristig etwas: ${escapeHtml(company.phone)}.</p>
   `);
 
   return client().emails.send({
     from: fromAddress(),
     to: booking.email,
     replyTo: ownerAddress(),
-    subject: 'Ihre Terminanfrage – leider nicht möglich',
+    subject: 'Ihre Terminanfrage: leider nicht möglich',
     html,
   });
 }

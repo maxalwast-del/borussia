@@ -40,10 +40,12 @@ export function SiteHeader() {
               <path d="M3 4h8v6H3V4Zm10 0h8v6h-8V4ZM3 12h5v8H3v-8Zm7 0h11v8H10v-8Z" />
             </svg>
           </span>
-          <span className="font-display text-lg font-semibold tracking-tight">{company.name}</span>
+          <span className="whitespace-nowrap font-display text-base font-semibold leading-tight tracking-tight sm:text-lg">
+            {company.name}
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Hauptnavigation">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Hauptnavigation">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -59,11 +61,11 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <a href={`tel:${company.phoneHref}`} className="text-[15px] font-medium text-ink-muted hover:text-ink">
+        <div className="hidden items-center gap-3 xl:flex">
+          <a href={`tel:${company.phoneHref}`} className="whitespace-nowrap text-[15px] font-medium text-ink-muted hover:text-ink">
             {company.phone}
           </a>
-          <Link href="/termin" className="btn-accent px-5 py-2.5 text-sm">
+          <Link href="/termin" className="btn-accent whitespace-nowrap px-5 py-2.5 text-sm">
             Termin anfragen
           </Link>
         </div>
@@ -73,7 +75,7 @@ export function SiteHeader() {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="grid h-10 w-10 place-items-center rounded-lg border border-ink/15 bg-white/70 lg:hidden"
+          className="grid h-10 w-10 place-items-center rounded-lg border border-ink/15 bg-white/70 xl:hidden"
         >
           <span className="sr-only">Menü {open ? 'schließen' : 'öffnen'}</span>
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -83,7 +85,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div id="mobile-nav" className="border-t border-ink/10 bg-gypsum lg:hidden">
+        <div id="mobile-nav" className="border-t border-ink/10 bg-gypsum xl:hidden">
           <nav className="container-page flex flex-col py-3" aria-label="Mobile Navigation">
             {links.map((link) => (
               <Link key={link.href} href={link.href} className="rounded-lg px-2 py-3 text-base text-ink-soft">

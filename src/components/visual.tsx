@@ -17,10 +17,10 @@ export function Visual({
   // Vier kühle Abstufungen aus der Blau-Grau-Palette, damit die Kacheln
   // untereinander variieren, ohne aus dem Farbklima zu fallen.
   const palettes = [
-    ['#DCE6EF', '#B9CBDD', '#17212B'],
-    ['#E3E9EE', '#C3CFDA', '#17212B'],
-    ['#D6E4F0', '#AFC7DD', '#17212B'],
-    ['#E7ECF1', '#CAD4DE', '#17212B'],
+    ['#CFDEEC', '#94B3D0', '#17212B'],
+    ['#D9E1E8', '#A6B6C4', '#17212B'],
+    ['#C7DAEC', '#8DAECE', '#17212B'],
+    ['#DCE3E9', '#AAB8C4', '#17212B'],
   ];
   const [base, mid, ink] = palettes[variant % palettes.length];
   const id = `v${variant}`;

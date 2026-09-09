@@ -7,11 +7,11 @@ import { SiteFooter } from '@/components/site-footer';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${company.name} – Trockenbau in Berlin & Brandenburg`,
+    default: `${company.name}: ${company.slogan}`,
     template: `%s · ${company.name}`,
   },
   description:
-    'Trockenbau für Altbausanierung und Wohnungsumbau in Berlin und Brandenburg: Trennwände, abgehängte Decken, Dachausbau, Vorsatzschalen. Termin online anfragen.',
+    'Trockenbau und Innenausbau für Altbausanierung und Wohnungsumbau in Berlin und Brandenburg. Trennwände, abgehängte Decken, Dachausbau, Vorsatzschalen. Termin online anfragen.',
   openGraph: {
     type: 'website',
     locale: 'de_DE',

@@ -14,8 +14,8 @@ export default function KontaktPage() {
     <>
       <PageHeader
         eyebrow="Kontakt"
-        title="Rufen Sie an – das ist meist schneller"
-        lede="Für konkrete Termine nutzen Sie besser die Online-Anfrage, dort sehen Sie sofort, wann wir Zeit haben."
+        title="Rufen Sie an, das geht meistens schneller"
+        lede="Für einen konkreten Termin ist die Online-Anfrage besser. Dort sehen Sie sofort, wann wir Zeit haben."
       />
 
       <section className="container-page py-16">
@@ -55,7 +55,7 @@ export default function KontaktPage() {
                 {company.zip} {company.city}
               </address>
               <p className="mt-4 text-sm text-ink-muted">
-                Büro nur nach Vereinbarung – wir sind meist auf der Baustelle.
+                Das Büro ist nur nach Vereinbarung besetzt. Wir sind meistens auf der Baustelle.
               </p>
             </div>
 
@@ -74,8 +74,8 @@ export default function KontaktPage() {
             <div className="rounded-card bg-ink p-7 text-gypsum">
               <h2 className="heading-md text-xl">Konkreter Termin?</h2>
               <p className="mt-2 text-[15px] leading-relaxed text-gypsum/70">
-                Über die Online-Anfrage sehen Sie sofort die freien Zeiten und sparen sich das
-                Hin-und-Her.
+                Über die Online-Anfrage sehen Sie die freien Zeiten sofort und sparen sich das
+                Hin und Her.
               </p>
               <Link href="/termin" className="btn-accent mt-5 w-full">
                 Termin anfragen

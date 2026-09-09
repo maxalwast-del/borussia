@@ -134,8 +134,8 @@ export function BookingFlow() {
         <h2 className="heading-md mt-6">Anfrage ist raus</h2>
         <p className="prose-body mt-3">{success.summary}</p>
         <p className="prose-body mt-4">
-          Der Termin ist bei uns vorgemerkt, aber noch nicht verbindlich. Sie erhalten die
-          Bestätigung per E-Mail, sobald wir zugesagt haben. {bookingRules.responseTimePromise}.
+          Der Termin ist vorgemerkt, aber noch nicht verbindlich. Sobald wir zugesagt haben,
+          bekommen Sie die Bestätigung per E-Mail. {bookingRules.responseTimePromise}.
         </p>
         <p className="mt-6 text-sm text-ink-muted">{success.hint}</p>
       </div>
@@ -180,8 +180,8 @@ export function BookingFlow() {
         <section>
           <StepHeading step={2} title="Wunschtermin wählen" />
           <p className="prose-body mt-2">
-            Angezeigt werden nur Zeiten, die im Kalender tatsächlich frei sind – inklusive Fahrzeit
-            zwischen den Baustellen.
+            Angezeigt werden nur Zeiten, die im Kalender tatsächlich frei sind. Die Fahrzeit
+            zwischen den Baustellen ist dabei schon abgezogen.
           </p>
 
           <div className="mt-5 flex items-center justify-between gap-4">
@@ -335,7 +335,7 @@ export function BookingFlow() {
               </div>
             )}
 
-            <Field label="Was ist geplant?" hint="Räume, Quadratmeter, Zeitrahmen – je konkreter, desto besser das Angebot">
+            <Field label="Was ist geplant?" hint="Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot">
               <textarea
                 className="field min-h-[130px] resize-y"
                 value={form.message}
@@ -343,7 +343,7 @@ export function BookingFlow() {
               />
             </Field>
 
-            {/* Honeypot – für Menschen unsichtbar */}
+            {/* Honeypot: für Menschen unsichtbar */}
             <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden opacity-0">
               <label>
                 Website
@@ -410,8 +410,8 @@ export function BookingFlow() {
         </dl>
 
         <div className="mt-6 rounded-xl bg-gypsum p-4 text-sm leading-relaxed text-ink-muted">
-          Der gewählte Slot wird sofort für andere gesperrt. Verbindlich wird der Termin erst mit
-          unserer Bestätigungsmail – {bookingRules.responseTimePromise}.
+          Die gewählte Zeit ist ab sofort für andere gesperrt. Verbindlich wird der Termin mit
+          unserer Bestätigungsmail. {bookingRules.responseTimePromise}.
         </div>
 
         <a href={`tel:${company.phoneHref}`} className="btn-ghost mt-5 w-full">

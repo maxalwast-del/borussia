@@ -14,7 +14,7 @@ const openings = [
   {
     title: 'Trockenbaumonteur (m/w/d)',
     type: 'Vollzeit',
-    text: 'Sie beplanken, spachteln und stellen Ständerwerk – selbstständig und ohne dass jemand daneben stehen muss.',
+    text: 'Sie stellen Ständerwerk, beplanken und spachteln. Selbstständig, ohne dass jemand danebenstehen muss.',
     requirements: [
       'Erfahrung im Trockenbau oder verwandtem Ausbaugewerk',
       'Führerschein Klasse B von Vorteil',
@@ -34,7 +34,7 @@ const openings = [
   {
     title: 'Auszubildender Trockenbaumonteur (m/w/d)',
     type: 'Ausbildung',
-    text: 'Drei Jahre Ausbildung mit einem festen Ausbilder – nicht mit wechselnden Zuständigkeiten.',
+    text: 'Drei Jahre Ausbildung bei einem festen Ausbilder, der auch dann zuständig bleibt, wenn etwas schiefgeht.',
     requirements: [
       'Schulabschluss',
       'Zuverlässigkeit und Pünktlichkeit',
@@ -44,12 +44,12 @@ const openings = [
 ];
 
 const benefits = [
-  { title: 'Pünktlich am Monatsende', text: 'Lohn kommt zum Ersten, Zuschläge werden abgerechnet, nicht diskutiert.' },
-  { title: 'Kein Wochenende als Regel', text: 'Freitag ist um 14 Uhr Feierabend. Samstagsarbeit nur bei Notfällen und mit Zuschlag.' },
-  { title: 'Werkzeug vom Betrieb', text: 'Maschinen, Werkzeug und Arbeitskleidung stellen wir. Sie bringen sich mit.' },
-  { title: 'Feste Kolonnen', text: 'Sie arbeiten mit denselben Leuten, nicht jede Woche mit neuen Gesichtern.' },
-  { title: 'Weiterbildung zahlt der Betrieb', text: 'Meisterkurs, Staplerschein, Brandschutzschulung – wenn es zum Betrieb passt, übernehmen wir die Kosten.' },
-  { title: 'Baustellen in der Region', text: 'Berlin und Umland. Keine Montage über Wochen, abends sind Sie zu Hause.' },
+  { title: 'Lohn kommt pünktlich', text: 'Zum Ersten ist das Geld da. Über Zuschläge diskutieren wir nicht, die rechnen wir ab.' },
+  { title: 'Freitag ist um 14 Uhr Schluss', text: 'Samstagsarbeit gibt es nur, wenn etwas brennt, und dann mit Zuschlag.' },
+  { title: 'Werkzeug vom Betrieb', text: 'Maschinen, Werkzeug und Arbeitskleidung stellen wir. Sie müssen nichts mitbringen.' },
+  { title: 'Feste Kolonnen', text: 'Sie arbeiten mit denselben Leuten. Das macht auf der Baustelle mehr aus, als man vorher denkt.' },
+  { title: 'Weiterbildung zahlt der Betrieb', text: 'Meisterkurs, Staplerschein oder Brandschutzschulung. Wenn es zum Betrieb passt, übernehmen wir die Kosten.' },
+  { title: 'Baustellen in der Region', text: 'Berlin und Umland. Keine Wochenmontage, abends sind Sie zu Hause.' },
 ];
 
 export default function JobsPage() {
@@ -76,7 +76,7 @@ export default function JobsPage() {
       <PageHeader
         eyebrow="Jobs"
         title="Wir suchen Leute, die bleiben wollen"
-        lede="Kein Anschreiben, kein Portal, kein wochenlanges Warten. Formular ausfüllen oder WhatsApp schreiben – wir melden uns."
+        lede="Sie brauchen kein Anschreiben und keinen Portal-Account. Formular ausfüllen oder per WhatsApp schreiben, wir melden uns."
       />
 
       <section className="container-page py-16">
@@ -118,7 +118,7 @@ export default function JobsPage() {
 
           <div className="lg:sticky lg:top-24">
             <h2 className="heading-md">In zwei Minuten bewerben</h2>
-            <p className="prose-body mb-5 mt-2">Zeugnisse und Lebenslauf später, wenn es passt.</p>
+            <p className="prose-body mb-5 mt-2">Zeugnisse und Lebenslauf können Sie nachreichen, wenn es passt.</p>
             <ApplicationForm positions={openings.map((opening) => opening.title)} />
           </div>
         </div>

@@ -6,46 +6,46 @@ import { Visual } from '@/components/visual';
 const services = [
   {
     title: 'Trennwände & Grundrisse',
-    text: 'Neue Raumaufteilung in Metallständerbauweise – mit Schallschutz, Türöffnungen und sauberem Anschluss an den Bestand.',
+    text: 'Neue Raumaufteilung in Metallständerbauweise, mit Schallschutz und ausgesteiften Türöffnungen. Anschlüsse an Bestandswände bekommen einen Trennschnitt, damit dort später keine Risse aufgehen.',
   },
   {
     title: 'Abgehängte Decken',
-    text: 'Leitungen verschwinden, Akustik wird besser, Spots sitzen. Auch über unebenen Altbaudecken.',
+    text: 'Leitungen verschwinden, Spots sitzen dort, wo sie hingehören. Unebene Altbaudecken gleichen wir über die Unterkonstruktion aus.',
   },
   {
     title: 'Dachgeschossausbau',
-    text: 'Dämmung, luftdichte Dampfbremse, Dachschrägen und Kniestock – dokumentiert bis zum letzten Anschluss.',
+    text: 'Dämmung, luftdichte Dampfbremse, Dachschrägen und Kniestock. Jede Durchdringung der Dampfbremse fotografieren wir, bevor beplankt wird.',
   },
   {
     title: 'Vorsatzschalen & Schallschutz',
-    text: 'Entkoppelte Schalen gegen Lärm von nebenan, Installationsvorwände fürs Bad.',
+    text: 'Freistehende Schalen gegen Lärm von nebenan. Installationsvorwände fürs Bad stimmen wir vorher mit den Sanitärleuten ab.',
   },
   {
     title: 'Feuchtraum & Bad',
-    text: 'Imprägnierte Platten, Verbundabdichtung, fliesenfertiger Untergrund nach Norm.',
+    text: 'Imprägnierte Platten und Verbundabdichtung nach Norm. Bei großformatigen Fliesen setzen wir die Ständer enger, sonst wird der Untergrund nicht eben genug.',
   },
   {
-    title: 'Spachtelarbeiten Q1 – Q4',
-    text: 'Von der Grundverspachtelung bis zur Oberfläche für Streiflicht und glänzende Anstriche.',
+    title: 'Spachtelarbeiten Q1 bis Q4',
+    text: 'Beim Aufmaß sagen wir Ihnen, welche Qualitätsstufe Ihr Raum braucht. Q4 kostet Aufpreis und lohnt sich längst nicht in jedem Zimmer.',
   },
 ];
 
 const reasons = [
   {
     title: 'Festpreis nach Aufmaß',
-    text: 'Kein Stundenlohn ins Blaue. Nach dem Aufmaß bekommen Sie ein Angebot mit Positionen, Menge und Preis. Was drinsteht, gilt.',
+    text: 'Nach dem Aufmaß bekommen Sie ein Angebot mit Positionen, Mengen und Preisen. Daran halten wir uns auch dann, wenn wir uns beim Aufwand verschätzt haben.',
   },
   {
     title: 'Ein Ansprechpartner',
-    text: 'Vom Aufmaß bis zur Abnahme derselbe Meister. Kein Weiterreichen an wechselnde Kolonnen.',
+    text: 'Vom Aufmaß bis zur Abnahme betreut Sie derselbe Meister. Sie müssen Ihr Projekt nicht dreimal neu erklären.',
   },
   {
     title: 'Baustelle bleibt bewohnbar',
-    text: 'Staubschutzwände, Absaugung am Gerät, abends besenrein. Bei Sanierungen im bewohnten Zustand Standard.',
+    text: 'Staubschutzwände und Absaugung direkt am Gerät. Abends räumen wir so weit auf, dass Sie die Räume wieder benutzen können.',
   },
   {
     title: 'Termine, die halten',
-    text: 'Wir sagen nur zu, was wir mit eigenen Leuten schaffen. Verschiebt sich etwas, erfahren Sie es vorher, nicht danach.',
+    text: 'Wir sagen nur zu, was wir mit eigenen Leuten schaffen. Wenn sich doch etwas verschiebt, rufen wir an, bevor Sie vergeblich warten.',
   },
 ];
 
@@ -63,15 +63,16 @@ export default function HomePage() {
 
         <div className="container-page grid gap-14 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
           <div className="animate-fade-up">
-            <p className="eyebrow">Trockenbau · Berlin & Brandenburg</p>
+            <p className="eyebrow">{company.slogan}</p>
             <h1 className="heading-xl mt-5">
               Neue Räume im
               <br />
               alten Grundriss.
             </h1>
             <p className="lede mt-6 max-w-xl">
-              Wir bauen Trennwände, Decken und Dachgeschosse für Sanierung und Wohnungsumbau. Festpreis
-              nach Aufmaß, ein Ansprechpartner, Baustelle abends besenrein.
+              Trockenbau und Innenausbau in Berlin und Brandenburg. Wir bauen Trennwände, Decken
+              und Dachgeschosse für Sanierung und Wohnungsumbau. Nach dem Aufmaß bekommen Sie
+              einen Festpreis, und bis zur Abnahme haben Sie denselben Ansprechpartner.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -118,7 +119,7 @@ export default function HomePage() {
           <p className="eyebrow">Leistungen</p>
           <h2 className="heading-lg mt-4">Was wir bauen</h2>
           <p className="prose-body mt-4">
-            Schwerpunkt Sanierung und Umbau im bewohnten Bestand. Neubau übernehmen wir, wenn es zeitlich passt.
+            Schwerpunkt ist Sanierung und Umbau im bewohnten Bestand. Neubau machen wir, wenn es zeitlich passt.
           </p>
         </div>
 
@@ -142,7 +143,7 @@ export default function HomePage() {
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Arbeitsweise</p>
-            <h2 className="heading-lg mt-4">Vier Dinge, auf die Sie sich verlassen können</h2>
+            <h2 className="heading-lg mt-4">Wobei wir uns festlegen</h2>
           </div>
           <div className="grid gap-8 sm:grid-cols-2">
             {reasons.map((reason, index) => (
@@ -194,8 +195,8 @@ export default function HomePage() {
               <p className="eyebrow">Einsatzgebiet</p>
               <h2 className="heading-lg mt-4">Berlin, Potsdam und das nähere Umland</h2>
               <p className="prose-body mt-4">
-                Wir fahren nur so weit, wie wir Termine zuverlässig halten können. Das ist keine
-                Bescheidenheit, sondern der Grund, warum unsere Zusagen stehen.
+                Wir fahren nur so weit, wie wir Termine zuverlässig halten können. Weiter draußen
+                wird die Anfahrt zum Risiko für alle anderen Termine des Tages.
               </p>
               <Link href="/termin" className="btn-primary mt-7">
                 Verfügbarkeit prüfen

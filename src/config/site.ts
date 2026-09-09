@@ -6,9 +6,10 @@
  */
 
 export const company = {
-  name: 'Trockenbau Berger', // [PLATZHALTER]
-  legalName: 'Trockenbau Berger GmbH', // [PLATZHALTER]
-  tagline: 'Trockenbau für Altbau und Sanierung in Berlin & Brandenburg',
+  name: 'Borussia Baudienstleistungen',
+  legalName: 'Borussia Baudienstleistungen GmbH', // [PLATZHALTER] Rechtsform prüfen
+  slogan: 'Renovieren. Sanieren. Modernisieren.',
+  tagline: 'Trockenbau und Innenausbau für Altbau und Sanierung in Berlin und Brandenburg',
   foundedYear: 2009, // [PLATZHALTER]
   teamSize: 12, // [PLATZHALTER]
 
@@ -18,10 +19,10 @@ export const company = {
   country: 'DE',
 
   phone: '+49 30 1234567', // [PLATZHALTER]
-  phoneHref: '+493012345670', // [PLATZHALTER] – nur Ziffern, für tel:-Links
-  whatsapp: '4915112345678', // [PLATZHALTER] – Ländervorwahl ohne +, für wa.me
-  email: 'info@trockenbau-berger.de', // [PLATZHALTER]
-  jobsEmail: 'jobs@trockenbau-berger.de', // [PLATZHALTER]
+  phoneHref: '+493012345670', // [PLATZHALTER]: nur Ziffern, für tel:-Links
+  whatsapp: '4915112345678', // [PLATZHALTER]: Ländervorwahl ohne +, für wa.me
+  email: 'info@borussia-bau.de', // [PLATZHALTER]
+  jobsEmail: 'jobs@borussia-bau.de', // [PLATZHALTER]
 
   // Handelsregister / Steuer – [PLATZHALTER]
   register: 'HRB 123456 B, Amtsgericht Berlin-Charlottenburg',
@@ -36,23 +37,23 @@ export const company = {
   ],
 
   socials: {
-    instagram: 'https://instagram.com/', // [PLATZHALTER] – leerer String blendet den Link aus
+    instagram: 'https://instagram.com/', // [PLATZHALTER]: leerer String blendet den Link aus
     facebook: '',
   },
 } as const;
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.trockenbau-berger.de';
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.borussia-bau.de';
 
 /**
  * Einsatzgebiet. Der PLZ-Check im Buchungsformular liest diese Zonen aus.
- * `prefixes` sind PLZ-Anfänge; Zone wird über die längste Übereinstimmung ermittelt.
+ * `prefixes` sind PLZ-Anfänge; Die Zone ergibt sich aus der längsten Übereinstimmung.
  */
 export const serviceZones = [
   {
     id: 'kern',
     label: 'Berlin (gesamtes Stadtgebiet)',
     prefixes: ['10', '12', '13', '14', '16', '10', '12'],
-    note: 'Anfahrt inklusive. Aufmaßtermine meist innerhalb von 5 Werktagen.',
+    note: 'Anfahrt inklusive. Aufmaßtermine meist innerhalb von fünf Werktagen.',
     surcharge: 'ohne Anfahrtspauschale',
   },
   {
@@ -66,7 +67,7 @@ export const serviceZones = [
     id: 'brandenburg',
     label: 'Brandenburg (weiteres Umland)',
     prefixes: ['03', '14', '15', '16', '17', '19'],
-    note: 'Auf Anfrage – wir prüfen die Machbarkeit vor Terminzusage.',
+    note: 'Auf Anfrage. Wir prüfen vor der Zusage, ob wir das zeitlich schaffen.',
     surcharge: 'nach Absprache',
   },
 ] as const;
@@ -82,7 +83,7 @@ export const appointmentTypes = [
     id: 'aufmass',
     label: 'Aufmaß & Beratung vor Ort',
     description:
-      'Wir kommen zu Ihnen, messen auf, besprechen die Ausführung und Sie erhalten danach ein verbindliches Festpreisangebot.',
+      'Wir kommen zu Ihnen, messen auf und besprechen die Ausführung. Danach bekommen Sie ein Festpreisangebot.',
     durationMinutes: 60,
     bufferMinutes: 45,
     price: 'kostenfrei im Einsatzgebiet',
@@ -91,7 +92,7 @@ export const appointmentTypes = [
     id: 'telefon',
     label: 'Telefonische Erstberatung',
     description:
-      'Kurzes Gespräch zu Machbarkeit, Preisrahmen und Terminlage. Ideal, wenn Sie noch in der Planung sind.',
+      'Kurzes Gespräch über Machbarkeit, Preisrahmen und Terminlage. Sinnvoll, solange Sie noch planen.',
     durationMinutes: 20,
     bufferMinutes: 10,
     price: 'kostenfrei',
@@ -99,7 +100,7 @@ export const appointmentTypes = [
   {
     id: 'abnahme',
     label: 'Nachbesprechung / Abnahme',
-    description: 'Für laufende Projekte: Zwischenabnahme, Restpunkte, Übergabe.',
+    description: 'Für laufende Projekte: Zwischenabnahme, offene Restpunkte, Übergabe.',
     durationMinutes: 45,
     bufferMinutes: 30,
     price: 'kostenfrei für Bestandskunden',
@@ -109,7 +110,7 @@ export const appointmentTypes = [
 export type AppointmentTypeId = (typeof appointmentTypes)[number]['id'];
 
 /**
- * Buchbare Zeiten (lokale Zeit, Europe/Berlin). 0 = Sonntag ... 6 = Samstag.
+ * Buchbare Zeiten (lokale Zeit, Europe/Berlin). 0 = Sonntag bis 6 = Samstag.
  */
 export const bookingWindows: Record<number, { start: string; end: string }[]> = {
   1: [{ start: '07:30', end: '16:00' }],
@@ -128,5 +129,5 @@ export const bookingRules = {
   /** Raster der angebotenen Startzeiten in Minuten. */
   slotGranularityMinutes: 30,
   /** Anfragen laufen ab, wenn sie nicht bestätigt werden (nur Info-Text). */
-  responseTimePromise: 'Rückmeldung in der Regel innerhalb eines Werktages',
+  responseTimePromise: 'Rückmeldung meist innerhalb eines Werktages',
 } as const;

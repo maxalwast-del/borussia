@@ -80,8 +80,8 @@ export default function DatenschutzPage() {
           <h2 className="heading-md text-xl text-ink">Schriftarten</h2>
           <p className="mt-3">
             Diese Website bindet Schriftarten von Google Fonts ein. Dabei wird Ihre IP-Adresse an
-            Google übermittelt. Wenn Sie das vermeiden möchten, können die Schriften auch lokal
-            ausgeliefert werden – sprechen Sie uns an.
+            Google übermittelt. Auf Wunsch liefern wir die Schriften auch lokal aus. Sprechen Sie
+            uns dazu an.
           </p>
         </div>
 

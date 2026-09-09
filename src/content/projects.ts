@@ -28,19 +28,19 @@ export const projects: Project[] = [
     year: 2025,
     category: 'Altbausanierung',
     summary:
-      'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer – bei erhaltenem Stuck.',
+      'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer. Der Stuck ist geblieben.',
     duration: '3 Wochen',
     area: '112 m²',
     scope: ['Trennwände in Metallständerbauweise', 'Schiebetürsystem', 'Stuckerhalt an Anschlüssen', 'Q3-Spachtelung'],
     challenge:
-      'Der originale Deckenstuck sollte erhalten bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Die Altbaudecke war um bis zu vier Zentimeter uneben.',
+      'Der originale Deckenstuck sollte bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Dazu kam eine Altbaudecke mit bis zu vier Zentimetern Höhenunterschied.',
     solution:
-      'Wandanschlüsse wurden mit Trennschnitt und Gleitanschluss ausgeführt, sodass der Stuck ohne Rissbildung stehen bleibt. Die Deckenunebenheit haben wir über eine justierbare Unterkonstruktion ausgeglichen.',
+      'Die Wandanschlüsse haben wir mit Trennschnitt und Gleitanschluss ausgeführt, damit der Stuck rissfrei stehen bleibt. Die Unebenheit der Decke fängt eine justierbare Unterkonstruktion ab.',
     result:
-      'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten keine Setzrisse an den Anschlüssen.',
+      'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten waren an den Anschlüssen keine Setzrisse zu sehen.',
     testimonial: {
       quote:
-        'Zeitplan gehalten, Baustelle jeden Abend besenrein. Bei zwei Punkten haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.',
+        'Zeitplan gehalten, Baustelle jeden Abend besenrein. An zwei Stellen haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.',
       author: 'Eigentümerin, Prenzlauer Berg',
     },
   },
@@ -55,10 +55,10 @@ export const projects: Project[] = [
     area: '68 m²',
     scope: ['Zwischensparrendämmung', 'Dampfbremse mit Blower-Door-Vorbereitung', 'Dachschrägenbekleidung', 'Kniestockschränke'],
     challenge:
-      'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede Undichtigkeit wäre später ein Bauschaden.',
+      'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede undichte Stelle wäre später ein Bauschaden geworden.',
     solution:
-      'Alle Durchdringungen wurden mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln dokumentiert.',
-    result: 'Blower-Door-Test bestanden. Die Fotodokumentation der Anschlüsse ging an den Bauherrn.',
+      'Alle Durchdringungen haben wir mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln fotografiert.',
+    result: 'Der Blower-Door-Test ging durch. Die Fotos der Anschlüsse hat der Bauherr bekommen.',
   },
   {
     slug: 'akustikdecke-praxis-mitte',
@@ -71,10 +71,10 @@ export const projects: Project[] = [
     area: '190 m²',
     scope: ['Abgehängte Decke', 'Akustik-Lochplatten', 'Integrierte Beleuchtung', 'Revisionsöffnungen'],
     challenge:
-      'Der Umbau lief im laufenden Praxisbetrieb. Es durfte nur zwischen 16 und 22 Uhr gearbeitet werden, staubarm.',
+      'Der Umbau lief im laufenden Praxisbetrieb. Gearbeitet werden durfte nur zwischen 16 und 22 Uhr, und das möglichst staubarm.',
     solution:
-      'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Jeder Abschnitt war am Morgen wieder nutzbar.',
-    result: 'Kein einziger Ausfalltag für die Praxis. Nachhallzeit im Wartebereich deutlich reduziert.',
+      'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Am nächsten Morgen war der Bereich wieder nutzbar.',
+    result: 'Die Praxis hatte keinen einzigen Ausfalltag. Im Wartebereich ist der Nachhall deutlich zurückgegangen.',
     testimonial: {
       quote: 'Wir konnten durchgehend behandeln. Morgens war nichts mehr von der Baustelle zu sehen.',
       author: 'Praxisinhaber, Berlin-Mitte',
@@ -86,14 +86,14 @@ export const projects: Project[] = [
     location: 'Potsdam',
     year: 2024,
     category: 'Wohnungsumbau',
-    summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung – inklusive Schallschutz zum Nachbarn.',
+    summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung, mit neuem Schallschutz zur Nachbarwohnung.',
     duration: '5 Wochen',
     area: '140 m²',
     scope: ['Vorsatzschalen mit Schallschutz', 'Neue Trennwände', 'Installationswand', 'Q4 in Wohnbereichen'],
     challenge: 'Die Wohnungstrennwand zum Nachbarn lag deutlich unter heutigem Schallschutzniveau.',
     solution:
-      'Freistehende Vorsatzschale mit Mineralwolle und entkoppelter Unterkonstruktion, ohne starre Verbindung zum Bestandsmauerwerk.',
-    result: 'Messbar verbesserter Schallschutz, spürbar ruhigere Schlafräume.',
+      'Eine freistehende Vorsatzschale mit Mineralwolle, entkoppelt und ohne starre Verbindung zum Bestandsmauerwerk.',
+    result: 'Der Schallschutz ist messbar besser, die Schlafräume merklich ruhiger.',
   },
   {
     slug: 'bad-feuchtraum-charlottenburg',
@@ -105,9 +105,9 @@ export const projects: Project[] = [
     duration: '8 Tage',
     area: '14 m²',
     scope: ['Installationsvorwand', 'Imprägnierte Bauplatten', 'Verbundabdichtung', 'Nischen und Ablagen'],
-    challenge: 'Großformatfliesen verzeihen keine Toleranzen – der Untergrund musste extrem eben sein.',
-    solution: 'Engere Ständerabstände, doppelte Beplankung und Ebenheitskontrolle vor Übergabe an den Fliesenleger.',
-    result: 'Fliesenleger konnte ohne Nacharbeit starten.',
+    challenge: 'Großformatfliesen verzeihen keine Toleranzen. Der Untergrund musste entsprechend eben werden.',
+    solution: 'Engere Ständerabstände, doppelte Beplankung und eine Ebenheitskontrolle, bevor der Fliesenleger übernommen hat.',
+    result: 'Der Fliesenleger konnte ohne Nacharbeit anfangen.',
   },
   {
     slug: 'buero-loft-friedrichshain',
@@ -120,8 +120,8 @@ export const projects: Project[] = [
     area: '85 m²',
     scope: ['Freistehende Raum-in-Raum-Konstruktion', 'Doppelbeplankung', 'Glaselemente', 'Deckenanschluss entkoppelt'],
     challenge: 'Die Boxen sollten rückbaubar sein und die Sichtbetondecke nicht beschädigen.',
-    solution: 'Konstruktion auf eigenen Schwellen, oben nur gleitend geführt – kein Eingriff in die Decke.',
-    result: 'Vollständig rückbaubar. Der Mietvertrag ließ nichts anderes zu.',
+    solution: 'Die Konstruktion steht auf eigenen Schwellen und ist oben nur gleitend geführt. In die Decke haben wir nicht eingegriffen.',
+    result: 'Vollständig rückbaubar, weil der Mietvertrag nichts anderes zuließ.',
   },
 ];
 

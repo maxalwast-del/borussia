@@ -114,7 +114,7 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
         <span className="field-label">Kurz zu Ihnen</span>
         <textarea
           className="field min-h-[110px] resize-y"
-          placeholder="Ein paar Sätze reichen. Lebenslauf können Sie später nachreichen."
+          placeholder="Ein paar Sätze reichen. Den Lebenslauf können Sie später nachreichen."
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
         />

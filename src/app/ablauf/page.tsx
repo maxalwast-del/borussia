@@ -10,18 +10,18 @@ export const metadata: Metadata = {
 const steps = [
   {
     title: 'Anfrage',
-    text: 'Sie wählen online einen Termin oder rufen an. Wir bestätigen in der Regel innerhalb eines Werktages – oder sagen ehrlich ab, wenn wir keine Kapazität haben.',
+    text: 'Sie wählen online einen Termin oder rufen an. Meist bestätigen wir innerhalb eines Werktages. Wenn wir keine Kapazität haben, sagen wir das auch so.',
     duration: 'Tag 0',
   },
   {
     title: 'Aufmaß vor Ort',
-    text: 'Wir sehen uns die Räume an, messen auf, prüfen Untergründe und besprechen, was sinnvoll ist. Dauer meist eine Stunde. Kostenfrei im Einsatzgebiet.',
-    duration: 'ca. 1 Woche später',
+    text: 'Wir sehen uns die Räume an, messen auf und prüfen die Untergründe. Das dauert meist eine Stunde und kostet im Einsatzgebiet nichts.',
+    duration: 'meist eine Woche später',
   },
   {
     title: 'Festpreisangebot',
-    text: 'Positionen, Mengen, Qualitätsstufen und Preis – schriftlich. Was Sie nicht brauchen, steht nicht drin. Gültig 30 Tage.',
-    duration: '3 – 5 Werktage nach Aufmaß',
+    text: 'Sie bekommen Positionen, Mengen, Qualitätsstufen und Preis schriftlich. Was Sie nicht brauchen, nehmen wir gar nicht erst auf. Das Angebot gilt 30 Tage.',
+    duration: 'drei bis fünf Werktage nach dem Aufmaß',
   },
   {
     title: 'Terminplanung',
@@ -30,12 +30,12 @@ const steps = [
   },
   {
     title: 'Ausführung',
-    text: 'Staubschutz steht vor dem ersten Schnitt. Abends besenrein. Bei Abweichungen rufen wir an, bevor wir weiterbauen – nicht danach.',
+    text: 'Der Staubschutz steht, bevor der erste Schnitt fällt. Wenn wir auf etwas Unerwartetes stoßen, rufen wir an, bevor wir weiterbauen.',
     duration: 'je nach Umfang',
   },
   {
     title: 'Abnahme',
-    text: 'Gemeinsamer Rundgang, Restpunkte werden protokolliert und innerhalb von zwei Wochen erledigt. Rechnung erst danach.',
+    text: 'Wir gehen gemeinsam durch, schreiben offene Restpunkte auf und erledigen sie innerhalb von zwei Wochen. Die Rechnung kommt erst danach.',
     duration: 'zum Bauende',
   },
 ];
@@ -43,27 +43,27 @@ const steps = [
 const faqs = [
   {
     q: 'Was kostet Trockenbau pro Quadratmeter?',
-    a: 'Seriös lässt sich das erst nach dem Aufmaß sagen. Der Preis hängt an Beplankungsart, Schallschutzanforderung, Spachtelqualität und Zugänglichkeit der Baustelle. Eine einfache Trennwand liegt in einem völlig anderen Bereich als eine entkoppelte Vorsatzschale mit Q4-Oberfläche. Deshalb messen wir kostenfrei auf, statt Zahlen zu raten.',
+    a: 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Der Preis hängt an der Beplankungsart, der Schallschutzanforderung, der Spachtelqualität und daran, wie gut wir mit Material an die Baustelle kommen. Eine einfache Trennwand liegt in einem ganz anderen Bereich als eine entkoppelte Vorsatzschale mit Q4-Oberfläche. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.',
   },
   {
     q: 'Kann ich während der Arbeiten in der Wohnung bleiben?',
-    a: 'In den meisten Fällen ja. Wir arbeiten abschnittsweise mit Staubschutzwänden und Absaugung. Bei größeren Umbauten mit Grundrissänderung ist ein Auszug für einzelne Wochen manchmal die entspanntere Lösung – das besprechen wir beim Aufmaß offen.',
+    a: 'Meistens ja. Wir arbeiten abschnittsweise mit Staubschutzwänden und Absaugung. Bei größeren Umbauten mit Grundrissänderung ist ein Auszug für ein paar Wochen oft die entspanntere Lösung. Das sprechen wir beim Aufmaß offen an.',
   },
   {
     q: 'Übernehmen Sie auch Elektro und Malerarbeiten?',
-    a: 'Trockenbau ist unser Gewerk. Für Elektro, Sanitär und Malerarbeiten arbeiten wir mit festen Partnerbetrieben aus der Region und koordinieren die Reihenfolge, damit niemand auf den anderen wartet.',
+    a: 'Trockenbau ist unser Gewerk. Für Elektro, Sanitär und Malerarbeiten haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.',
   },
   {
     q: 'Welche Spachtelqualität brauche ich?',
-    a: 'Q2 reicht für gewöhnliche Anstriche und Raufaser. Q3 ist sinnvoll bei glatten Anstrichen, Q4 bei Streiflicht durch große Fenster oder glänzenden Beschichtungen. Wir schauen uns die Lichtsituation vor Ort an und empfehlen die Stufe, die Sie wirklich brauchen.',
+    a: 'Q2 reicht für gewöhnliche Anstriche und Raufaser. Q3 ist bei glatten Anstrichen sinnvoll, Q4 bei Streiflicht durch große Fenster oder bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation vor Ort an. In den meisten Wohnungen ist Q4 rausgeworfenes Geld.',
   },
   {
     q: 'Wie schnell können Sie anfangen?',
-    a: 'Die aktuelle Vorlaufzeit sagen wir Ihnen beim Aufmaß verbindlich. Kleinere Arbeiten schieben sich manchmal kurzfristig dazwischen, größere Projekte planen wir mit einigen Wochen Vorlauf.',
+    a: 'Die aktuelle Vorlaufzeit nennen wir Ihnen beim Aufmaß verbindlich. Kleinere Arbeiten schieben sich manchmal kurzfristig dazwischen, für größere Projekte brauchen wir einige Wochen Vorlauf.',
   },
   {
     q: 'Kann ich Handwerkerleistungen steuerlich absetzen?',
-    a: 'Für Privathaushalte sind Lohn-, Fahrt- und Maschinenkosten von Handwerkerleistungen nach § 35a EStG anteilig steuerlich begünstigt; Materialkosten zählen nicht dazu. Unsere Rechnungen weisen die Lohnanteile deshalb getrennt aus. Zu Ihrer konkreten Situation berät Ihr Steuerbüro.',
+    a: 'Für Privathaushalte sind Lohn-, Fahrt- und Maschinenkosten nach § 35a EStG anteilig steuerlich begünstigt. Materialkosten zählen nicht dazu. Unsere Rechnungen weisen den Lohnanteil deshalb getrennt aus, und wir bitten um Überweisung statt Barzahlung, weil das Finanzamt sonst nicht mitspielt. Was in Ihrem Fall herauskommt, sagt Ihnen Ihr Steuerbüro.',
   },
 ];
 
@@ -83,7 +83,7 @@ export default function AblaufPage() {
       <PageHeader
         eyebrow="Ablauf"
         title="Von der Anfrage bis zur Abnahme"
-        lede="Keine Überraschungen: Sie wissen zu jedem Zeitpunkt, was als Nächstes passiert und wer dafür zuständig ist."
+        lede="Sie wissen zu jedem Zeitpunkt, was als Nächstes passiert und wer dafür zuständig ist."
       />
 
       <section className="container-page py-16">

@@ -1,6 +1,6 @@
-# Trockenbau-Website mit Terminbuchung
+# Borussia Baudienstleistungen: Website mit Terminbuchung
 
-Website für einen Trockenbaubetrieb im Großraum Berlin/Brandenburg. Kern ist eine
+Website für Borussia Baudienstleistungen, einen Trockenbau- und Innenausbaubetrieb im Großraum Berlin und Brandenburg. Kern ist eine
 Terminanfrage, die echte freie Zeiten aus dem Google Kalender anzeigt, den gewählten
 Slot sofort sperrt und nach der Freigabe durch den Betrieb automatisch eine
 Bestätigungsmail an den Kunden schickt.

@@ -6,44 +6,44 @@ import { Visual } from '@/components/visual';
 export const metadata: Metadata = {
   title: 'Leistungen',
   description:
-    'Trennwände, abgehängte Decken, Dachgeschossausbau, Vorsatzschalen, Feuchtraum und Spachtelarbeiten Q1–Q4 in Berlin und Brandenburg.',
+    'Trennwände, abgehängte Decken, Dachgeschossausbau, Vorsatzschalen, Feuchtraum und Spachtelarbeiten Q1 bis Q4 in Berlin und Brandenburg.',
 };
 
 const services = [
   {
     title: 'Trennwände & Grundrissänderung',
     lede: 'Wenn der Grundriss nicht mehr zum Leben passt.',
-    body: 'Metallständerwände mit ein- oder doppelter Beplankung, auf Wunsch mit erhöhtem Schallschutz. Türöffnungen mit Aussteifung, Anschlüsse an Bestandswände mit Trennschnitt, damit später keine Risse entstehen.',
+    body: 'Metallständerwände mit ein- oder doppelter Beplankung, auf Wunsch mit erhöhtem Schallschutz. Türöffnungen bekommen eine Aussteifung, Anschlüsse an Bestandswände einen Trennschnitt. Das ist die Stelle, an der Altbauwände sonst nach einem Jahr aufreißen.',
     facts: ['Einfach- bis Dreifachbeplankung', 'Schallschutz bis 60 dB möglich', 'Statisch ausgesteifte Türöffnungen'],
   },
   {
     title: 'Abgehängte Decken & Akustik',
     lede: 'Leitungen verstecken, Raumklang verbessern.',
-    body: 'Abhängungen auf Nonius- oder Direktabhängern, mit Revisionsöffnungen an den richtigen Stellen. Für Praxen, Büros und Gastronomie auch als Akustikdecke mit Lochplatten und Vliesauflage.',
+    body: 'Abhängungen auf Nonius- oder Direktabhängern. Revisionsöffnungen setzen wir dorthin, wo später wirklich jemand ranmuss, nicht dorthin, wo sie am wenigsten stören. Für Praxen und Büros auch als Akustikdecke mit Lochplatten und Vliesauflage.',
     facts: ['Ausgleich unebener Altbaudecken', 'Lochplatten für Nachhallreduktion', 'Vorbereitung für Spots und Lüftung'],
   },
   {
     title: 'Dachgeschossausbau',
-    lede: 'Der größte Raumgewinn pro Euro – wenn die Bauphysik stimmt.',
-    body: 'Zwischensparrendämmung, luftdichte Dampfbremse, Dachschrägen- und Kniestockbekleidung. Alle Durchdringungen werden systemkonform ausgeführt und vor dem Beplanken fotografisch dokumentiert.',
+    lede: 'Viel Raumgewinn, wenn die Bauphysik stimmt.',
+    body: 'Zwischensparrendämmung, luftdichte Dampfbremse, Dachschrägen- und Kniestockbekleidung. Jede Durchdringung führen wir systemkonform aus und fotografieren sie, bevor wir beplanken. Wer die Dampfbremse pfuscht, sieht den Schaden erst nach drei Wintern.',
     facts: ['Dokumentation der Luftdichtheitsebene', 'Vorbereitung für Blower-Door-Test', 'Kniestockschränke auf Wunsch'],
   },
   {
     title: 'Vorsatzschalen & Schallschutz',
     lede: 'Gegen Lärm von nebenan und für Leitungen an der Wand.',
-    body: 'Freistehende oder angesetzte Vorsatzschalen mit Mineralwolle. Entkoppelt vom Bestandsmauerwerk, weil eine starre Verbindung den Schallschutz zunichtemacht.',
+    body: 'Freistehende oder angesetzte Vorsatzschalen mit Mineralwolle, entkoppelt vom Bestandsmauerwerk. Eine einzige starre Verbindung reicht, um den Schallschutz wieder aufzuheben.',
     facts: ['Installationsvorwände fürs Bad', 'Entkoppelte Unterkonstruktion', 'Dämmung nach Anforderung'],
   },
   {
     title: 'Feuchtraum & Bad',
-    lede: 'Der Untergrund entscheidet, wie lange die Fliesen halten.',
-    body: 'Imprägnierte Bauplatten, Verbundabdichtung in den Belastungsklassen nach Norm, engere Ständerabstände für großformatige Fliesen. Nischen und Ablagen planen wir gleich mit ein.',
+    lede: 'Am Untergrund hängt, wie lange die Fliesen halten.',
+    body: 'Imprägnierte Bauplatten und Verbundabdichtung in der passenden Belastungsklasse. Für großformatige Fliesen setzen wir die Ständer enger. Nischen und Ablagen planen wir gleich mit, weil sie nachträglich teuer werden.',
     facts: ['Verbundabdichtung nach Norm', 'Ebenheitskontrolle vor Übergabe', 'Nischen und Ablagen integriert'],
   },
   {
-    title: 'Spachtelarbeiten Q1 – Q4',
+    title: 'Spachtelarbeiten Q1 bis Q4',
     lede: 'Die Oberfläche, die Sie später jeden Tag sehen.',
-    body: 'Q2 ist Standard für gewöhnliche Anstriche. Q3 empfiehlt sich bei Streiflicht, Q4 bei glänzenden Beschichtungen oder großflächigem Seitenlicht. Wir sagen Ihnen vorher, welche Stufe Ihr Raum wirklich braucht.',
+    body: 'Q2 reicht für gewöhnliche Anstriche. Q3 wird bei Streiflicht sinnvoll, Q4 bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation an und sagen Ihnen, welche Stufe Ihr Raum braucht. Meistens ist es eine niedrigere, als Sie erwarten.',
     facts: ['Beratung zur passenden Qualitätsstufe', 'Streiflichtprüfung vor Abnahme', 'Aufpreise transparent im Angebot'],
   },
 ];
@@ -54,7 +54,7 @@ export default function LeistungenPage() {
       <PageHeader
         eyebrow="Leistungen"
         title="Trockenbau von der Trennwand bis zur Q4-Oberfläche"
-        lede="Schwerpunkt Sanierung im bewohnten Bestand. Wir sagen vorher, was sinnvoll ist – und was Sie sich sparen können."
+        lede="Schwerpunkt ist Sanierung im bewohnten Bestand. Wir sagen Ihnen vorher, was sinnvoll ist und was Sie sich sparen können."
       />
 
       <div className="container-page py-16">
@@ -87,8 +87,8 @@ export default function LeistungenPage() {
         <div className="card mt-20 p-8 text-center sm:p-12">
           <h2 className="heading-lg">Unsicher, was Ihr Projekt braucht?</h2>
           <p className="prose-body mx-auto mt-4 max-w-xl">
-            Das Aufmaß vor Ort ist kostenfrei und unverbindlich. Danach wissen Sie, was machbar ist und
-            was es kostet – schriftlich.
+            Das Aufmaß vor Ort ist kostenfrei und unverbindlich. Danach wissen Sie schriftlich,
+            was machbar ist und was es kostet.
           </p>
           <Link href="/termin" className="btn-accent mt-8">
             Aufmaßtermin anfragen

@@ -38,7 +38,7 @@ function calendarId(): string {
   return id;
 }
 
-/** Belegte Zeiten im Zeitraum – inklusive der noch nicht bestätigten Anfragen. */
+/** Belegte Zeiten im Zeitraum, inklusive der noch nicht bestätigten Anfragen. */
 export async function getBusyIntervals(timeMin: Date, timeMax: Date): Promise<BusyInterval[]> {
   const response = await calendarClient().freebusy.query({
     requestBody: {

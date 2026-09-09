@@ -14,7 +14,7 @@ export default function ReferenzenPage() {
       <PageHeader
         eyebrow="Referenzen"
         title="Projekte, die wir vorzeigen dürfen"
-        lede="Jedes Projekt mit dem, was tatsächlich die Schwierigkeit war – nicht nur mit schönen Bildern."
+        lede="Zu jedem Projekt steht dabei, was daran schwierig war."
       />
       <section className="container-page py-16">
         <ProjectGallery />

@@ -14,7 +14,7 @@ export default function TerminPage() {
       <PageHeader
         eyebrow="Termin"
         title="Freie Zeiten, direkt aus unserem Kalender"
-        lede="Kein Rückrufversprechen ins Leere: Sie wählen einen Slot, wir bestätigen ihn – in der Regel innerhalb eines Werktages."
+        lede="Sie wählen eine Zeit aus, wir bestätigen sie. Meistens noch am selben oder am nächsten Werktag."
       />
       <section className="container-page pb-24">
         <BookingFlow />

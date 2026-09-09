@@ -7,6 +7,7 @@ export function SiteFooter() {
       <div className="container-page grid gap-12 py-16 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-display text-2xl tracking-tight">{company.name}</p>
+          <p className="mt-2 text-sm font-medium tracking-wide text-accent-bright">{company.slogan}</p>
           <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-gypsum/65">{company.tagline}</p>
           <div className="mt-6 space-y-1 text-[15px] text-gypsum/80">
             <p>{company.street}</p>
