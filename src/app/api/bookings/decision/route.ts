@@ -15,23 +15,23 @@ export const dynamic = 'force-dynamic';
  * eine Seite mit einem Button, und erst dessen POST verändert etwas.
  */
 
-function page(title: string, body: string, accent = '#14161B'): Response {
+function page(title: string, body: string, accent = '#17212B'): Response {
   const html = `<!doctype html><html lang="de"><head><meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex">
   <title>${title} · ${company.name}</title>
   <style>
-    body{margin:0;background:#F6F4F1;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#14161B;
+    body{margin:0;background:#F3F6F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#17212B;
       display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
-    .card{background:#fff;border:1px solid #EBE7E1;border-radius:14px;padding:40px;max-width:520px;width:100%;
-      box-shadow:0 18px 44px -16px rgba(20,22,27,.28);}
+    .card{background:#fff;border:1px solid #E4EAF0;border-radius:14px;padding:40px;max-width:520px;width:100%;
+      box-shadow:0 18px 44px -16px rgba(23,33,43,.22);}
     h1{margin:0 0 14px;font-size:22px;color:${accent};}
-    p{margin:0 0 14px;font-size:15px;line-height:1.65;color:#232833;}
-    .meta{background:#F6F4F1;border-radius:10px;padding:16px;font-size:14px;line-height:1.7;margin:20px 0;}
+    p{margin:0 0 14px;font-size:15px;line-height:1.65;color:#2C3A47;}
+    .meta{background:#F3F6F9;border-radius:10px;padding:16px;font-size:14px;line-height:1.7;margin:20px 0;}
     button{font:inherit;font-weight:600;padding:13px 22px;border-radius:9px;border:0;cursor:pointer;}
-    .accept{background:#1F7A4C;color:#fff;}
-    .decline{background:#8A2F2F;color:#fff;}
-    .foot{font-size:12px;color:#5A6273;margin-top:22px;}
+    .accept{background:#1B7A5A;color:#fff;}
+    .decline{background:#A33B3B;color:#fff;}
+    .foot{font-size:12px;color:#5C6B7A;margin-top:22px;}
   </style></head><body><div class="card">${body}
   <p class="foot">${company.legalName} · ${company.phone}</p></div></body></html>`;
   return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
@@ -63,15 +63,15 @@ export async function GET(request: Request) {
   const token = new URL(request.url).searchParams.get('token') ?? '';
   const payload = verifyDecision(token);
   if (!payload) {
-    return page('Link ungültig', '<h1>Link ungültig oder abgelaufen</h1><p>Bitte bearbeiten Sie den Termin direkt im Google Kalender.</p>', '#8A2F2F');
+    return page('Link ungültig', '<h1>Link ungültig oder abgelaufen</h1><p>Bitte bearbeiten Sie den Termin direkt im Google Kalender.</p>', '#A33B3B');
   }
 
   const event = await getEvent(payload.eventId);
   if (!event) {
-    return page('Termin nicht gefunden', '<h1>Dieser Termin existiert nicht mehr</h1><p>Er wurde vermutlich bereits abgesagt oder im Kalender gelöscht.</p>', '#8A2F2F');
+    return page('Termin nicht gefunden', '<h1>Dieser Termin existiert nicht mehr</h1><p>Er wurde vermutlich bereits abgesagt oder im Kalender gelöscht.</p>', '#A33B3B');
   }
   if (event.status === 'confirmed' && payload.action === 'accept') {
-    return page('Bereits bestätigt', '<h1>Dieser Termin ist bereits bestätigt</h1><p>Der Kunde hat die Bestätigungsmail erhalten.</p>', '#1F7A4C');
+    return page('Bereits bestätigt', '<h1>Dieser Termin ist bereits bestätigt</h1><p>Der Kunde hat die Bestätigungsmail erhalten.</p>', '#1B7A5A');
   }
 
   const details = eventDetails(event);
@@ -90,7 +90,7 @@ export async function GET(request: Request) {
      ${meta}
      <form method="post"><input type="hidden" name="token" value="${token.replace(/"/g, '&quot;')}">
      <button class="${accept ? 'accept' : 'decline'}" type="submit">${accept ? 'Ja, bestätigen' : 'Ja, absagen'}</button></form>`,
-    accept ? '#1F7A4C' : '#8A2F2F',
+    accept ? '#1B7A5A' : '#A33B3B',
   );
 }
 
@@ -99,12 +99,12 @@ export async function POST(request: Request) {
   const token = String(form?.get('token') ?? '');
   const payload = verifyDecision(token);
   if (!payload) {
-    return page('Link ungültig', '<h1>Link ungültig oder abgelaufen</h1>', '#8A2F2F');
+    return page('Link ungültig', '<h1>Link ungültig oder abgelaufen</h1>', '#A33B3B');
   }
 
   const event = await getEvent(payload.eventId);
   if (!event) {
-    return page('Termin nicht gefunden', '<h1>Dieser Termin existiert nicht mehr</h1>', '#8A2F2F');
+    return page('Termin nicht gefunden', '<h1>Dieser Termin existiert nicht mehr</h1>', '#A33B3B');
   }
   const details = eventDetails(event);
 
@@ -117,7 +117,7 @@ export async function POST(request: Request) {
         `<h1>Termin bestätigt</h1><p>Der Eintrag steht im Kalender${
           details ? ` und ${details.name} hat die Bestätigung per E-Mail erhalten` : ''
         }.</p>`,
-        '#1F7A4C',
+        '#1B7A5A',
       );
     }
 
@@ -128,14 +128,14 @@ export async function POST(request: Request) {
       `<h1>Termin abgesagt</h1><p>Der Slot ist wieder frei${
         details ? ` und ${details.name} wurde informiert` : ''
       }.</p>`,
-      '#8A2F2F',
+      '#A33B3B',
     );
   } catch (error) {
     console.error('[decision]', error);
     return page(
       'Fehler',
       `<h1>Das hat nicht geklappt</h1><p>Bitte prüfen Sie den Termin direkt im Google Kalender und melden Sie sich beim Kunden.</p>`,
-      '#8A2F2F',
+      '#A33B3B',
     );
   }
 }

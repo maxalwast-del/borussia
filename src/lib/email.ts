@@ -24,16 +24,16 @@ function ownerAddress(): string {
 
 const styles = {
   wrapper:
-    'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#F6F4F1;padding:32px 16px;',
-  card: 'max-width:560px;margin:0 auto;background:#ffffff;border-radius:14px;padding:32px;border:1px solid #EBE7E1;',
-  h1: 'margin:0 0 16px;font-size:20px;line-height:1.3;color:#14161B;',
-  p: 'margin:0 0 14px;font-size:15px;line-height:1.65;color:#232833;',
-  meta: 'margin:20px 0;padding:16px;background:#F6F4F1;border-radius:10px;font-size:14px;line-height:1.7;color:#232833;',
-  footer: 'margin:24px 0 0;font-size:12px;line-height:1.6;color:#5A6273;',
+    'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#F3F6F9;padding:32px 16px;',
+  card: 'max-width:560px;margin:0 auto;background:#ffffff;border-radius:14px;padding:32px;border:1px solid #E4EAF0;',
+  h1: 'margin:0 0 16px;font-size:20px;line-height:1.3;color:#17212B;',
+  p: 'margin:0 0 14px;font-size:15px;line-height:1.65;color:#2C3A47;',
+  meta: 'margin:20px 0;padding:16px;background:#F3F6F9;border-radius:10px;font-size:14px;line-height:1.7;color:#2C3A47;',
+  footer: 'margin:24px 0 0;font-size:12px;line-height:1.6;color:#5C6B7A;',
   buttonAccept:
-    'display:inline-block;padding:13px 22px;background:#1F7A4C;color:#ffffff;text-decoration:none;border-radius:9px;font-size:15px;font-weight:600;',
+    'display:inline-block;padding:13px 22px;background:#1B7A5A;color:#ffffff;text-decoration:none;border-radius:9px;font-size:15px;font-weight:600;',
   buttonDecline:
-    'display:inline-block;padding:13px 22px;background:#ffffff;color:#8A2F2F;border:1px solid #E3C4C4;text-decoration:none;border-radius:9px;font-size:15px;font-weight:600;',
+    'display:inline-block;padding:13px 22px;background:#ffffff;color:#A33B3B;border:1px solid #E3C4C4;text-decoration:none;border-radius:9px;font-size:15px;font-weight:600;',
 };
 
 function shell(inner: string): string {
@@ -158,7 +158,7 @@ export async function sendCustomerDeclinedMail(booking: BookingDetails) {
     Auslastung oder der Anfahrt an diesem Tag – nicht an Ihrem Projekt.</p>
     ${detailBlock(booking)}
     <p style="${styles.p}">Suchen Sie sich gern direkt einen neuen Termin aus:
-    <a href="${siteUrl}/termin" style="color:#C2703A;">${siteUrl}/termin</a><br>
+    <a href="${siteUrl}/termin" style="color:#1F6FB2;">${siteUrl}/termin</a><br>
     Oder rufen Sie an, dann finden wir kurzfristig etwas: ${escapeHtml(company.phone)}.</p>
   `);
 

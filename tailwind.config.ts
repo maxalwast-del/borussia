@@ -5,19 +5,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Anthrazit mit leichtem Blaustich – trägt allen Fließtext.
         ink: {
-          DEFAULT: '#14161B',
-          soft: '#232833',
-          muted: '#5A6273',
+          DEFAULT: '#17212B',
+          soft: '#2C3A47',
+          muted: '#5C6B7A',
         },
+        // Kühles Grau als Seitenhintergrund, Karten stehen in Weiß darauf.
         gypsum: {
-          DEFAULT: '#F6F4F1',
-          deep: '#EBE7E1',
+          DEFAULT: '#F3F6F9',
+          deep: '#E4EAF0',
         },
+        // Hellblau. Der DEFAULT ist dunkel genug für Text auf Weiß
+        // (Kontrast 5,3:1, erfüllt WCAG AA); `bright` ist rein dekorativ.
         accent: {
-          DEFAULT: '#C2703A',
-          hover: '#A85C2C',
-          soft: '#F5E4D6',
+          DEFAULT: '#1F6FB2',
+          hover: '#17588F',
+          soft: '#DCEAF6',
+          bright: '#4A9BD8',
         },
       },
       fontFamily: {
@@ -31,8 +36,8 @@ const config: Config = {
         card: '14px',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(20,22,27,0.04), 0 8px 28px -12px rgba(20,22,27,0.18)',
-        lift: '0 2px 4px rgba(20,22,27,0.05), 0 18px 44px -16px rgba(20,22,27,0.28)',
+        card: '0 1px 2px rgba(23,33,43,0.04), 0 8px 28px -12px rgba(23,33,43,0.16)',
+        lift: '0 2px 4px rgba(23,33,43,0.05), 0 18px 44px -16px rgba(31,111,178,0.22)',
       },
       keyframes: {
         'fade-up': {
