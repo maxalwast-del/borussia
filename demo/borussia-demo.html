@@ -1,0 +1,1260 @@
+<title>Borussia Baudienstleistungen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap">
+
+<style>
+/* Diese Demo übernimmt die Tokens aus dem Projekt (tailwind.config.ts).
+   Bewusst einfarbig hell: die spätere Website rendert genauso, unabhängig
+   davon, ob der Betrachter sein System auf dunkel gestellt hat. */
+:root {
+  --ink: #17212B;
+  --ink-soft: #2C3A47;
+  --ink-muted: #5C6B7A;
+  --gypsum: #F3F6F9;
+  --gypsum-deep: #E4EAF0;
+  --white: #FFFFFF;
+  --accent: #1F6FB2;
+  --accent-hover: #17588F;
+  --accent-soft: #DCEAF6;
+  --accent-bright: #4A9BD8;
+  --line: rgba(23, 33, 43, 0.10);
+  --line-strong: rgba(23, 33, 43, 0.18);
+  --shadow-card: 0 1px 2px rgba(23,33,43,.04), 0 8px 28px -12px rgba(23,33,43,.16);
+  --shadow-lift: 0 2px 4px rgba(23,33,43,.05), 0 18px 44px -16px rgba(31,111,178,.22);
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --page: 1180px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--gypsum);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+.wrap { width: 100%; max-width: var(--page); margin: 0 auto; padding: 0 20px; }
+@media (min-width: 640px) { .wrap { padding: 0 32px; } }
+
+/* ---------- Demo-Kennzeichnung ---------- */
+.demobar {
+  background: var(--ink);
+  color: rgba(243,246,249,.82);
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 10px 20px;
+  text-align: center;
+}
+.demobar strong { color: var(--accent-bright); font-weight: 600; }
+
+/* ---------- Kopfzeile ---------- */
+header.site {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(243,246,249,.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.headrow { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+.mark {
+  width: 36px; height: 36px; flex: 0 0 36px; border-radius: 9px;
+  background: var(--ink); color: var(--gypsum);
+  display: grid; place-items: center;
+}
+.brand-name {
+  font-family: var(--display); font-weight: 600; font-size: 17px;
+  letter-spacing: -.01em; white-space: nowrap;
+}
+nav.main { display: none; gap: 2px; }
+nav.main button {
+  font: inherit; font-size: 15px; background: none; border: 0; cursor: pointer;
+  color: var(--ink-muted); padding: 8px 13px; border-radius: 9px;
+  transition: background .18s, color .18s;
+}
+nav.main button:hover { background: rgba(255,255,255,.75); color: var(--ink); }
+nav.main button[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.headcta { display: none; align-items: center; gap: 12px; }
+.headphone { color: var(--ink-muted); text-decoration: none; font-size: 15px; font-weight: 500; white-space: nowrap; }
+.headphone:hover { color: var(--ink); }
+.burger {
+  width: 40px; height: 40px; border-radius: 9px; border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,.75); display: grid; place-items: center; cursor: pointer;
+}
+@media (min-width: 1280px) {
+  nav.main { display: flex; }
+  .headcta { display: flex; }
+  .burger { display: none; }
+}
+#mobilenav { border-top: 1px solid var(--line); background: var(--gypsum); }
+#mobilenav .wrap { display: flex; flex-direction: column; padding-top: 10px; padding-bottom: 18px; gap: 2px; }
+#mobilenav button.navlink {
+  font: inherit; font-size: 16px; text-align: left; background: none; border: 0;
+  color: var(--ink-soft); padding: 12px 8px; border-radius: 9px; cursor: pointer;
+}
+#mobilenav button.navlink:hover { background: var(--white); }
+
+/* ---------- Bausteine ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  border-radius: 12px; padding: 14px 24px; border: 1px solid transparent;
+  text-decoration: none; transition: background .18s, box-shadow .18s, border-color .18s;
+}
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-hover); box-shadow: var(--shadow-lift); }
+.btn-accent:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; background: var(--accent); }
+.btn-dark { background: var(--ink); color: var(--gypsum); }
+.btn-dark:hover { background: var(--ink-soft); box-shadow: var(--shadow-lift); }
+.btn-ghost { background: rgba(255,255,255,.7); color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover { background: var(--white); border-color: rgba(23,33,43,.35); }
+.btn-sm { padding: 10px 18px; font-size: 14px; }
+
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-card); }
+
+.eyebrow {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0;
+}
+h1, h2, h3 { font-family: var(--display); letter-spacing: -.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.5rem, 5.5vw, 3.75rem); line-height: 1.06; }
+.h-lg { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.14; }
+.h-md { font-size: 1.35rem; line-height: 1.3; }
+.lede { font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 62ch; }
+.body { font-size: 15px; line-height: 1.65; color: var(--ink-muted); margin: 0; }
+.body-dark { color: var(--ink-soft); }
+
+.pagehead { background: rgba(255,255,255,.5); border-bottom: 1px solid var(--line); }
+.pagehead .wrap { padding-top: 56px; padding-bottom: 64px; display: flex; flex-direction: column; gap: 18px; }
+
+section.block { padding: 72px 0; }
+.stack { display: flex; flex-direction: column; }
+
+/* ---------- Startseite ---------- */
+.hero { position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; right: -120px; top: -160px;
+  width: 520px; height: 520px; border-radius: 50%;
+  background: var(--accent-soft); filter: blur(70px); opacity: .7; pointer-events: none;
+}
+.hero .wrap { position: relative; display: grid; gap: 56px; padding-top: 64px; padding-bottom: 64px; }
+@media (min-width: 1024px) { .hero .wrap { grid-template-columns: 1.05fr .95fr; align-items: center; } }
+.herobtns { display: flex; flex-direction: column; gap: 12px; }
+@media (min-width: 640px) { .herobtns { flex-direction: row; } }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 1px solid var(--line); padding-top: 28px; max-width: 520px; }
+.stats dt { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; }
+.stats dd { margin: 4px 0 0; font-size: 14px; color: var(--ink-muted); }
+.herovisual { position: relative; }
+.floatcard { position: absolute; left: -16px; bottom: -24px; max-width: 250px; padding: 20px; display: none; }
+@media (min-width: 640px) { .floatcard { display: block; } }
+
+.grid-hair {
+  display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: 14px; overflow: hidden;
+}
+@media (min-width: 640px) { .grid-hair { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .grid-hair { grid-template-columns: repeat(3, 1fr); } }
+.grid-hair > div { background: var(--white); padding: 28px; transition: background .18s; }
+.grid-hair > div:hover { background: var(--gypsum); }
+
+.dark-band { background: var(--ink); color: var(--gypsum); padding: 76px 0; }
+.dark-band .wrap { display: grid; gap: 48px; }
+@media (min-width: 1024px) { .dark-band .wrap { grid-template-columns: .8fr 1.2fr; } }
+.dark-band .eyebrow { color: var(--accent-bright); }
+.reasons { display: grid; gap: 32px; }
+@media (min-width: 640px) { .reasons { grid-template-columns: repeat(2, 1fr); } }
+.reasons h3 { font-family: var(--sans); font-size: 1.05rem; font-weight: 600; margin: 6px 0 0; }
+.reasons p { margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: rgba(243,246,249,.66); }
+
+.cards-3 { display: grid; gap: 32px; }
+@media (min-width: 768px) { .cards-3 { grid-template-columns: repeat(3, 1fr); } }
+.projcard { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; display: flex; flex-direction: column; gap: 0; }
+.projcard .vis { transition: box-shadow .25s; }
+.projcard:hover .vis { box-shadow: var(--shadow-lift); }
+.projcard:hover h3 { color: var(--accent); }
+.projmeta { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-muted); margin: 16px 0 0; }
+.projcard h3 { margin: 8px 0 0; font-size: 1.2rem; transition: color .18s; }
+
+.vis { border-radius: 14px; overflow: hidden; background: var(--gypsum-deep); display: block; }
+.vis svg { display: block; width: 100%; height: 100%; }
+
+.zonewrap { display: grid; gap: 40px; }
+@media (min-width: 1024px) { .zonewrap { grid-template-columns: 1fr 1fr; align-items: center; } }
+.zonelist { display: flex; flex-direction: column; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.zonelist li { background: var(--gypsum); border-radius: 12px; padding: 20px; }
+.zonelist strong { display: block; }
+.zonefee { margin: 8px 0 0; font-size: 14px; font-weight: 500; color: var(--accent); }
+
+/* ---------- Leistungen ---------- */
+.svc { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 1024px) { .svc { grid-template-columns: 1fr 1fr; } .svc.flip > *:first-child { order: 2; } }
+.svc .lede-accent { color: var(--accent); font-weight: 500; font-size: 1.05rem; margin: 12px 0 0; }
+.ticks { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ticks li { display: flex; gap: 12px; font-size: 15px; color: var(--ink-soft); align-items: flex-start; }
+.ticks li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 9px; flex: 0 0 6px; }
+
+/* ---------- Referenzen ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button {
+  font: inherit; font-size: 14px; font-weight: 500; cursor: pointer;
+  border-radius: 999px; padding: 9px 17px;
+  border: 1px solid var(--line-strong); background: var(--white); color: var(--ink-muted);
+  transition: background .18s, color .18s, border-color .18s;
+}
+.filters button:hover { border-color: rgba(23,33,43,.35); color: var(--ink); }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--gypsum); border-color: var(--ink); }
+.projgrid { display: grid; gap: 40px; margin-top: 40px; }
+@media (min-width: 640px) { .projgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .projgrid { grid-template-columns: repeat(3, 1fr); } }
+.detail-grid { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 1024px) { .detail-grid { grid-template-columns: 1fr 320px; } }
+.spec { list-style: none; margin: 0; padding: 0; }
+.spec div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(23,33,43,.08); font-size: 14px; }
+.spec div:last-child { border-bottom: 0; }
+.spec dt { color: var(--ink-muted); }
+.spec dd { margin: 0; font-weight: 500; text-align: right; }
+blockquote.quote {
+  margin: 0; background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 14px; padding: 28px; box-shadow: var(--shadow-card);
+}
+blockquote.quote p { font-family: var(--display); font-size: 1.25rem; line-height: 1.5; margin: 0; }
+blockquote.quote footer { margin-top: 16px; font-size: 14px; color: var(--ink-muted); }
+.backlink { background: none; border: 0; font: inherit; font-size: 14px; font-weight: 500; color: var(--ink-muted); cursor: pointer; padding: 0; }
+.backlink:hover { color: var(--ink); }
+
+/* ---------- Ablauf ---------- */
+ol.steps { list-style: none; margin: 0; padding: 0 0 0 34px; border-left: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: 40px; }
+ol.steps li { position: relative; }
+ol.steps .num {
+  position: absolute; left: -50px; top: 0; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--ink); color: var(--gypsum); display: grid; place-items: center;
+  font-size: 14px; font-weight: 600; font-family: var(--sans);
+}
+.when { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0; }
+.faqbox { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--white); }
+.faqbox details { border-bottom: 1px solid var(--line); }
+.faqbox details:last-child { border-bottom: 0; }
+.faqbox summary {
+  cursor: pointer; padding: 24px 28px; font-weight: 600; list-style: none;
+  display: flex; justify-content: space-between; gap: 24px; align-items: flex-start;
+}
+.faqbox summary::-webkit-details-marker { display: none; }
+.faqbox summary::after { content: "+"; color: var(--accent); font-size: 20px; line-height: 1; transition: transform .2s; }
+.faqbox details[open] summary::after { transform: rotate(45deg); }
+.faqbox .answer { padding: 0 28px 26px; margin: 0; font-size: 15px; line-height: 1.7; color: var(--ink-muted); max-width: 72ch; }
+
+/* ---------- Termin ---------- */
+.booking { display: grid; gap: 40px; align-items: start; }
+@media (min-width: 1024px) { .booking { grid-template-columns: 1.15fr .85fr; } }
+.stephead { display: flex; align-items: center; gap: 12px; }
+.stephead .num {
+  width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; background: var(--ink); color: var(--gypsum);
+  display: grid; place-items: center; font-size: 14px; font-weight: 600;
+}
+.typelist { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.typebtn {
+  text-align: left; font: inherit; cursor: pointer; padding: 20px;
+  border: 1px solid var(--line-strong); background: var(--white); border-radius: 14px;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+}
+.typebtn:hover { border-color: rgba(23,33,43,.35); }
+.typebtn[aria-pressed="true"] { border-color: var(--accent); background: rgba(220,234,246,.42); box-shadow: var(--shadow-card); }
+.typebtn .row { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.typebtn .name { font-weight: 600; }
+.chip { background: rgba(23,33,43,.05); color: var(--ink-muted); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.price { margin: 12px 0 0; font-size: 14px; font-weight: 500; color: var(--accent); }
+.weekbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
+.weekbar .range { font-size: 14px; font-weight: 500; color: var(--ink-muted); }
+.daygrid { display: grid; gap: 12px; margin-top: 20px; align-items: start; }
+@media (min-width: 640px) { .daygrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .daygrid { grid-template-columns: repeat(3, 1fr); } }
+.day { border: 1px solid var(--line-strong); background: var(--white); border-radius: 14px; padding: 16px; }
+.day.empty { border-style: dashed; background: transparent; }
+.day .dname { font-size: 14px; font-weight: 600; }
+.day .none { margin: 12px 0 0; font-size: 14px; color: rgba(92,107,122,.7); }
+.slots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.slot {
+  font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; border: 0;
+  border-radius: 9px; padding: 7px 13px; background: var(--gypsum); color: var(--ink-soft);
+  transition: background .16s, color .16s; font-variant-numeric: tabular-nums;
+}
+.slot:hover { background: var(--ink); color: var(--gypsum); }
+.slot[aria-pressed="true"] { background: var(--accent); color: #fff; }
+form.booking-form { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+.frow { display: grid; gap: 20px; }
+@media (min-width: 640px) { .frow.two { grid-template-columns: 1fr 1fr; } .frow.addr { grid-template-columns: 1fr 140px; } }
+label.field { display: block; }
+.flabel { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+.req { color: var(--accent); }
+input.inp, textarea.inp, select.inp {
+  width: 100%; font: inherit; font-size: 15px; color: var(--ink);
+  border: 1px solid var(--line-strong); background: var(--white); border-radius: 12px; padding: 12px 16px;
+  transition: border-color .16s, box-shadow .16s;
+}
+input.inp:focus, textarea.inp:focus, select.inp:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,111,178,.18);
+}
+textarea.inp { min-height: 130px; resize: vertical; }
+.hint { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-muted); }
+.zonebox { border-radius: 12px; padding: 16px; font-size: 14px; line-height: 1.6; background: rgba(220,234,246,.5); color: var(--ink-soft); }
+.zonebox.outside { background: rgba(23,33,43,.05); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.6; color: var(--ink-muted); }
+.check input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--accent); }
+.summary { padding: 28px; position: sticky; top: 92px; }
+.summary dl { margin: 24px 0 0; padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
+.summary dl div { display: flex; justify-content: space-between; gap: 16px; }
+.summary dt { color: var(--ink-muted); }
+.summary dd { margin: 0; font-weight: 500; text-align: right; }
+.notice { margin-top: 24px; border-radius: 12px; padding: 16px; background: var(--gypsum); font-size: 14px; line-height: 1.6; color: var(--ink-muted); }
+.done { max-width: 560px; margin: 0 auto; padding: 48px 32px; text-align: center; }
+.done .ring { width: 56px; height: 56px; margin: 0 auto; border-radius: 50%; background: var(--accent-soft); display: grid; place-items: center; color: var(--accent); }
+
+/* ---------- Jobs ---------- */
+.jobs-layout { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 1024px) { .jobs-layout { grid-template-columns: 1.15fr .85fr; } }
+.joblist { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+.job { padding: 28px; }
+.jobtop { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.tag { background: var(--accent-soft); color: var(--accent-hover); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; }
+.benefits { display: grid; gap: 24px; margin-top: 32px; }
+@media (min-width: 640px) { .benefits { grid-template-columns: repeat(2, 1fr); } }
+.benefits h3 { font-family: var(--sans); font-size: 1rem; font-weight: 600; margin: 0; }
+.benefits p { margin: 6px 0 0; }
+
+/* ---------- Kontakt ---------- */
+.contact-layout { display: grid; gap: 48px; align-items: start; }
+@media (min-width: 1024px) { .contact-layout { grid-template-columns: .85fr 1.15fr; } }
+.contactcards { display: flex; flex-direction: column; gap: 24px; }
+.contactcards .card { padding: 28px; }
+.hours { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+.hours li { display: flex; justify-content: space-between; gap: 16px; }
+.hours span:first-child { color: var(--ink-muted); }
+.darkcta { background: var(--ink); color: var(--gypsum); border-radius: 14px; padding: 28px; }
+.darkcta p { color: rgba(243,246,249,.7); font-size: 15px; line-height: 1.65; margin: 8px 0 0; }
+
+/* ---------- Fußzeile ---------- */
+footer.site { background: var(--ink); color: var(--gypsum); margin-top: 88px; }
+footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom: 64px; }
+@media (min-width: 768px) { footer.site .wrap { grid-template-columns: 2fr 1fr 1fr; } }
+.fname { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; margin: 0; }
+.fslogan { margin: 8px 0 0; font-size: 14px; font-weight: 500; letter-spacing: .02em; color: var(--accent-bright); }
+.ftag { margin: 12px 0 0; max-width: 36ch; font-size: 15px; line-height: 1.65; color: rgba(243,246,249,.65); }
+.faddr { margin: 24px 0 0; font-style: normal; font-size: 15px; line-height: 1.7; color: rgba(243,246,249,.8); }
+.faddr a { color: inherit; text-decoration: none; }
+.faddr a:hover { color: var(--accent-bright); }
+.fhead { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; color: rgba(243,246,249,.45); margin: 0; }
+.flist { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: rgba(243,246,249,.8); }
+.flist button { background: none; border: 0; font: inherit; color: inherit; padding: 0; cursor: pointer; text-align: left; }
+.flist button:hover { color: var(--accent-bright); }
+.fbottom { border-top: 1px solid rgba(255,255,255,.1); }
+.fbottom .wrap {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+  padding-top: 24px; padding-bottom: 24px; font-size: 14px; color: rgba(243,246,249,.55);
+}
+.fbottom .wrap { grid-template-columns: none; }
+
+.notedemo {
+  border-radius: 12px; padding: 20px; background: rgba(220,234,246,.5);
+  font-size: 14px; line-height: 1.65; color: var(--ink-soft);
+}
+[hidden] { display: none !important; }
+</style>
+
+<div class="demobar">
+  <strong>Demo.</strong> Firmendaten, Referenzprojekte und Kundenstimmen sind Platzhalter.
+  Terminanfragen werden nicht versendet und nicht gespeichert.
+</div>
+
+<header class="site">
+  <div class="wrap headrow">
+    <a class="brand" href="#" data-go="start">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 4h8v6H3V4Zm10 0h8v6h-8V4ZM3 12h5v8H3v-8Zm7 0h11v8H10v-8Z"/></svg>
+      </span>
+      <span class="brand-name">Borussia Baudienstleistungen</span>
+    </a>
+
+    <nav class="main" aria-label="Hauptnavigation" id="desknav"></nav>
+
+    <div class="headcta">
+      <a class="headphone" href="tel:+493012345670">+49 30 1234567</a>
+      <button class="btn btn-accent btn-sm" data-go="termin">Termin anfragen</button>
+    </div>
+
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mobilenav">
+      <span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Menü öffnen</span>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div id="mobilenav" hidden><div class="wrap"></div></div>
+</header>
+
+<main id="main"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <p class="fname">Borussia Baudienstleistungen</p>
+      <p class="fslogan">Renovieren. Sanieren. Modernisieren.</p>
+      <p class="ftag">Trockenbau und Innenausbau für Altbau und Sanierung in Berlin und Brandenburg</p>
+      <address class="faddr">
+        Musterstraße 12<br>12437 Berlin<br><br>
+        <a href="tel:+493012345670">+49 30 1234567</a><br>
+        <a href="mailto:info@borussia-bau.de">info@borussia-bau.de</a>
+      </address>
+    </div>
+    <div>
+      <p class="fhead">Seiten</p>
+      <ul class="flist" id="footnav"></ul>
+    </div>
+    <div>
+      <p class="fhead">Einsatzgebiet</p>
+      <ul class="flist">
+        <li>Berlin, gesamtes Stadtgebiet</li>
+        <li>Berliner Umland und Potsdam</li>
+        <li>Brandenburg, weiteres Umland</li>
+      </ul>
+      <p class="fhead" style="margin-top:28px">Öffnungszeiten</p>
+      <ul class="flist">
+        <li>Mo bis Do &nbsp; 07:00 – 16:30 Uhr</li>
+        <li>Fr &nbsp; 07:00 – 14:00 Uhr</li>
+        <li>Sa und So &nbsp; geschlossen</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbottom"><div class="wrap">
+    <span>© 2026 Borussia Baudienstleistungen GmbH</span>
+    <span>Demo-Ansicht, keine veröffentlichte Website</span>
+  </div></div>
+</footer>
+
+<script>
+/* =========================================================================
+   Daten. Spiegelt src/config/site.ts und src/content/projects.ts aus dem
+   Projekt, damit die Demo und die gebaute Website denselben Text zeigen.
+   ========================================================================= */
+
+const PAGES = [
+  ['leistungen', 'Leistungen'],
+  ['referenzen', 'Referenzen'],
+  ['ablauf', 'Ablauf'],
+  ['jobs', 'Jobs'],
+  ['kontakt', 'Kontakt'],
+];
+
+const SERVICES_SHORT = [
+  ['Trennwände & Grundrisse', 'Neue Raumaufteilung in Metallständerbauweise, mit Schallschutz und ausgesteiften Türöffnungen. Anschlüsse an Bestandswände bekommen einen Trennschnitt, damit dort später keine Risse aufgehen.'],
+  ['Abgehängte Decken', 'Leitungen verschwinden, Spots sitzen dort, wo sie hingehören. Unebene Altbaudecken gleichen wir über die Unterkonstruktion aus.'],
+  ['Dachgeschossausbau', 'Dämmung, luftdichte Dampfbremse, Dachschrägen und Kniestock. Jede Durchdringung der Dampfbremse fotografieren wir, bevor beplankt wird.'],
+  ['Vorsatzschalen & Schallschutz', 'Freistehende Schalen gegen Lärm von nebenan. Installationsvorwände fürs Bad stimmen wir vorher mit den Sanitärleuten ab.'],
+  ['Feuchtraum & Bad', 'Imprägnierte Platten und Verbundabdichtung nach Norm. Bei großformatigen Fliesen setzen wir die Ständer enger, sonst wird der Untergrund nicht eben genug.'],
+  ['Spachtelarbeiten Q1 bis Q4', 'Beim Aufmaß sagen wir Ihnen, welche Qualitätsstufe Ihr Raum braucht. Q4 kostet Aufpreis und lohnt sich längst nicht in jedem Zimmer.'],
+];
+
+const REASONS = [
+  ['Festpreis nach Aufmaß', 'Nach dem Aufmaß bekommen Sie ein Angebot mit Positionen, Mengen und Preisen. Daran halten wir uns auch dann, wenn wir uns beim Aufwand verschätzt haben.'],
+  ['Ein Ansprechpartner', 'Vom Aufmaß bis zur Abnahme betreut Sie derselbe Meister. Sie müssen Ihr Projekt nicht dreimal neu erklären.'],
+  ['Baustelle bleibt bewohnbar', 'Staubschutzwände und Absaugung direkt am Gerät. Abends räumen wir so weit auf, dass Sie die Räume wieder benutzen können.'],
+  ['Termine, die halten', 'Wir sagen nur zu, was wir mit eigenen Leuten schaffen. Wenn sich doch etwas verschiebt, rufen wir an, bevor Sie vergeblich warten.'],
+];
+
+const SERVICES_FULL = [
+  {
+    title: 'Trennwände & Grundrissänderung',
+    lede: 'Wenn der Grundriss nicht mehr zum Leben passt.',
+    body: 'Metallständerwände mit ein- oder doppelter Beplankung, auf Wunsch mit erhöhtem Schallschutz. Türöffnungen bekommen eine Aussteifung, Anschlüsse an Bestandswände einen Trennschnitt. Das ist die Stelle, an der Altbauwände sonst nach einem Jahr aufreißen.',
+    facts: ['Einfach- bis Dreifachbeplankung', 'Schallschutz bis 60 dB möglich', 'Statisch ausgesteifte Türöffnungen'],
+  },
+  {
+    title: 'Abgehängte Decken & Akustik',
+    lede: 'Leitungen verstecken, Raumklang verbessern.',
+    body: 'Abhängungen auf Nonius- oder Direktabhängern. Revisionsöffnungen setzen wir dorthin, wo später wirklich jemand ranmuss, nicht dorthin, wo sie am wenigsten stören. Für Praxen und Büros auch als Akustikdecke mit Lochplatten und Vliesauflage.',
+    facts: ['Ausgleich unebener Altbaudecken', 'Lochplatten für Nachhallreduktion', 'Vorbereitung für Spots und Lüftung'],
+  },
+  {
+    title: 'Dachgeschossausbau',
+    lede: 'Viel Raumgewinn, wenn die Bauphysik stimmt.',
+    body: 'Zwischensparrendämmung, luftdichte Dampfbremse, Dachschrägen- und Kniestockbekleidung. Jede Durchdringung führen wir systemkonform aus und fotografieren sie, bevor wir beplanken. Wer die Dampfbremse pfuscht, sieht den Schaden erst nach drei Wintern.',
+    facts: ['Dokumentation der Luftdichtheitsebene', 'Vorbereitung für Blower-Door-Test', 'Kniestockschränke auf Wunsch'],
+  },
+  {
+    title: 'Vorsatzschalen & Schallschutz',
+    lede: 'Gegen Lärm von nebenan und für Leitungen an der Wand.',
+    body: 'Freistehende oder angesetzte Vorsatzschalen mit Mineralwolle, entkoppelt vom Bestandsmauerwerk. Eine einzige starre Verbindung reicht, um den Schallschutz wieder aufzuheben.',
+    facts: ['Installationsvorwände fürs Bad', 'Entkoppelte Unterkonstruktion', 'Dämmung nach Anforderung'],
+  },
+  {
+    title: 'Feuchtraum & Bad',
+    lede: 'Am Untergrund hängt, wie lange die Fliesen halten.',
+    body: 'Imprägnierte Bauplatten und Verbundabdichtung in der passenden Belastungsklasse. Für großformatige Fliesen setzen wir die Ständer enger. Nischen und Ablagen planen wir gleich mit, weil sie nachträglich teuer werden.',
+    facts: ['Verbundabdichtung nach Norm', 'Ebenheitskontrolle vor Übergabe', 'Nischen und Ablagen integriert'],
+  },
+  {
+    title: 'Spachtelarbeiten Q1 bis Q4',
+    lede: 'Die Oberfläche, die Sie später jeden Tag sehen.',
+    body: 'Q2 reicht für gewöhnliche Anstriche. Q3 wird bei Streiflicht sinnvoll, Q4 bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation an und sagen Ihnen, welche Stufe Ihr Raum braucht. Meistens ist es eine niedrigere, als Sie erwarten.',
+    facts: ['Beratung zur passenden Qualitätsstufe', 'Streiflichtprüfung vor Abnahme', 'Aufpreise transparent im Angebot'],
+  },
+];
+
+const PROJECTS = [
+  {
+    slug: 'altbau-prenzlauer-berg', title: 'Altbauwohnung mit neuem Grundriss',
+    location: 'Berlin Prenzlauer Berg', year: 2025, category: 'Altbausanierung',
+    summary: 'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer. Der Stuck ist geblieben.',
+    duration: '3 Wochen', area: '112 m²',
+    scope: ['Trennwände in Metallständerbauweise', 'Schiebetürsystem', 'Stuckerhalt an Anschlüssen', 'Q3-Spachtelung'],
+    challenge: 'Der originale Deckenstuck sollte bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Dazu kam eine Altbaudecke mit bis zu vier Zentimetern Höhenunterschied.',
+    solution: 'Die Wandanschlüsse haben wir mit Trennschnitt und Gleitanschluss ausgeführt, damit der Stuck rissfrei stehen bleibt. Die Unebenheit der Decke fängt eine justierbare Unterkonstruktion ab.',
+    result: 'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten waren an den Anschlüssen keine Setzrisse zu sehen.',
+    testimonial: { quote: 'Zeitplan gehalten, Baustelle jeden Abend besenrein. An zwei Stellen haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.', author: 'Eigentümerin, Prenzlauer Berg' },
+  },
+  {
+    slug: 'dachausbau-koepenick', title: 'Dachgeschossausbau mit Gaube',
+    location: 'Berlin Köpenick', year: 2025, category: 'Dachausbau',
+    summary: 'Ungenutzter Spitzboden wurde zu zwei Kinderzimmern mit Dachschrägen und Kniestock.',
+    duration: '4 Wochen', area: '68 m²',
+    scope: ['Zwischensparrendämmung', 'Dampfbremse mit Blower-Door-Vorbereitung', 'Dachschrägenbekleidung', 'Kniestockschränke'],
+    challenge: 'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede undichte Stelle wäre später ein Bauschaden geworden.',
+    solution: 'Alle Durchdringungen haben wir mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln fotografiert.',
+    result: 'Der Blower-Door-Test ging durch. Die Fotos der Anschlüsse hat der Bauherr bekommen.',
+  },
+  {
+    slug: 'akustikdecke-praxis-mitte', title: 'Akustikdecke für eine Praxis',
+    location: 'Berlin Mitte', year: 2024, category: 'Decken & Akustik',
+    summary: 'Abgehängte Lochplattendecke für Sprachverständlichkeit und Diskretion zwischen Behandlungsräumen.',
+    duration: '2 Wochen', area: '190 m²',
+    scope: ['Abgehängte Decke', 'Akustik-Lochplatten', 'Integrierte Beleuchtung', 'Revisionsöffnungen'],
+    challenge: 'Der Umbau lief im laufenden Praxisbetrieb. Gearbeitet werden durfte nur zwischen 16 und 22 Uhr, und das möglichst staubarm.',
+    solution: 'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Am nächsten Morgen war der Bereich wieder nutzbar.',
+    result: 'Die Praxis hatte keinen einzigen Ausfalltag. Im Wartebereich ist der Nachhall deutlich zurückgegangen.',
+    testimonial: { quote: 'Wir konnten durchgehend behandeln. Morgens war nichts mehr von der Baustelle zu sehen.', author: 'Praxisinhaber, Berlin-Mitte' },
+  },
+  {
+    slug: 'wohnungsumbau-potsdam', title: 'Wohnungszusammenlegung',
+    location: 'Potsdam', year: 2024, category: 'Wohnungsumbau',
+    summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung, mit neuem Schallschutz zur Nachbarwohnung.',
+    duration: '5 Wochen', area: '140 m²',
+    scope: ['Vorsatzschalen mit Schallschutz', 'Neue Trennwände', 'Installationswand', 'Q4 in Wohnbereichen'],
+    challenge: 'Die Wohnungstrennwand zum Nachbarn lag deutlich unter heutigem Schallschutzniveau.',
+    solution: 'Eine freistehende Vorsatzschale mit Mineralwolle, entkoppelt und ohne starre Verbindung zum Bestandsmauerwerk.',
+    result: 'Der Schallschutz ist messbar besser, die Schlafräume merklich ruhiger.',
+  },
+  {
+    slug: 'bad-feuchtraum-charlottenburg', title: 'Feuchtraumausbau Bad',
+    location: 'Berlin Charlottenburg', year: 2024, category: 'Bad & Feuchtraum',
+    summary: 'Installationsvorwand und Feuchtraumbeplankung als Untergrund für großformatige Fliesen.',
+    duration: '8 Tage', area: '14 m²',
+    scope: ['Installationsvorwand', 'Imprägnierte Bauplatten', 'Verbundabdichtung', 'Nischen und Ablagen'],
+    challenge: 'Großformatfliesen verzeihen keine Toleranzen. Der Untergrund musste entsprechend eben werden.',
+    solution: 'Engere Ständerabstände, doppelte Beplankung und eine Ebenheitskontrolle, bevor der Fliesenleger übernommen hat.',
+    result: 'Der Fliesenleger konnte ohne Nacharbeit anfangen.',
+  },
+  {
+    slug: 'buero-loft-friedrichshain', title: 'Büroloft mit Besprechungsboxen',
+    location: 'Berlin Friedrichshain', year: 2023, category: 'Wohnungsumbau',
+    summary: 'Drei freistehende Besprechungsboxen in einer offenen Hallenfläche, akustisch entkoppelt.',
+    duration: '3 Wochen', area: '85 m²',
+    scope: ['Freistehende Raum-in-Raum-Konstruktion', 'Doppelbeplankung', 'Glaselemente', 'Deckenanschluss entkoppelt'],
+    challenge: 'Die Boxen sollten rückbaubar sein und die Sichtbetondecke nicht beschädigen.',
+    solution: 'Die Konstruktion steht auf eigenen Schwellen und ist oben nur gleitend geführt. In die Decke haben wir nicht eingegriffen.',
+    result: 'Vollständig rückbaubar, weil der Mietvertrag nichts anderes zuließ.',
+  },
+];
+
+const STEPS = [
+  ['Anfrage', 'Tag 0', 'Sie wählen online einen Termin oder rufen an. Meist bestätigen wir innerhalb eines Werktages. Wenn wir keine Kapazität haben, sagen wir das auch so.'],
+  ['Aufmaß vor Ort', 'meist eine Woche später', 'Wir sehen uns die Räume an, messen auf und prüfen die Untergründe. Das dauert meist eine Stunde und kostet im Einsatzgebiet nichts.'],
+  ['Festpreisangebot', 'drei bis fünf Werktage nach dem Aufmaß', 'Sie bekommen Positionen, Mengen, Qualitätsstufen und Preis schriftlich. Was Sie nicht brauchen, nehmen wir gar nicht erst auf. Das Angebot gilt 30 Tage.'],
+  ['Terminplanung', 'nach Auftrag', 'Nach Auftragserteilung legen wir gemeinsam den Starttermin fest und stimmen die Reihenfolge mit anderen Gewerken ab.'],
+  ['Ausführung', 'je nach Umfang', 'Der Staubschutz steht, bevor der erste Schnitt fällt. Wenn wir auf etwas Unerwartetes stoßen, rufen wir an, bevor wir weiterbauen.'],
+  ['Abnahme', 'zum Bauende', 'Wir gehen gemeinsam durch, schreiben offene Restpunkte auf und erledigen sie innerhalb von zwei Wochen. Die Rechnung kommt erst danach.'],
+];
+
+const FAQS = [
+  ['Was kostet Trockenbau pro Quadratmeter?', 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Der Preis hängt an der Beplankungsart, der Schallschutzanforderung, der Spachtelqualität und daran, wie gut wir mit Material an die Baustelle kommen. Eine einfache Trennwand liegt in einem ganz anderen Bereich als eine entkoppelte Vorsatzschale mit Q4-Oberfläche. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.'],
+  ['Kann ich während der Arbeiten in der Wohnung bleiben?', 'Meistens ja. Wir arbeiten abschnittsweise mit Staubschutzwänden und Absaugung. Bei größeren Umbauten mit Grundrissänderung ist ein Auszug für ein paar Wochen oft die entspanntere Lösung. Das sprechen wir beim Aufmaß offen an.'],
+  ['Übernehmen Sie auch Elektro und Malerarbeiten?', 'Trockenbau ist unser Gewerk. Für Elektro, Sanitär und Malerarbeiten haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.'],
+  ['Welche Spachtelqualität brauche ich?', 'Q2 reicht für gewöhnliche Anstriche und Raufaser. Q3 ist bei glatten Anstrichen sinnvoll, Q4 bei Streiflicht durch große Fenster oder bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation vor Ort an. In den meisten Wohnungen ist Q4 rausgeworfenes Geld.'],
+  ['Wie schnell können Sie anfangen?', 'Die aktuelle Vorlaufzeit nennen wir Ihnen beim Aufmaß verbindlich. Kleinere Arbeiten schieben sich manchmal kurzfristig dazwischen, für größere Projekte brauchen wir einige Wochen Vorlauf.'],
+  ['Kann ich Handwerkerleistungen steuerlich absetzen?', 'Für Privathaushalte sind Lohn-, Fahrt- und Maschinenkosten nach § 35a EStG anteilig steuerlich begünstigt. Materialkosten zählen nicht dazu. Unsere Rechnungen weisen den Lohnanteil deshalb getrennt aus, und wir bitten um Überweisung statt Barzahlung, weil das Finanzamt sonst nicht mitspielt. Was in Ihrem Fall herauskommt, sagt Ihnen Ihr Steuerbüro.'],
+];
+
+const OPENINGS = [
+  { title: 'Trockenbaumonteur (m/w/d)', type: 'Vollzeit',
+    text: 'Sie stellen Ständerwerk, beplanken und spachteln. Selbstständig, ohne dass jemand danebenstehen muss.',
+    req: ['Erfahrung im Trockenbau oder verwandtem Ausbaugewerk', 'Führerschein Klasse B von Vorteil', 'Deutsch für die Baustellenkommunikation'] },
+  { title: 'Vorarbeiter Trockenbau (m/w/d)', type: 'Vollzeit',
+    text: 'Sie führen eine kleine Kolonne, halten den Kontakt zur Bauleitung und behalten Material und Termine im Blick.',
+    req: ['Mehrjährige Erfahrung im Trockenbau', 'Erfahrung in der Führung kleiner Teams', 'Sicheres Lesen von Ausführungsplänen'] },
+  { title: 'Auszubildender Trockenbaumonteur (m/w/d)', type: 'Ausbildung',
+    text: 'Drei Jahre Ausbildung bei einem festen Ausbilder, der auch dann zuständig bleibt, wenn etwas schiefgeht.',
+    req: ['Schulabschluss', 'Zuverlässigkeit und Pünktlichkeit', 'Interesse am Handwerk'] },
+];
+
+const BENEFITS = [
+  ['Lohn kommt pünktlich', 'Zum Ersten ist das Geld da. Über Zuschläge diskutieren wir nicht, die rechnen wir ab.'],
+  ['Freitag ist um 14 Uhr Schluss', 'Samstagsarbeit gibt es nur, wenn etwas brennt, und dann mit Zuschlag.'],
+  ['Werkzeug vom Betrieb', 'Maschinen, Werkzeug und Arbeitskleidung stellen wir. Sie müssen nichts mitbringen.'],
+  ['Feste Kolonnen', 'Sie arbeiten mit denselben Leuten. Das macht auf der Baustelle mehr aus, als man vorher denkt.'],
+  ['Weiterbildung zahlt der Betrieb', 'Meisterkurs, Staplerschein oder Brandschutzschulung. Wenn es zum Betrieb passt, übernehmen wir die Kosten.'],
+  ['Baustellen in der Region', 'Berlin und Umland. Keine Wochenmontage, abends sind Sie zu Hause.'],
+];
+
+const ZONES = [
+  { id: 'kern', label: 'Berlin, gesamtes Stadtgebiet', prefixes: ['10','12','13','14'],
+    note: 'Anfahrt inklusive. Aufmaßtermine meist innerhalb von fünf Werktagen.', fee: 'ohne Anfahrtspauschale' },
+  { id: 'umland', label: 'Berliner Umland und Potsdam', prefixes: ['144','145','146','147','148','150','153','154','155','163','164','165'],
+    note: 'Regulär im Einsatzgebiet. Anfahrtspauschale je nach Entfernung.', fee: 'Anfahrtspauschale ab 45 €' },
+  { id: 'brandenburg', label: 'Brandenburg, weiteres Umland', prefixes: ['03','15','16','17','19'],
+    note: 'Auf Anfrage. Wir prüfen vor der Zusage, ob wir das zeitlich schaffen.', fee: 'nach Absprache' },
+];
+
+const TYPES = [
+  { id: 'aufmass', label: 'Aufmaß & Beratung vor Ort', minutes: 60,
+    desc: 'Wir kommen zu Ihnen, messen auf und besprechen die Ausführung. Danach bekommen Sie ein Festpreisangebot.',
+    price: 'kostenfrei im Einsatzgebiet' },
+  { id: 'telefon', label: 'Telefonische Erstberatung', minutes: 20,
+    desc: 'Kurzes Gespräch über Machbarkeit, Preisrahmen und Terminlage. Sinnvoll, solange Sie noch planen.',
+    price: 'kostenfrei' },
+  { id: 'abnahme', label: 'Nachbesprechung / Abnahme', minutes: 45,
+    desc: 'Für laufende Projekte: Zwischenabnahme, offene Restpunkte, Übergabe.',
+    price: 'kostenfrei für Bestandskunden' },
+];
+
+/* ---------- Hilfsfunktionen ---------- */
+
+const esc = (v) => String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function matchZone(zip) {
+  const clean = String(zip).replace(/\D/g, '');
+  let best = null;
+  for (const z of ZONES) for (const p of z.prefixes) {
+    if (clean.startsWith(p) && (!best || p.length > best.len)) best = { zone: z, len: p.length };
+  }
+  if (!best) return { label: 'Außerhalb des regulären Einsatzgebiets', fee: 'auf Anfrage',
+    note: 'Wir sehen uns die Anfrage trotzdem an. Ab einer gewissen Projektgröße fahren wir auch weiter.', inside: false };
+  return { ...best.zone, inside: true };
+}
+
+/* Platzhaltergrafik. Ersetzt später ein echtes Foto. */
+function visual(variant, ratio) {
+  const palettes = [
+    ['#CFDEEC', '#94B3D0'], ['#D9E1E8', '#A6B6C4'],
+    ['#C7DAEC', '#8DAECE'], ['#DCE3E9', '#AAB8C4'],
+  ];
+  const [base, mid] = palettes[variant % 4];
+  const ink = '#17212B';
+  const id = 'p' + variant + Math.random().toString(36).slice(2, 7);
+  const shapes = [
+    `<rect x="40" y="60" width="130" height="200" fill="${mid}" opacity=".75"/>
+     <rect x="190" y="110" width="170" height="150" fill="${ink}" opacity=".08"/>
+     <path d="M40 60h130" stroke="${ink}" stroke-width="3" opacity=".35"/>`,
+    `<path d="M0 210 200 90l200 120v90H0Z" fill="${mid}" opacity=".7"/>
+     <path d="M200 90 400 210" stroke="${ink}" stroke-width="2" opacity=".3" fill="none"/>`,
+    `<rect y="40" width="400" height="26" fill="${mid}" opacity=".8"/>
+     <rect y="86" width="400" height="26" fill="${mid}" opacity=".55"/>
+     <rect y="132" width="400" height="26" fill="${mid}" opacity=".35"/>
+     <rect x="240" y="180" width="120" height="120" fill="${ink}" opacity=".09"/>`,
+    `<circle cx="300" cy="90" r="70" fill="${mid}" opacity=".6"/>
+     <rect x="30" y="150" width="220" height="120" fill="${ink}" opacity=".08"/>
+     <path d="M30 150h220" stroke="${ink}" stroke-width="3" opacity=".3"/>`,
+  ][variant % 4];
+  return `<div class="vis" style="aspect-ratio:${ratio || '4/3'}">
+    <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Platzhalter, echtes Projektfoto folgt">
+      <rect width="400" height="300" fill="${base}"/>
+      <defs><pattern id="${id}" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M40 0H0v40" fill="none" stroke="${mid}" stroke-width="1"/></pattern></defs>
+      <rect width="400" height="300" fill="url(#${id})"/>${shapes}
+    </svg></div>`;
+}
+
+/* ---------- Terminplanung ---------- */
+/* Beispielbelegung, die dieselben Regeln einhält wie die echte Anwendung:
+   Mo bis Do 07:30 bis 16:00, Fr bis 13:00, Wochenende gesperrt, 24 Stunden
+   Vorlauf, und zwischen zwei Terminen bleibt Fahrzeit. */
+
+const WEEK_RULES = { 1: ['07:30','16:00'], 2: ['07:30','16:00'], 3: ['07:30','16:00'], 4: ['07:30','16:00'], 5: ['07:30','13:00'] };
+
+function seeded(n) { const x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); }
+
+function slotsFor(date, type) {
+  const wd = date.getDay();
+  const rule = WEEK_RULES[wd];
+  if (!rule) return [];
+  const key = Math.floor(date.getTime() / 86400000);
+  const toMin = (t) => Number(t.slice(0,2)) * 60 + Number(t.slice(3));
+  const start = toMin(rule[0]), end = toMin(rule[1]);
+  const buffer = type.id === 'telefon' ? 10 : type.id === 'abnahme' ? 30 : 45;
+  const out = [];
+  for (let m = start; m + type.minutes <= end; m += 30) {
+    // Deterministische Pseudobelegung, damit jeder Betrachter dasselbe sieht.
+    const busy = seeded(key * 100 + m) > (type.id === 'telefon' ? 0.55 : 0.72);
+    if (busy) continue;
+    if (out.length && m - out[out.length - 1] < type.minutes + buffer) continue;
+    out.push(m);
+  }
+  const today = new Date(); today.setHours(0,0,0,0);
+  const lead = new Date(today.getTime() + 86400000);
+  if (date <= lead) return [];
+  return out.map((m) => ({ minutes: m, label: String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0') }));
+}
+
+const DE_DAY = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const DE_MONTH = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const DE_DAY_LONG = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const DE_MONTH_LONG = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+/* =========================================================================
+   Seitenaufbau
+   ========================================================================= */
+
+const state = {
+  page: 'start',
+  project: null,
+  filter: 'Alle',
+  typeId: 'aufmass',
+  weekOffset: 0,
+  selected: null,
+  zip: '',
+  sent: false,
+  jobSent: false,
+  contactSent: false,
+};
+
+function pagehead(eyebrow, title, lede) {
+  return `<div class="pagehead"><div class="wrap">
+    <p class="eyebrow">${esc(eyebrow)}</p>
+    <h1 class="h-lg" style="max-width:22ch">${esc(title)}</h1>
+    ${lede ? `<p class="lede">${esc(lede)}</p>` : ''}
+  </div></div>`;
+}
+
+/* ---------- Start ---------- */
+function viewStart() {
+  const featured = PROJECTS.slice(0, 3);
+  return `
+  <div class="hero"><div class="wrap">
+    <div>
+      <p class="eyebrow">Renovieren. Sanieren. Modernisieren.</p>
+      <h1 style="margin-top:20px">Neue Räume im<br>alten Grundriss.</h1>
+      <p class="lede" style="margin-top:24px">Trockenbau und Innenausbau in Berlin und Brandenburg. Wir bauen Trennwände,
+        Decken und Dachgeschosse für Sanierung und Wohnungsumbau. Nach dem Aufmaß bekommen Sie
+        einen Festpreis, und bis zur Abnahme haben Sie denselben Ansprechpartner.</p>
+      <div class="herobtns" style="margin-top:36px">
+        <button class="btn btn-accent" data-go="termin">Aufmaßtermin anfragen &nbsp;→</button>
+        <a class="btn btn-ghost" href="tel:+493012345670">+49 30 1234567</a>
+      </div>
+      <dl class="stats" style="margin-top:48px">
+        <div><dt>seit 2009</dt><dd>am Markt</dd></div>
+        <div><dt>12 Leute</dt><dd>im eigenen Team</dd></div>
+        <div><dt>24 h</dt><dd>Rückmeldung auf Anfragen</dd></div>
+      </dl>
+    </div>
+    <div class="herovisual">
+      ${visual(0)}
+      <div class="card floatcard">
+        <p style="margin:0;font-weight:600;font-size:14px">Termin online anfragen</p>
+        <p class="body" style="margin-top:6px">Sie sehen nur Zeiten, die im Kalender wirklich frei sind.</p>
+      </div>
+    </div>
+  </div></div>
+
+  <section class="block"><div class="wrap">
+    <p class="eyebrow">Leistungen</p>
+    <h2 class="h-lg" style="margin-top:16px">Was wir bauen</h2>
+    <p class="body" style="margin-top:16px;max-width:60ch">Schwerpunkt ist Sanierung und Umbau im bewohnten Bestand.
+      Neubau machen wir, wenn es zeitlich passt.</p>
+    <div class="grid-hair" style="margin-top:48px">
+      ${SERVICES_SHORT.map(([t, x]) => `<div><h3 class="h-md">${esc(t)}</h3><p class="body" style="margin-top:12px">${esc(x)}</p></div>`).join('')}
+    </div>
+    <p style="margin-top:32px"><button class="backlink" style="color:var(--accent);font-weight:600;font-size:16px" data-go="leistungen">Alle Leistungen im Detail →</button></p>
+  </div></section>
+
+  <div class="dark-band"><div class="wrap">
+    <div>
+      <p class="eyebrow">Arbeitsweise</p>
+      <h2 class="h-lg" style="margin-top:16px">Wobei wir uns festlegen</h2>
+    </div>
+    <div class="reasons">
+      ${REASONS.map(([t, x], i) => `<div>
+        <span style="font-family:var(--display);font-size:14px;color:var(--accent-bright)">0${i+1}</span>
+        <h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join('')}
+    </div>
+  </div></div>
+
+  <section class="block"><div class="wrap">
+    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between">
+      <div><p class="eyebrow">Referenzen</p><h2 class="h-lg" style="margin-top:16px">Zuletzt gebaut</h2></div>
+      <button class="btn btn-ghost" data-go="referenzen">Alle Projekte</button>
+    </div>
+    <div class="cards-3" style="margin-top:48px">
+      ${featured.map((p, i) => projectCard(p, i)).join('')}
+    </div>
+  </div></section>
+
+  <section style="padding-bottom:80px"><div class="wrap">
+    <div class="card" style="padding:40px">
+      <div class="zonewrap">
+        <div>
+          <p class="eyebrow">Einsatzgebiet</p>
+          <h2 class="h-lg" style="margin-top:16px">Berlin, Potsdam und das nähere Umland</h2>
+          <p class="body" style="margin-top:16px">Wir fahren nur so weit, wie wir Termine zuverlässig halten können.
+            Weiter draußen wird die Anfahrt zum Risiko für alle anderen Termine des Tages.</p>
+          <button class="btn btn-dark" style="margin-top:28px" data-go="termin">Verfügbarkeit prüfen</button>
+        </div>
+        <ul class="zonelist">
+          ${ZONES.map((z) => `<li><strong>${esc(z.label)}</strong>
+            <p class="body" style="margin-top:6px">${esc(z.note)}</p>
+            <p class="zonefee">${esc(z.fee)}</p></li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+function projectCard(p, i) {
+  return `<button class="projcard" data-project="${esc(p.slug)}">
+    ${visual(i)}
+    <p class="projmeta">${esc(p.category)} · ${esc(p.location)}</p>
+    <h3>${esc(p.title)}</h3>
+    <p class="body" style="margin-top:8px">${esc(p.summary)}</p>
+  </button>`;
+}
+
+/* ---------- Leistungen ---------- */
+function viewLeistungen() {
+  return pagehead('Leistungen', 'Trockenbau von der Trennwand bis zur Q4-Oberfläche',
+    'Schwerpunkt ist Sanierung im bewohnten Bestand. Wir sagen Ihnen vorher, was sinnvoll ist und was Sie sich sparen können.') + `
+  <section class="block"><div class="wrap stack" style="gap:80px">
+    ${SERVICES_FULL.map((s, i) => `<div class="svc ${i % 2 ? 'flip' : ''}">
+      ${visual(i, '5/4')}
+      <div>
+        <h2 class="h-lg">${esc(s.title)}</h2>
+        <p class="lede-accent">${esc(s.lede)}</p>
+        <p class="body" style="margin-top:16px">${esc(s.body)}</p>
+        <ul class="ticks">${s.facts.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
+      </div>
+    </div>`).join('')}
+    <div class="card" style="padding:48px;text-align:center">
+      <h2 class="h-lg">Unsicher, was Ihr Projekt braucht?</h2>
+      <p class="body" style="margin:16px auto 0;max-width:52ch">Das Aufmaß vor Ort ist kostenfrei und unverbindlich.
+        Danach wissen Sie schriftlich, was machbar ist und was es kostet.</p>
+      <button class="btn btn-accent" style="margin-top:32px" data-go="termin">Aufmaßtermin anfragen</button>
+    </div>
+  </div></section>`;
+}
+
+/* ---------- Referenzen ---------- */
+function viewReferenzen() {
+  if (state.project) return viewProject(state.project);
+  const cats = ['Alle', ...new Set(PROJECTS.map((p) => p.category))];
+  const list = state.filter === 'Alle' ? PROJECTS : PROJECTS.filter((p) => p.category === state.filter);
+  return pagehead('Referenzen', 'Projekte, die wir vorzeigen dürfen', 'Zu jedem Projekt steht dabei, was daran schwierig war.') + `
+  <section class="block"><div class="wrap">
+    <div class="filters" role="group" aria-label="Projekte filtern">
+      ${cats.map((c) => `<button data-filter="${esc(c)}" aria-pressed="${c === state.filter}">${esc(c)}</button>`).join('')}
+    </div>
+    <div class="projgrid">${list.map((p, i) => projectCard(p, i)).join('')}</div>
+  </div></section>`;
+}
+
+function viewProject(slug) {
+  const i = PROJECTS.findIndex((p) => p.slug === slug);
+  const p = PROJECTS[i];
+  const others = PROJECTS.filter((o) => o.slug !== slug).slice(0, 3);
+  return `
+  <div class="wrap" style="padding-top:40px"><button class="backlink" data-back="referenzen">← Alle Referenzen</button></div>
+  <div class="wrap" style="padding-top:32px">
+    <p class="eyebrow">${esc(p.category)} · ${esc(p.location)} · ${p.year}</p>
+    <h1 class="h-lg" style="margin-top:16px;max-width:24ch">${esc(p.title)}</h1>
+    <p class="lede" style="margin-top:20px">${esc(p.summary)}</p>
+  </div>
+  <div class="wrap" style="margin-top:40px">${visual(i, '16/8')}</div>
+  <div class="wrap detail-grid" style="margin-top:48px">
+    <div class="stack" style="gap:40px">
+      <div><h2 class="h-md">Die Herausforderung</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.challenge)}</p></div>
+      <div><h2 class="h-md">Unsere Lösung</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.solution)}</p></div>
+      <div><h2 class="h-md">Ergebnis</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.result)}</p></div>
+      ${p.testimonial ? `<blockquote class="quote"><p>„${esc(p.testimonial.quote)}"</p>
+        <footer>${esc(p.testimonial.author)}</footer></blockquote>` : ''}
+    </div>
+    <aside class="card" style="padding:28px">
+      <p class="eyebrow">Eckdaten</p>
+      <dl class="spec" style="margin-top:16px">
+        <div><dt>Ort</dt><dd>${esc(p.location)}</dd></div>
+        <div><dt>Fläche</dt><dd>${esc(p.area)}</dd></div>
+        <div><dt>Bauzeit</dt><dd>${esc(p.duration)}</dd></div>
+        <div><dt>Jahr</dt><dd>${p.year}</dd></div>
+      </dl>
+      <p class="fhead" style="color:var(--ink-muted);margin-top:24px">Ausgeführte Gewerke</p>
+      <ul class="ticks" style="margin-top:12px">${p.scope.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <button class="btn btn-accent" style="margin-top:28px;width:100%" data-go="termin">Ähnliches Projekt? Termin anfragen</button>
+    </aside>
+  </div>
+  <section class="block"><div class="wrap">
+    <h2 class="h-md">Weitere Projekte</h2>
+    <div class="cards-3" style="margin-top:32px">${others.map((o, k) => projectCard(o, k + 1)).join('')}</div>
+  </div></section>`;
+}
+
+/* ---------- Ablauf ---------- */
+function viewAblauf() {
+  return pagehead('Ablauf', 'Von der Anfrage bis zur Abnahme',
+    'Sie wissen zu jedem Zeitpunkt, was als Nächstes passiert und wer dafür zuständig ist.') + `
+  <section class="block"><div class="wrap">
+    <ol class="steps">
+      ${STEPS.map(([t, w, x], i) => `<li><span class="num">${i+1}</span>
+        <p class="when">${esc(w)}</p>
+        <h2 class="h-md" style="margin-top:6px">${esc(t)}</h2>
+        <p class="body" style="margin-top:8px;max-width:64ch">${esc(x)}</p></li>`).join('')}
+    </ol>
+  </div></section>
+  <section style="padding-bottom:80px"><div class="wrap">
+    <h2 class="h-lg">Häufige Fragen</h2>
+    <div class="faqbox" style="margin-top:32px">
+      ${FAQS.map(([q, a]) => `<details><summary>${esc(q)}</summary><p class="answer">${esc(a)}</p></details>`).join('')}
+    </div>
+  </div></section>`;
+}
+
+/* ---------- Termin ---------- */
+function viewTermin() {
+  const type = TYPES.find((t) => t.id === state.typeId);
+  if (state.sent) {
+    return pagehead('Termin', 'Freie Zeiten, direkt aus unserem Kalender') + `
+    <section class="block"><div class="wrap"><div class="card done">
+      <div class="ring"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></svg></div>
+      <h2 class="h-md" style="margin-top:24px">Anfrage ist raus</h2>
+      <p class="body" style="margin-top:12px">${esc(state.sent)}</p>
+      <p class="body" style="margin-top:16px">Der Termin ist vorgemerkt, aber noch nicht verbindlich. Sobald wir
+        zugesagt haben, bekommen Sie die Bestätigung per E-Mail.</p>
+      <div class="notedemo" style="margin-top:28px;text-align:left">
+        <strong>In der Demo endet der Ablauf hier.</strong> In der fertigen Anwendung wird der Termin
+        jetzt als vorgemerkter Eintrag im Google Kalender angelegt, und der Betrieb bekommt eine E-Mail
+        mit zwei Schaltflächen: bestätigen oder absagen. Erst die Bestätigung löst die verbindliche
+        Terminmail an den Kunden aus.
+      </div>
+      <button class="btn btn-ghost" style="margin-top:24px" data-reset="termin">Noch einmal ansehen</button>
+    </div></div></section>`;
+  }
+
+  const monday = new Date(); monday.setHours(0,0,0,0);
+  monday.setDate(monday.getDate() + state.weekOffset * 7);
+  const days = Array.from({ length: 7 }, (_, k) => {
+    const d = new Date(monday); d.setDate(d.getDate() + k);
+    return { date: d, slots: slotsFor(d, type) };
+  });
+  const first = days[0].date, last = days[6].date;
+  const zone = state.zip.length === 5 ? matchZone(state.zip) : null;
+
+  return pagehead('Termin', 'Freie Zeiten, direkt aus unserem Kalender',
+    'Sie wählen eine Zeit aus, wir bestätigen sie. Meistens noch am selben oder am nächsten Werktag.') + `
+  <section class="block"><div class="wrap booking">
+    <div class="stack" style="gap:44px">
+
+      <div>
+        <div class="stephead"><span class="num">1</span><h2 class="h-md">Worum geht es?</h2></div>
+        <div class="typelist">
+          ${TYPES.map((t) => `<button class="typebtn" data-type="${t.id}" aria-pressed="${t.id === state.typeId}">
+            <span class="row"><span>
+              <span class="name">${esc(t.label)}</span>
+              <p class="body" style="margin-top:6px">${esc(t.desc)}</p>
+            </span><span class="chip">${t.minutes} Min.</span></span>
+            <p class="price">${esc(t.price)}</p>
+          </button>`).join('')}
+        </div>
+      </div>
+
+      <div>
+        <div class="stephead"><span class="num">2</span><h2 class="h-md">Wunschtermin wählen</h2></div>
+        <p class="body" style="margin-top:8px">Angezeigt werden nur Zeiten, die im Kalender tatsächlich frei sind.
+          Die Fahrzeit zwischen den Baustellen ist dabei schon abgezogen.</p>
+        <div class="weekbar">
+          <button class="btn btn-ghost btn-sm" data-week="-1" ${state.weekOffset <= 0 ? 'disabled' : ''}>← Früher</button>
+          <span class="range">${first.getDate()}. ${DE_MONTH[first.getMonth()]} – ${last.getDate()}. ${DE_MONTH[last.getMonth()]}</span>
+          <button class="btn btn-ghost btn-sm" data-week="1">Später →</button>
+        </div>
+        <div class="daygrid">
+          ${days.map((d) => `<div class="day ${d.slots.length ? '' : 'empty'}">
+            <p class="dname">${DE_DAY[d.date.getDay()]} ${d.date.getDate()}. ${DE_MONTH[d.date.getMonth()]}</p>
+            ${d.slots.length
+              ? `<div class="slots">${d.slots.map((s) => {
+                  const key = d.date.toISOString().slice(0,10) + 'T' + s.label;
+                  return `<button class="slot" data-slot="${key}" aria-pressed="${state.selected === key}">${s.label}</button>`;
+                }).join('')}</div>`
+              : `<p class="none">keine freien Zeiten</p>`}
+          </div>`).join('')}
+        </div>
+      </div>
+
+      <div>
+        <div class="stephead"><span class="num">3</span><h2 class="h-md">Kontaktdaten</h2></div>
+        <form class="booking-form" id="bookingform" novalidate>
+          <div class="frow two">
+            <label class="field"><span class="flabel">Name <span class="req">*</span></span>
+              <input class="inp" name="name" required autocomplete="name"></label>
+            <label class="field"><span class="flabel">Telefon <span class="req">*</span></span>
+              <input class="inp" name="phone" type="tel" required autocomplete="tel">
+              <span class="hint">Für kurzfristige Rückfragen</span></label>
+          </div>
+          <label class="field"><span class="flabel">E-Mail <span class="req">*</span></span>
+            <input class="inp" name="email" type="email" required autocomplete="email">
+            <span class="hint">Hierhin geht die Bestätigung</span></label>
+          <div class="frow addr">
+            <label class="field"><span class="flabel">Straße und Hausnummer des Objekts <span class="req">*</span></span>
+              <input class="inp" name="address" required autocomplete="street-address"></label>
+            <label class="field"><span class="flabel">PLZ <span class="req">*</span></span>
+              <input class="inp" name="zip" id="zipinput" inputmode="numeric" maxlength="5" required value="${esc(state.zip)}"></label>
+          </div>
+          <div id="zoneslot">${zone ? `<div class="zonebox ${zone.inside ? '' : 'outside'}">
+            <strong>${esc(zone.label)}</strong> · ${esc(zone.fee)}<br>${esc(zone.note)}</div>` : ''}</div>
+          <label class="field"><span class="flabel">Was ist geplant?</span>
+            <textarea class="inp" name="message"></textarea>
+            <span class="hint">Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot</span></label>
+          <label class="check"><input type="checkbox" name="privacy" required>
+            <span>Ich habe die Datenschutzhinweise gelesen und bin mit der Verarbeitung meiner Angaben
+              zur Terminbearbeitung einverstanden.</span></label>
+          <div>
+            <button class="btn btn-accent" type="submit" ${state.selected ? '' : 'disabled'}>Termin verbindlich anfragen</button>
+            ${state.selected ? '' : '<p class="body" style="margin-top:12px">Bitte oben zuerst einen Zeitpunkt auswählen.</p>'}
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <aside class="card summary">
+      <p class="eyebrow">Ihre Auswahl</p>
+      <h2 class="h-md" style="margin-top:12px">${esc(type.label)}</h2>
+      <p class="body" style="margin-top:8px">${esc(type.desc)}</p>
+      <dl>
+        <div><dt>Dauer</dt><dd>${type.minutes} Minuten</dd></div>
+        <div><dt>Kosten</dt><dd>${esc(type.price)}</dd></div>
+        <div><dt>Zeitpunkt</dt><dd>${state.selected ? esc(prettySlot(state.selected)) : 'noch nicht gewählt'}</dd></div>
+      </dl>
+      <div class="notice">Die gewählte Zeit ist ab sofort für andere gesperrt. Verbindlich wird der Termin
+        mit unserer Bestätigungsmail.</div>
+      <a class="btn btn-ghost" style="margin-top:20px;width:100%" href="tel:+493012345670">Lieber telefonisch: +49 30 1234567</a>
+    </aside>
+  </div></section>`;
+}
+
+function prettySlot(key) {
+  const [iso, time] = key.split('T');
+  const d = new Date(iso + 'T12:00:00');
+  return `${DE_DAY_LONG[d.getDay()]}, ${d.getDate()}. ${DE_MONTH_LONG[d.getMonth()]} um ${time}`;
+}
+
+/* ---------- Jobs ---------- */
+function viewJobs() {
+  return pagehead('Jobs', 'Wir suchen Leute, die bleiben wollen',
+    'Sie brauchen kein Anschreiben und keinen Portal-Account. Formular ausfüllen oder per WhatsApp schreiben, wir melden uns.') + `
+  <section class="block"><div class="wrap jobs-layout">
+    <div>
+      <h2 class="h-lg">Offene Stellen</h2>
+      <div class="joblist">
+        ${OPENINGS.map((o) => `<article class="card job">
+          <div class="jobtop"><h3 class="h-md">${esc(o.title)}</h3><span class="tag">${esc(o.type)}</span></div>
+          <p class="body" style="margin-top:12px">${esc(o.text)}</p>
+          <ul class="ticks">${o.req.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
+        </article>`).join('')}
+      </div>
+      <h2 class="h-lg" style="margin-top:64px">Was wir bieten</h2>
+      <div class="benefits">
+        ${BENEFITS.map(([t, x]) => `<div><h3>${esc(t)}</h3><p class="body">${esc(x)}</p></div>`).join('')}
+      </div>
+    </div>
+    <div>
+      <h2 class="h-md">In zwei Minuten bewerben</h2>
+      <p class="body" style="margin:8px 0 20px">Zeugnisse und Lebenslauf können Sie nachreichen, wenn es passt.</p>
+      ${state.jobSent
+        ? `<div class="card" style="padding:32px;text-align:center">
+             <h3 class="h-md">Bewerbung ist angekommen</h3>
+             <p class="body" style="margin-top:12px">Wir melden uns innerhalb weniger Tage.</p>
+             <p class="notedemo" style="margin-top:20px;text-align:left">In der Demo wurde nichts versendet.</p>
+           </div>`
+        : `<form class="card" id="jobform" style="padding:32px;display:flex;flex-direction:column;gap:20px" novalidate>
+             <label class="field"><span class="flabel">Stelle</span>
+               <select class="inp" name="position">
+                 ${OPENINGS.map((o) => `<option>${esc(o.title)}</option>`).join('')}
+                 <option>Initiativbewerbung</option>
+               </select></label>
+             <div class="frow two">
+               <label class="field"><span class="flabel">Name <span class="req">*</span></span><input class="inp" name="name" required></label>
+               <label class="field"><span class="flabel">Telefon <span class="req">*</span></span><input class="inp" name="phone" type="tel" required></label>
+             </div>
+             <label class="field"><span class="flabel">E-Mail <span class="req">*</span></span><input class="inp" name="email" type="email" required></label>
+             <label class="field"><span class="flabel">Berufserfahrung</span>
+               <input class="inp" name="exp" placeholder="z. B. 5 Jahre Trockenbau, davon 2 als Vorarbeiter"></label>
+             <label class="field"><span class="flabel">Kurz zu Ihnen</span>
+               <textarea class="inp" name="message" style="min-height:110px" placeholder="Ein paar Sätze reichen. Den Lebenslauf können Sie später nachreichen."></textarea></label>
+             <label class="check"><input type="checkbox" required><span>Ich bin mit der Verarbeitung meiner Angaben im Bewerbungsverfahren einverstanden.</span></label>
+             <button class="btn btn-accent" type="submit">Bewerbung senden</button>
+             <p class="body" style="text-align:center">Lieber direkt? Per WhatsApp melden oder anrufen: +49 30 1234567</p>
+           </form>`}
+    </div>
+  </div></section>`;
+}
+
+/* ---------- Kontakt ---------- */
+function viewKontakt() {
+  return pagehead('Kontakt', 'Rufen Sie an, das geht meistens schneller',
+    'Für einen konkreten Termin ist die Online-Anfrage besser. Dort sehen Sie sofort, wann wir Zeit haben.') + `
+  <section class="block"><div class="wrap contact-layout">
+    <div class="contactcards">
+      <div class="card">
+        <h2 class="h-md">Direkt erreichbar</h2>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px;font-size:15px">
+          <p style="margin:0"><span style="display:block;font-size:14px;color:var(--ink-muted)">Telefon</span>
+            <a href="tel:+493012345670" style="font-weight:600;color:inherit;text-decoration:none">+49 30 1234567</a></p>
+          <p style="margin:0"><span style="display:block;font-size:14px;color:var(--ink-muted)">E-Mail</span>
+            <a href="mailto:info@borussia-bau.de" style="font-weight:600;color:inherit;text-decoration:none">info@borussia-bau.de</a></p>
+          <p style="margin:0"><span style="display:block;font-size:14px;color:var(--ink-muted)">WhatsApp</span>
+            <span style="font-weight:600">Nachricht schreiben</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="h-md">Anschrift</h2>
+        <address class="body" style="font-style:normal;margin-top:16px;line-height:1.7">
+          Borussia Baudienstleistungen GmbH<br>Musterstraße 12<br>12437 Berlin</address>
+        <p class="body" style="margin-top:16px">Das Büro ist nur nach Vereinbarung besetzt. Wir sind meistens auf der Baustelle.</p>
+      </div>
+      <div class="card">
+        <h2 class="h-md">Bürozeiten</h2>
+        <ul class="hours">
+          <li><span>Mo bis Do</span><span style="font-weight:500">07:00 – 16:30 Uhr</span></li>
+          <li><span>Fr</span><span style="font-weight:500">07:00 – 14:00 Uhr</span></li>
+          <li><span>Sa und So</span><span style="font-weight:500">geschlossen</span></li>
+        </ul>
+      </div>
+      <div class="darkcta">
+        <h2 class="h-md">Konkreter Termin?</h2>
+        <p>Über die Online-Anfrage sehen Sie die freien Zeiten sofort und sparen sich das Hin und Her.</p>
+        <button class="btn btn-accent" style="margin-top:20px;width:100%" data-go="termin">Termin anfragen</button>
+      </div>
+    </div>
+    ${state.contactSent
+      ? `<div class="card" style="padding:48px;text-align:center">
+           <h2 class="h-md">Nachricht ist angekommen</h2>
+           <p class="body" style="margin-top:12px">Wir antworten meist innerhalb eines Werktages.</p>
+           <p class="notedemo" style="margin-top:24px;text-align:left">In der Demo wurde nichts versendet.</p>
+         </div>`
+      : `<form class="card" id="contactform" style="padding:32px;display:flex;flex-direction:column;gap:20px" novalidate>
+           <div class="frow two">
+             <label class="field"><span class="flabel">Name <span class="req">*</span></span><input class="inp" required></label>
+             <label class="field"><span class="flabel">Telefon</span><input class="inp" type="tel"></label>
+           </div>
+           <div class="frow addr">
+             <label class="field"><span class="flabel">E-Mail <span class="req">*</span></span><input class="inp" type="email" required></label>
+             <label class="field"><span class="flabel">PLZ</span><input class="inp" inputmode="numeric" maxlength="5"></label>
+           </div>
+           <label class="field"><span class="flabel">Betreff</span>
+             <select class="inp">
+               <option>Allgemeine Anfrage</option><option>Angebot / Kostenschätzung</option>
+               <option>Laufendes Projekt</option><option>Reklamation</option>
+               <option>Zusammenarbeit / Nachunternehmer</option>
+             </select></label>
+           <label class="field"><span class="flabel">Nachricht <span class="req">*</span></span>
+             <textarea class="inp" style="min-height:150px" required></textarea></label>
+           <label class="check"><input type="checkbox" required><span>Ich habe die Datenschutzhinweise gelesen.</span></label>
+           <button class="btn btn-accent" type="submit" style="align-self:flex-start">Nachricht senden</button>
+         </form>`}
+  </div></section>`;
+}
+
+/* =========================================================================
+   Steuerung
+   ========================================================================= */
+
+const VIEWS = { start: viewStart, leistungen: viewLeistungen, referenzen: viewReferenzen,
+                ablauf: viewAblauf, termin: viewTermin, jobs: viewJobs, kontakt: viewKontakt };
+
+function buildNav() {
+  document.getElementById('desknav').innerHTML =
+    PAGES.map(([id, l]) => `<button data-go="${id}">${l}</button>`).join('');
+  document.querySelector('#mobilenav .wrap').innerHTML =
+    PAGES.map(([id, l]) => `<button class="navlink" data-go="${id}">${l}</button>`).join('') +
+    `<button class="btn btn-accent" style="margin-top:12px" data-go="termin">Termin anfragen</button>`;
+  document.getElementById('footnav').innerHTML =
+    [['start','Start'], ...PAGES.slice(0,3), ['termin','Termin anfragen'], ...PAGES.slice(3)]
+      .map(([id, l]) => `<li><button data-go="${id}">${l}</button></li>`).join('');
+}
+
+function render(scroll = true) {
+  document.getElementById('main').innerHTML = VIEWS[state.page]();
+  document.querySelectorAll('#desknav button').forEach((b) => {
+    if (b.dataset.go === state.page) b.setAttribute('aria-current', 'page');
+    else b.removeAttribute('aria-current');
+  });
+  if (scroll) window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function go(page) {
+  state.page = page;
+  if (page !== 'referenzen') state.project = null;
+  document.getElementById('mobilenav').hidden = true;
+  document.getElementById('burger').setAttribute('aria-expanded', 'false');
+  render();
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-go],[data-project],[data-back],[data-filter],[data-type],[data-week],[data-slot],[data-reset]');
+  if (!el) return;
+
+  if (el.dataset.go) { e.preventDefault(); go(el.dataset.go); return; }
+  if (el.dataset.project) { state.page = 'referenzen'; state.project = el.dataset.project; render(); return; }
+  if (el.dataset.back) { state.project = null; render(); return; }
+  if (el.dataset.filter) { state.filter = el.dataset.filter; render(false); return; }
+  if (el.dataset.type) { state.typeId = el.dataset.type; state.selected = null; render(false); return; }
+  if (el.dataset.week) {
+    state.weekOffset = Math.max(0, state.weekOffset + Number(el.dataset.week));
+    state.selected = null; render(false); return;
+  }
+  if (el.dataset.slot) { state.selected = el.dataset.slot; render(false); return; }
+  if (el.dataset.reset) { state.sent = false; state.selected = null; state.zip = ''; render(); return; }
+});
+
+document.getElementById('burger').addEventListener('click', () => {
+  const nav = document.getElementById('mobilenav');
+  const open = nav.hidden;
+  nav.hidden = !open;
+  document.getElementById('burger').setAttribute('aria-expanded', String(open));
+});
+
+/* PLZ-Zone live einblenden, ohne die ganze Seite neu zu zeichnen. */
+document.addEventListener('input', (e) => {
+  if (e.target.id !== 'zipinput') return;
+  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+  state.zip = e.target.value;
+  const box = document.getElementById('zoneslot');
+  if (!box) return;
+  if (state.zip.length !== 5) { box.innerHTML = ''; return; }
+  const z = matchZone(state.zip);
+  box.innerHTML = `<div class="zonebox ${z.inside ? '' : 'outside'}">
+    <strong>${esc(z.label)}</strong> · ${esc(z.fee)}<br>${esc(z.note)}</div>`;
+});
+
+document.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  if (form.id === 'bookingform') {
+    const type = TYPES.find((t) => t.id === state.typeId);
+    state.sent = `${type.label} am ${prettySlot(state.selected)}`;
+    render();
+  } else if (form.id === 'jobform') { state.jobSent = true; render(); }
+  else if (form.id === 'contactform') { state.contactSent = true; render(); }
+});
+
+buildNav();
+render(false);
+</script>
