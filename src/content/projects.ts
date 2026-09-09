@@ -1,0 +1,128 @@
+/**
+ * Portfolio / Referenzen.
+ * [PLATZHALTER] Alle Einträge durch echte Projekte ersetzen. Struktur beibehalten,
+ * dann funktionieren Übersicht, Detailseite, Filter und Sitemap automatisch.
+ */
+
+export type Project = {
+  slug: string;
+  title: string;
+  location: string;
+  year: number;
+  category: 'Altbausanierung' | 'Dachausbau' | 'Wohnungsumbau' | 'Decken & Akustik' | 'Bad & Feuchtraum';
+  summary: string;
+  duration: string;
+  area: string;
+  scope: string[];
+  challenge: string;
+  solution: string;
+  result: string;
+  testimonial?: { quote: string; author: string };
+};
+
+export const projects: Project[] = [
+  {
+    slug: 'altbau-prenzlauer-berg',
+    title: 'Altbauwohnung mit neuem Grundriss',
+    location: 'Berlin Prenzlauer Berg',
+    year: 2025,
+    category: 'Altbausanierung',
+    summary:
+      'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer – bei erhaltenem Stuck.',
+    duration: '3 Wochen',
+    area: '112 m²',
+    scope: ['Trennwände in Metallständerbauweise', 'Schiebetürsystem', 'Stuckerhalt an Anschlüssen', 'Q3-Spachtelung'],
+    challenge:
+      'Der originale Deckenstuck sollte erhalten bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Die Altbaudecke war um bis zu vier Zentimeter uneben.',
+    solution:
+      'Wandanschlüsse wurden mit Trennschnitt und Gleitanschluss ausgeführt, sodass der Stuck ohne Rissbildung stehen bleibt. Die Deckenunebenheit haben wir über eine justierbare Unterkonstruktion ausgeglichen.',
+    result:
+      'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten keine Setzrisse an den Anschlüssen.',
+    testimonial: {
+      quote:
+        'Zeitplan gehalten, Baustelle jeden Abend besenrein. Bei zwei Punkten haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.',
+      author: 'Eigentümerin, Prenzlauer Berg',
+    },
+  },
+  {
+    slug: 'dachausbau-koepenick',
+    title: 'Dachgeschossausbau mit Gaube',
+    location: 'Berlin Köpenick',
+    year: 2025,
+    category: 'Dachausbau',
+    summary: 'Ungenutzter Spitzboden wurde zu zwei Kinderzimmern mit Dachschrägen und Kniestock.',
+    duration: '4 Wochen',
+    area: '68 m²',
+    scope: ['Zwischensparrendämmung', 'Dampfbremse mit Blower-Door-Vorbereitung', 'Dachschrägenbekleidung', 'Kniestockschränke'],
+    challenge:
+      'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede Undichtigkeit wäre später ein Bauschaden.',
+    solution:
+      'Alle Durchdringungen wurden mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln dokumentiert.',
+    result: 'Blower-Door-Test bestanden. Die Fotodokumentation der Anschlüsse ging an den Bauherrn.',
+  },
+  {
+    slug: 'akustikdecke-praxis-mitte',
+    title: 'Akustikdecke für eine Praxis',
+    location: 'Berlin Mitte',
+    year: 2024,
+    category: 'Decken & Akustik',
+    summary: 'Abgehängte Lochplattendecke für Sprachverständlichkeit und Diskretion zwischen Behandlungsräumen.',
+    duration: '2 Wochen',
+    area: '190 m²',
+    scope: ['Abgehängte Decke', 'Akustik-Lochplatten', 'Integrierte Beleuchtung', 'Revisionsöffnungen'],
+    challenge:
+      'Der Umbau lief im laufenden Praxisbetrieb. Es durfte nur zwischen 16 und 22 Uhr gearbeitet werden, staubarm.',
+    solution:
+      'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Jeder Abschnitt war am Morgen wieder nutzbar.',
+    result: 'Kein einziger Ausfalltag für die Praxis. Nachhallzeit im Wartebereich deutlich reduziert.',
+    testimonial: {
+      quote: 'Wir konnten durchgehend behandeln. Morgens war nichts mehr von der Baustelle zu sehen.',
+      author: 'Praxisinhaber, Berlin-Mitte',
+    },
+  },
+  {
+    slug: 'wohnungsumbau-potsdam',
+    title: 'Wohnungszusammenlegung',
+    location: 'Potsdam',
+    year: 2024,
+    category: 'Wohnungsumbau',
+    summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung – inklusive Schallschutz zum Nachbarn.',
+    duration: '5 Wochen',
+    area: '140 m²',
+    scope: ['Vorsatzschalen mit Schallschutz', 'Neue Trennwände', 'Installationswand', 'Q4 in Wohnbereichen'],
+    challenge: 'Die Wohnungstrennwand zum Nachbarn lag deutlich unter heutigem Schallschutzniveau.',
+    solution:
+      'Freistehende Vorsatzschale mit Mineralwolle und entkoppelter Unterkonstruktion, ohne starre Verbindung zum Bestandsmauerwerk.',
+    result: 'Messbar verbesserter Schallschutz, spürbar ruhigere Schlafräume.',
+  },
+  {
+    slug: 'bad-feuchtraum-charlottenburg',
+    title: 'Feuchtraumausbau Bad',
+    location: 'Berlin Charlottenburg',
+    year: 2024,
+    category: 'Bad & Feuchtraum',
+    summary: 'Installationsvorwand und Feuchtraumbeplankung als Untergrund für großformatige Fliesen.',
+    duration: '8 Tage',
+    area: '14 m²',
+    scope: ['Installationsvorwand', 'Imprägnierte Bauplatten', 'Verbundabdichtung', 'Nischen und Ablagen'],
+    challenge: 'Großformatfliesen verzeihen keine Toleranzen – der Untergrund musste extrem eben sein.',
+    solution: 'Engere Ständerabstände, doppelte Beplankung und Ebenheitskontrolle vor Übergabe an den Fliesenleger.',
+    result: 'Fliesenleger konnte ohne Nacharbeit starten.',
+  },
+  {
+    slug: 'buero-loft-friedrichshain',
+    title: 'Büroloft mit Besprechungsboxen',
+    location: 'Berlin Friedrichshain',
+    year: 2023,
+    category: 'Wohnungsumbau',
+    summary: 'Drei freistehende Besprechungsboxen in einer offenen Hallenfläche, akustisch entkoppelt.',
+    duration: '3 Wochen',
+    area: '85 m²',
+    scope: ['Freistehende Raum-in-Raum-Konstruktion', 'Doppelbeplankung', 'Glaselemente', 'Deckenanschluss entkoppelt'],
+    challenge: 'Die Boxen sollten rückbaubar sein und die Sichtbetondecke nicht beschädigen.',
+    solution: 'Konstruktion auf eigenen Schwellen, oben nur gleitend geführt – kein Eingriff in die Decke.',
+    result: 'Vollständig rückbaubar. Der Mietvertrag ließ nichts anderes zu.',
+  },
+];
+
+export const projectCategories = Array.from(new Set(projects.map((p) => p.category)));

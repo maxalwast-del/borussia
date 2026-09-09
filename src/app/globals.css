@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-gypsum text-ink antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent/20;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-gypsum;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+
+  .heading-xl {
+    @apply font-display text-[2.6rem] leading-[1.08] tracking-tight sm:text-6xl;
+  }
+
+  .heading-lg {
+    @apply font-display text-3xl leading-[1.15] tracking-tight sm:text-[2.6rem];
+  }
+
+  .heading-md {
+    @apply font-display text-2xl leading-snug tracking-tight sm:text-[1.75rem];
+  }
+
+  .lede {
+    @apply text-lg leading-relaxed text-ink-soft sm:text-xl;
+  }
+
+  .prose-body {
+    @apply text-[15px] leading-relaxed text-ink-muted sm:text-base;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-[15px] font-semibold
+           transition duration-200 disabled:cursor-not-allowed disabled:opacity-55;
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-gypsum hover:bg-ink-soft hover:shadow-lift;
+  }
+
+  .btn-accent {
+    @apply btn bg-accent text-white hover:bg-accent-hover hover:shadow-lift;
+  }
+
+  .btn-ghost {
+    @apply btn border border-ink/15 bg-white/70 text-ink hover:border-ink/35 hover:bg-white;
+  }
+
+  .card {
+    @apply rounded-card border border-ink/10 bg-white shadow-card;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-ink-soft;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink
+           placeholder:text-ink-muted/60 transition focus:border-accent focus:outline-none
+           focus:ring-2 focus:ring-accent/25;
+  }
+
+  .hairline {
+    @apply border-t border-ink/10;
+  }
+}
