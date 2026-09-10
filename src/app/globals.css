@@ -12,6 +12,10 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Die Seite hat bewusst nur ein Erscheinungsbild. Ohne diese Angabe
+       zeichnet der Browser Formularelemente im Farbschema des Besuchers,
+       was zu heller Schrift auf hellem Grund führen kann. */
+    color-scheme: light;
   }
 
   body {

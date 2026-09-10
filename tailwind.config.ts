@@ -10,7 +10,7 @@ const config: Config = {
           DEFAULT: '#122C5E',
           deep: '#0B1D40',
           soft: '#2C4478',
-          muted: '#5C6B87',
+          muted: '#4F5E78',
         },
         // Das helle Blau des Logos. Der DEFAULT ist so weit abgedunkelt,
         // dass weiße Schrift darauf 5,0:1 erreicht und blaue Schrift auf

@@ -166,11 +166,11 @@ export function BookingFlow() {
                     <p className="font-semibold">{entry.label}</p>
                     <p className="prose-body mt-1.5">{entry.description}</p>
                   </div>
-                  <span className="whitespace-nowrap rounded-full bg-navy/5 px-3 py-1 text-xs font-medium text-navy-muted">
+                  <span className="whitespace-nowrap rounded-full bg-navy/10 px-3 py-1 text-xs font-semibold text-navy-soft">
                     {entry.durationMinutes} Min.
                   </span>
                 </div>
-                <p className="mt-3 text-sm font-medium text-brand">{entry.price}</p>
+                <p className="mt-3 text-sm font-semibold text-brand-hover">{entry.price}</p>
               </button>
             ))}
           </div>
@@ -212,7 +212,7 @@ export function BookingFlow() {
               <p className="font-semibold">{calendarError}</p>
               <p className="prose-body mt-2">
                 Rufen Sie uns bitte direkt an, wir finden sofort einen Termin:{' '}
-                <a href={`tel:${company.phoneHref}`} className="font-semibold text-brand">
+                <a href={`tel:${company.phoneHref}`} className="font-semibold text-brand-hover underline">
                   {company.phone}
                 </a>
               </p>

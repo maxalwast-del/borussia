@@ -8,9 +8,14 @@
    Bewusst einfarbig hell: die spätere Website rendert genauso, unabhängig
    davon, ob der Betrachter sein System auf dunkel gestellt hat. */
 :root {
+  /* Die Seite zeigt bewusst nur ein Erscheinungsbild, so wie die spätere
+     Website. Ohne diese Angabe stellt der Browser Formularelemente im
+     Farbschema des Betrachters dar, und Schaltflächen bekommen im
+     Dunkelmodus weiße Schrift auf hellem Grund. */
+  color-scheme: light;
   --ink: #122C5E;
   --ink-soft: #2C4478;
-  --ink-muted: #5C6B87;
+  --ink-muted: #4F5E78;
   --gypsum: #F4F7FA;
   --gypsum-deep: #E3EBF3;
   --white: #FFFFFF;
@@ -29,6 +34,8 @@
 }
 
 * { box-sizing: border-box; }
+/* Bedienelemente erben Schrift und Farbe nicht von selbst. */
+button, input, select, textarea { font: inherit; color: inherit; }
 body {
   margin: 0;
   background: var(--gypsum);
@@ -78,7 +85,8 @@ header.site {
 .mark { background: var(--white); box-shadow: inset 0 0 0 1px var(--line); }
 .slogan-rule { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0;
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); }
-.slogan-rule .bar { color: rgba(92,107,135,.45); }
+.slogan-rule .bar { color: #4F5E78; }
+.slogan-rule[data-tone="dark"] .bar { color: rgba(244,247,250,.75); }
 .claim { font-family: var(--display); font-style: italic; font-size: 1.05rem; margin: 16px 0 0; color: rgba(244,247,250,.85); }
 .tradeicon { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
   display: grid; place-items: center; transition: background .18s, color .18s; }
@@ -102,7 +110,8 @@ nav.main button[aria-current="page"] { color: var(--ink); font-weight: 600; }
 .headphone:hover { color: var(--ink); }
 .burger {
   width: 40px; height: 40px; border-radius: 9px; border: 1px solid var(--line-strong);
-  background: rgba(255,255,255,.75); display: grid; place-items: center; cursor: pointer;
+  background: rgba(255,255,255,.75); color: var(--ink);
+  display: grid; place-items: center; cursor: pointer;
 }
 @media (min-width: 1280px) {
   nav.main { display: flex; }
@@ -276,16 +285,20 @@ ol.steps .num {
 }
 .typelist { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
 .typebtn {
-  text-align: left; font: inherit; cursor: pointer; padding: 20px;
+  text-align: left; font: inherit; color: var(--ink); cursor: pointer; padding: 20px;
   border: 1px solid var(--line-strong); background: var(--white); border-radius: 14px;
   transition: border-color .18s, background .18s, box-shadow .18s;
 }
 .typebtn:hover { border-color: rgba(23,33,43,.35); }
-.typebtn[aria-pressed="true"] { border-color: var(--accent); background: rgba(220,234,246,.42); box-shadow: var(--shadow-card); }
+.typebtn[aria-pressed="true"] {
+  border-color: var(--accent); background: var(--accent-soft);
+  box-shadow: inset 4px 0 0 var(--accent), var(--shadow-card);
+}
+.typebtn[aria-pressed="true"] .name { color: var(--accent-hover); }
 .typebtn .row { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .typebtn .name { font-weight: 600; }
-.chip { background: rgba(23,33,43,.05); color: var(--ink-muted); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 500; white-space: nowrap; }
-.price { margin: 12px 0 0; font-size: 14px; font-weight: 500; color: var(--accent); }
+.chip { background: rgba(18,44,94,.10); color: var(--ink-soft); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.price { margin: 12px 0 0; font-size: 14px; font-weight: 600; color: var(--accent-hover); }
 .weekbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
 .weekbar .range { font-size: 14px; font-weight: 500; color: var(--ink-muted); }
 .daygrid { display: grid; gap: 12px; margin-top: 20px; align-items: start; }
@@ -294,7 +307,7 @@ ol.steps .num {
 .day { border: 1px solid var(--line-strong); background: var(--white); border-radius: 14px; padding: 16px; }
 .day.empty { border-style: dashed; background: transparent; }
 .day .dname { font-size: 14px; font-weight: 600; }
-.day .none { margin: 12px 0 0; font-size: 14px; color: rgba(92,107,122,.7); }
+.day .none { margin: 12px 0 0; font-size: 14px; color: var(--ink-muted); }
 .slots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .slot {
   font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; border: 0;
@@ -365,7 +378,7 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
 .faddr { margin: 24px 0 0; font-style: normal; font-size: 15px; line-height: 1.7; color: rgba(243,246,249,.8); }
 .faddr a { color: inherit; text-decoration: none; }
 .faddr a:hover { color: var(--accent-bright); }
-.fhead { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; color: rgba(243,246,249,.45); margin: 0; }
+.fhead { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; color: rgba(244,247,250,.7); margin: 0; }
 .flist { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: rgba(243,246,249,.8); }
 .flist button { background: none; border: 0; font: inherit; color: inherit; padding: 0; cursor: pointer; text-align: left; }
 .flist button:hover { color: var(--accent-bright); }
@@ -427,7 +440,7 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
     <div>
       <p class="fname">Borussia</p>
       <p class="fslogan" style="letter-spacing:.22em;font-size:11px;text-transform:uppercase">Baudienstleistungen</p>
-      <p class="slogan-rule" style="margin-top:18px;color:var(--accent-bright)">
+      <p class="slogan-rule" style="margin-top:18px;color:var(--accent-bright)" data-tone="dark">
         <span>Renovieren</span><span class="bar">|</span><span>Sanieren</span><span class="bar">|</span><span>Modernisieren</span>
       </p>
       <p class="ftag" style="margin-top:18px">Sechs Gewerke aus einer Hand für Sanierung, Umbau und Renovierung in Berlin und Brandenburg</p>

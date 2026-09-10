@@ -33,7 +33,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/45">Seiten</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Seiten</p>
           <ul className="mt-4 space-y-2.5 text-[15px] text-paper/80">
             {[
               ['/leistungen', 'Leistungen'],
@@ -53,13 +53,13 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/45">Einsatzgebiet</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Einsatzgebiet</p>
           <ul className="mt-4 space-y-2.5 text-[15px] text-paper/80">
             {serviceZones.map((zone) => (
               <li key={zone.id}>{zone.label}</li>
             ))}
           </ul>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-paper/45">Öffnungszeiten</p>
+          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Öffnungszeiten</p>
           <ul className="mt-4 space-y-1.5 text-[15px] text-paper/80">
             {company.openingHours.map((entry) => (
               <li key={entry.days}>

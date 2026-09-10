@@ -121,13 +121,13 @@ export default function HomePage() {
       <section className="bg-navy py-20 text-paper">
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">Arbeitsweise</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-bright">Arbeitsweise</p>
             <h2 className="heading-lg mt-4">Wobei wir uns festlegen</h2>
           </div>
           <div className="grid gap-8 sm:grid-cols-2">
             {reasons.map((reason, index) => (
               <div key={reason.title}>
-                <span className="font-display text-sm text-brand">0{index + 1}</span>
+                <span className="font-display text-sm font-semibold text-brand-bright">0{index + 1}</span>
                 <h3 className="mt-2 text-lg font-semibold">{reason.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-paper/65">{reason.text}</p>
               </div>

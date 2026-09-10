@@ -58,7 +58,9 @@ export function SloganRule({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
     >
       {company.sloganParts.map((part, index) => (
         <span key={part} className="flex items-center gap-3">
-          {index > 0 && <span className="text-navy-muted/40">|</span>}
+          {index > 0 && (
+            <span className={tone === 'dark' ? 'text-paper/75' : 'text-navy-muted'}>|</span>
+          )}
           {part}
         </span>
       ))}
