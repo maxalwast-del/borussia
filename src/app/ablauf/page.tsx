@@ -4,7 +4,7 @@ import { PageHeader } from '@/components/page-header';
 
 export const metadata: Metadata = {
   title: 'Ablauf',
-  description: 'Von der Anfrage bis zur Abnahme: So läuft ein Trockenbauprojekt bei uns ab.',
+  description: 'Von der Anfrage bis zur Abnahme: So läuft ein Projekt bei uns ab.',
 };
 
 const steps = [
@@ -42,16 +42,16 @@ const steps = [
 
 const faqs = [
   {
-    q: 'Was kostet Trockenbau pro Quadratmeter?',
-    a: 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Der Preis hängt an der Beplankungsart, der Schallschutzanforderung, der Spachtelqualität und daran, wie gut wir mit Material an die Baustelle kommen. Eine einfache Trennwand liegt in einem ganz anderen Bereich als eine entkoppelte Vorsatzschale mit Q4-Oberfläche. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.',
+    q: 'Was kostet das pro Quadratmeter?',
+    a: 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Bei einer Trennwand hängt der Preis an Beplankung, Schallschutz und Spachtelqualität, beim Boden am Zustand des Estrichs, beim Bad an Format und Abdichtung. Dazu kommt, wie gut wir mit Material an die Baustelle kommen. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.',
   },
   {
     q: 'Kann ich während der Arbeiten in der Wohnung bleiben?',
     a: 'Meistens ja. Wir arbeiten abschnittsweise mit Staubschutzwänden und Absaugung. Bei größeren Umbauten mit Grundrissänderung ist ein Auszug für ein paar Wochen oft die entspanntere Lösung. Das sprechen wir beim Aufmaß offen an.',
   },
   {
-    q: 'Übernehmen Sie auch Elektro und Malerarbeiten?',
-    a: 'Trockenbau ist unser Gewerk. Für Elektro, Sanitär und Malerarbeiten haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.',
+    q: 'Welche Gewerke machen Sie selbst?',
+    a: 'Trockenbau, Fliesen, Maler, Innenausbau und Boden führen wir mit eigenen Leuten aus. Für Elektro und Sanitär haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.',
   },
   {
     q: 'Welche Spachtelqualität brauche ich?',
@@ -87,13 +87,13 @@ export default function AblaufPage() {
       />
 
       <section className="container-page py-16">
-        <ol className="relative space-y-10 border-l border-ink/15 pl-8 sm:pl-10">
+        <ol className="relative space-y-10 border-l border-navy/15 pl-8 sm:pl-10">
           {steps.map((step, index) => (
             <li key={step.title} className="relative">
-              <span className="absolute -left-[41px] grid h-8 w-8 place-items-center rounded-full bg-ink text-sm font-semibold text-gypsum sm:-left-[49px]">
+              <span className="absolute -left-[41px] grid h-8 w-8 place-items-center rounded-full bg-navy text-sm font-semibold text-paper sm:-left-[49px]">
                 {index + 1}
               </span>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">{step.duration}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">{step.duration}</p>
               <h2 className="heading-md mt-1.5 text-xl">{step.title}</h2>
               <p className="prose-body mt-2 max-w-2xl">{step.text}</p>
             </li>
@@ -103,12 +103,12 @@ export default function AblaufPage() {
 
       <section className="container-page pb-20">
         <h2 className="heading-lg">Häufige Fragen</h2>
-        <div className="mt-8 divide-y divide-ink/10 overflow-hidden rounded-card border border-ink/10 bg-white">
+        <div className="mt-8 divide-y divide-navy/10 overflow-hidden rounded-card border border-navy/10 bg-white">
           {faqs.map((faq) => (
             <details key={faq.q} className="group p-6 sm:p-7">
               <summary className="flex cursor-pointer items-start justify-between gap-6 font-semibold marker:content-['']">
                 {faq.q}
-                <span className="mt-1 shrink-0 text-accent transition group-open:rotate-45" aria-hidden="true">
+                <span className="mt-1 shrink-0 text-brand transition group-open:rotate-45" aria-hidden="true">
                   +
                 </span>
               </summary>
@@ -122,7 +122,7 @@ export default function AblaufPage() {
           <p className="prose-body mx-auto mt-3 max-w-lg">
             Rufen Sie an oder buchen Sie eine kostenfreie telefonische Erstberatung.
           </p>
-          <Link href="/termin" className="btn-accent mt-7">
+          <Link href="/termin" className="btn-brand mt-7">
             Termin anfragen
           </Link>
         </div>

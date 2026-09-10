@@ -8,8 +8,11 @@
 export const company = {
   name: 'Borussia Baudienstleistungen',
   legalName: 'Borussia Baudienstleistungen GmbH', // [PLATZHALTER] Rechtsform prüfen
-  slogan: 'Renovieren. Sanieren. Modernisieren.',
-  tagline: 'Trockenbau und Innenausbau für Altbau und Sanierung in Berlin und Brandenburg',
+  /** Wie auf dem Firmenschild, dort mit senkrechten Strichen getrennt. */
+  sloganParts: ['Renovieren', 'Sanieren', 'Modernisieren'],
+  slogan: 'Renovieren · Sanieren · Modernisieren',
+  claim: 'Qualität, auf die Sie bauen können.',
+  tagline: 'Sechs Gewerke aus einer Hand für Sanierung, Umbau und Renovierung in Berlin und Brandenburg',
   foundedYear: 2009, // [PLATZHALTER]
   teamSize: 12, // [PLATZHALTER]
 
@@ -83,7 +86,7 @@ export const appointmentTypes = [
     id: 'aufmass',
     label: 'Aufmaß & Beratung vor Ort',
     description:
-      'Wir kommen zu Ihnen, messen auf und besprechen die Ausführung. Danach bekommen Sie ein Festpreisangebot.',
+      'Wir kommen zu Ihnen, sehen uns an, was ansteht, und messen auf. Danach bekommen Sie ein Festpreisangebot über alle beteiligten Gewerke.',
     durationMinutes: 60,
     bufferMinutes: 45,
     price: 'kostenfrei im Einsatzgebiet',
@@ -108,6 +111,45 @@ export const appointmentTypes = [
 ] as const;
 
 export type AppointmentTypeId = (typeof appointmentTypes)[number]['id'];
+
+/**
+ * Die sechs Gewerke des Betriebs, in derselben Reihenfolge wie auf dem
+ * Firmenschild. `icon` verweist auf die Symbole in components/trade-icon.tsx.
+ */
+export const trades = [
+  {
+    id: 'trockenbau',
+    label: 'Trockenbau',
+    short: 'Trennwände, abgehängte Decken, Vorsatzschalen und Dachschrägen in Metallständerbauweise.',
+  },
+  {
+    id: 'fliesen',
+    label: 'Fliesenarbeiten',
+    short: 'Bad, Küche und Bodenflächen, vom Untergrund über die Abdichtung bis zur letzten Fuge.',
+  },
+  {
+    id: 'maler',
+    label: 'Malerarbeiten',
+    short: 'Spachteln, Grundieren, Streichen und Tapezieren, innen wie in Treppenhäusern.',
+  },
+  {
+    id: 'innenausbau',
+    label: 'Innenausbau',
+    short: 'Dachgeschosse, Einbauten, Türen und alles, was einen Rohbau bewohnbar macht.',
+  },
+  {
+    id: 'sanierung',
+    label: 'Sanierung',
+    short: 'Komplette Wohnungen und Häuser, mit einem Ansprechpartner für alle Gewerke.',
+  },
+  {
+    id: 'boden',
+    label: 'Bodenlegerarbeiten',
+    short: 'Untergrund vorbereiten, spachteln und Parkett, Vinyl oder Laminat verlegen.',
+  },
+] as const;
+
+export type TradeId = (typeof trades)[number]['id'];
 
 /**
  * Buchbare Zeiten (lokale Zeit, Europe/Berlin). 0 = Sonntag bis 6 = Samstag.

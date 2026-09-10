@@ -126,8 +126,8 @@ export function BookingFlow() {
   if (success) {
     return (
       <div className="card mx-auto max-w-xl p-8 text-center sm:p-12">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-accent-soft">
-          <svg viewBox="0 0 24 24" className="h-6 w-6 text-accent" fill="none" stroke="currentColor" strokeWidth="2.2">
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-soft">
+          <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" stroke="currentColor" strokeWidth="2.2">
             <path d="m5 13 4 4 10-10" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
@@ -137,7 +137,7 @@ export function BookingFlow() {
           Der Termin ist vorgemerkt, aber noch nicht verbindlich. Sobald wir zugesagt haben,
           bekommen Sie die Bestätigung per E-Mail. {bookingRules.responseTimePromise}.
         </p>
-        <p className="mt-6 text-sm text-ink-muted">{success.hint}</p>
+        <p className="mt-6 text-sm text-navy-muted">{success.hint}</p>
       </div>
     );
   }
@@ -157,8 +157,8 @@ export function BookingFlow() {
                 aria-pressed={entry.id === typeId}
                 className={`rounded-card border p-5 text-left transition ${
                   entry.id === typeId
-                    ? 'border-accent bg-accent-soft/40 shadow-card'
-                    : 'border-ink/12 bg-white hover:border-ink/30'
+                    ? 'border-brand bg-brand-soft/40 shadow-card'
+                    : 'border-navy/12 bg-white hover:border-navy/30'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
@@ -166,11 +166,11 @@ export function BookingFlow() {
                     <p className="font-semibold">{entry.label}</p>
                     <p className="prose-body mt-1.5">{entry.description}</p>
                   </div>
-                  <span className="whitespace-nowrap rounded-full bg-ink/5 px-3 py-1 text-xs font-medium text-ink-muted">
+                  <span className="whitespace-nowrap rounded-full bg-navy/5 px-3 py-1 text-xs font-medium text-navy-muted">
                     {entry.durationMinutes} Min.
                   </span>
                 </div>
-                <p className="mt-3 text-sm font-medium text-accent">{entry.price}</p>
+                <p className="mt-3 text-sm font-medium text-brand">{entry.price}</p>
               </button>
             ))}
           </div>
@@ -193,7 +193,7 @@ export function BookingFlow() {
             >
               ← Früher
             </button>
-            <p className="text-sm font-medium text-ink-muted">
+            <p className="text-sm font-medium text-navy-muted">
               {formatDayLabel(weekStart).day}. {formatDayLabel(weekStart).month} –{' '}
               {formatDayLabel(shiftIso(weekStart, WEEK_LENGTH - 1)).day}.{' '}
               {formatDayLabel(shiftIso(weekStart, WEEK_LENGTH - 1)).month}
@@ -208,11 +208,11 @@ export function BookingFlow() {
           </div>
 
           {calendarError ? (
-            <div className="mt-5 rounded-card border border-accent/30 bg-accent-soft/40 p-6">
+            <div className="mt-5 rounded-card border border-brand/30 bg-brand-soft/40 p-6">
               <p className="font-semibold">{calendarError}</p>
               <p className="prose-body mt-2">
                 Rufen Sie uns bitte direkt an, wir finden sofort einen Termin:{' '}
-                <a href={`tel:${company.phoneHref}`} className="font-semibold text-accent">
+                <a href={`tel:${company.phoneHref}`} className="font-semibold text-brand">
                   {company.phone}
                 </a>
               </p>
@@ -229,14 +229,14 @@ export function BookingFlow() {
                       <div
                         key={day.date}
                         className={`rounded-card border p-4 ${
-                          day.slots.length ? 'border-ink/12 bg-white' : 'border-dashed border-ink/12 bg-transparent'
+                          day.slots.length ? 'border-navy/12 bg-white' : 'border-dashed border-navy/12 bg-transparent'
                         }`}
                       >
                         <p className="text-sm font-semibold">
                           {label.weekday} {label.day}. {label.month}
                         </p>
                         {day.slots.length === 0 ? (
-                          <p className="mt-3 text-sm text-ink-muted/70">keine freien Zeiten</p>
+                          <p className="mt-3 text-sm text-navy-muted/70">keine freien Zeiten</p>
                         ) : (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {day.slots.map((slot) => (
@@ -247,8 +247,8 @@ export function BookingFlow() {
                                 aria-pressed={selected === slot.start}
                                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                                   selected === slot.start
-                                    ? 'bg-accent text-white'
-                                    : 'bg-gypsum text-ink-soft hover:bg-ink hover:text-gypsum'
+                                    ? 'bg-brand text-white'
+                                    : 'bg-paper text-navy-soft hover:bg-navy hover:text-paper'
                                 }`}
                               >
                                 {slot.label}
@@ -326,7 +326,7 @@ export function BookingFlow() {
             {zone && (
               <div
                 className={`rounded-xl p-4 text-sm leading-relaxed ${
-                  zone.inside ? 'bg-accent-soft/50 text-ink-soft' : 'bg-ink/5 text-ink-soft'
+                  zone.inside ? 'bg-brand-soft/50 text-navy-soft' : 'bg-navy/5 text-navy-soft'
                 }`}
               >
                 <strong>{zone.label}</strong> · {zone.surcharge}
@@ -356,16 +356,16 @@ export function BookingFlow() {
               </label>
             </div>
 
-            <label className="flex items-start gap-3 text-sm leading-relaxed text-ink-muted">
+            <label className="flex items-start gap-3 text-sm leading-relaxed text-navy-muted">
               <input
                 type="checkbox"
                 required
                 checked={form.privacy}
                 onChange={(e) => setForm({ ...form, privacy: e.target.checked })}
-                className="mt-1 h-4 w-4 rounded border-ink/30 text-accent focus:ring-accent"
+                className="mt-1 h-4 w-4 rounded border-navy/30 text-brand focus:ring-brand"
               />
               <span>
-                Ich habe die <a href="/datenschutz" className="underline hover:text-ink">Datenschutzhinweise</a> gelesen
+                Ich habe die <a href="/datenschutz" className="underline hover:text-navy">Datenschutzhinweise</a> gelesen
                 und bin mit der Verarbeitung meiner Angaben zur Terminbearbeitung einverstanden.
               </span>
             </label>
@@ -376,11 +376,11 @@ export function BookingFlow() {
               </p>
             )}
 
-            <button type="submit" disabled={!selected || submitting} className="btn-accent w-full sm:w-auto">
+            <button type="submit" disabled={!selected || submitting} className="btn-brand w-full sm:w-auto">
               {submitting ? 'Wird gesendet …' : 'Termin verbindlich anfragen'}
             </button>
             {!selected && (
-              <p className="text-sm text-ink-muted">Bitte oben zuerst einen Zeitpunkt auswählen.</p>
+              <p className="text-sm text-navy-muted">Bitte oben zuerst einen Zeitpunkt auswählen.</p>
             )}
           </form>
         </section>
@@ -392,24 +392,24 @@ export function BookingFlow() {
         <p className="heading-md mt-3 text-xl">{type.label}</p>
         <p className="prose-body mt-2">{type.description}</p>
 
-        <dl className="mt-6 space-y-3 border-t border-ink/10 pt-6 text-sm">
+        <dl className="mt-6 space-y-3 border-t border-navy/10 pt-6 text-sm">
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-muted">Dauer</dt>
+            <dt className="text-navy-muted">Dauer</dt>
             <dd className="font-medium">{type.durationMinutes} Minuten</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-muted">Kosten</dt>
+            <dt className="text-navy-muted">Kosten</dt>
             <dd className="font-medium">{type.price}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-ink-muted">Zeitpunkt</dt>
+            <dt className="text-navy-muted">Zeitpunkt</dt>
             <dd className="text-right font-medium">
               {selected ? formatSelection(selected) : 'noch nicht gewählt'}
             </dd>
           </div>
         </dl>
 
-        <div className="mt-6 rounded-xl bg-gypsum p-4 text-sm leading-relaxed text-ink-muted">
+        <div className="mt-6 rounded-xl bg-paper p-4 text-sm leading-relaxed text-navy-muted">
           Die gewählte Zeit ist ab sofort für andere gesperrt. Verbindlich wird der Termin mit
           unserer Bestätigungsmail. {bookingRules.responseTimePromise}.
         </div>
@@ -425,7 +425,7 @@ export function BookingFlow() {
 function StepHeading({ step, title }: { step: number; title: string }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="grid h-8 w-8 place-items-center rounded-full bg-ink text-sm font-semibold text-gypsum">
+      <span className="grid h-8 w-8 place-items-center rounded-full bg-navy text-sm font-semibold text-paper">
         {step}
       </span>
       <h2 className="heading-md text-xl">{title}</h2>
@@ -448,10 +448,10 @@ function Field({
     <label className="block">
       <span className="field-label">
         {label}
-        {required && <span className="text-accent"> *</span>}
+        {required && <span className="text-brand"> *</span>}
       </span>
       {children}
-      {hint && <span className="mt-1.5 block text-xs text-ink-muted">{hint}</span>}
+      {hint && <span className="mt-1.5 block text-xs text-navy-muted">{hint}</span>}
     </label>
   );
 }

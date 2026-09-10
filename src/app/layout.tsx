@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: `%s · ${company.name}`,
   },
   description:
-    'Trockenbau und Innenausbau für Altbausanierung und Wohnungsumbau in Berlin und Brandenburg. Trennwände, abgehängte Decken, Dachausbau, Vorsatzschalen. Termin online anfragen.',
+    'Trockenbau, Fliesen, Maler, Innenausbau, Sanierung und Boden in Berlin und Brandenburg. Sechs Gewerke aus einer Hand, Termin online anfragen.',
   openGraph: {
     type: 'website',
     locale: 'de_DE',
@@ -25,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const localBusiness = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
+    slogan: company.claim,
     name: company.legalName,
     description: company.tagline,
     telephone: company.phone,
@@ -48,13 +49,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Archivo:wght@500;600;700&family=Archivo+Black&display=swap"
         />
       </head>
       <body>
         <a
           href="#inhalt"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2 focus:text-gypsum"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2 focus:text-paper"
         >
           Zum Inhalt springen
         </a>

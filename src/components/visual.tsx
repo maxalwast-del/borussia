@@ -17,16 +17,16 @@ export function Visual({
   // Vier kühle Abstufungen aus der Blau-Grau-Palette, damit die Kacheln
   // untereinander variieren, ohne aus dem Farbklima zu fallen.
   const palettes = [
-    ['#CFDEEC', '#94B3D0', '#17212B'],
-    ['#D9E1E8', '#A6B6C4', '#17212B'],
-    ['#C7DAEC', '#8DAECE', '#17212B'],
-    ['#DCE3E9', '#AAB8C4', '#17212B'],
+    ['#D3E4F4', '#8FB8DE', '#122C5E'],
+    ['#DEE7F0', '#A8BCD2', '#122C5E'],
+    ['#C9DEF3', '#7FADDA', '#122C5E'],
+    ['#E2E9F1', '#AEC0D4', '#122C5E'],
   ];
-  const [base, mid, ink] = palettes[variant % palettes.length];
+  const [base, mid, navy] = palettes[variant % palettes.length];
   const id = `v${variant}`;
 
   return (
-    <div className={`relative overflow-hidden bg-gypsum-deep ${className}`}>
+    <div className={`relative overflow-hidden bg-paper-deep ${className}`}>
       <svg viewBox="0 0 400 300" className="h-full w-full" role="img" aria-label={label ?? 'Projektbild folgt'}>
         <rect width="400" height="300" fill={base} />
         <defs>
@@ -38,14 +38,14 @@ export function Visual({
         {variant % 4 === 0 && (
           <>
             <rect x="40" y="60" width="130" height="200" fill={mid} opacity="0.75" />
-            <rect x="190" y="110" width="170" height="150" fill={ink} opacity="0.08" />
-            <path d="M40 60h130" stroke={ink} strokeWidth="3" opacity="0.35" />
+            <rect x="190" y="110" width="170" height="150" fill={navy} opacity="0.08" />
+            <path d="M40 60h130" stroke={navy} strokeWidth="3" opacity="0.35" />
           </>
         )}
         {variant % 4 === 1 && (
           <>
             <path d="M0 210 200 90l200 120v90H0Z" fill={mid} opacity="0.7" />
-            <path d="M200 90 400 210" stroke={ink} strokeWidth="2" opacity="0.3" fill="none" />
+            <path d="M200 90 400 210" stroke={navy} strokeWidth="2" opacity="0.3" fill="none" />
           </>
         )}
         {variant % 4 === 2 && (
@@ -53,14 +53,14 @@ export function Visual({
             <rect x="0" y="40" width="400" height="26" fill={mid} opacity="0.8" />
             <rect x="0" y="86" width="400" height="26" fill={mid} opacity="0.55" />
             <rect x="0" y="132" width="400" height="26" fill={mid} opacity="0.35" />
-            <rect x="240" y="180" width="120" height="120" fill={ink} opacity="0.09" />
+            <rect x="240" y="180" width="120" height="120" fill={navy} opacity="0.09" />
           </>
         )}
         {variant % 4 === 3 && (
           <>
             <circle cx="300" cy="90" r="70" fill={mid} opacity="0.6" />
-            <rect x="30" y="150" width="220" height="120" fill={ink} opacity="0.08" />
-            <path d="M30 150h220" stroke={ink} strokeWidth="3" opacity="0.3" />
+            <rect x="30" y="150" width="220" height="120" fill={navy} opacity="0.08" />
+            <path d="M30 150h220" stroke={navy} strokeWidth="3" opacity="0.3" />
           </>
         )}
       </svg>

@@ -5,29 +5,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Anthrazit mit leichtem Blaustich – trägt allen Fließtext.
-        ink: {
-          DEFAULT: '#17212B',
-          soft: '#2C3A47',
-          muted: '#5C6B7A',
+        // Marineblau aus der Wortmarke. Trägt Fließtext und dunkle Flächen.
+        navy: {
+          DEFAULT: '#122C5E',
+          deep: '#0B1D40',
+          soft: '#2C4478',
+          muted: '#5C6B87',
         },
-        // Kühles Grau als Seitenhintergrund, Karten stehen in Weiß darauf.
-        gypsum: {
-          DEFAULT: '#F3F6F9',
-          deep: '#E4EAF0',
+        // Das helle Blau des Logos. Der DEFAULT ist so weit abgedunkelt,
+        // dass weiße Schrift darauf 5,0:1 erreicht und blaue Schrift auf
+        // Weiß denselben Wert. Beides erfüllt WCAG AA.
+        brand: {
+          DEFAULT: '#1A72BC',
+          hover: '#145C99',
+          bright: '#2E9BE8',
+          soft: '#DCEBF8',
         },
-        // Hellblau. Der DEFAULT ist dunkel genug für Text auf Weiß
-        // (Kontrast 5,3:1, erfüllt WCAG AA); `bright` ist rein dekorativ.
-        accent: {
-          DEFAULT: '#1F6FB2',
-          hover: '#17588F',
-          soft: '#DCEAF6',
-          bright: '#4A9BD8',
+        // Kühles Papierweiß, angelehnt an den Untergrund des Firmenschilds.
+        paper: {
+          DEFAULT: '#F4F7FA',
+          deep: '#E3EBF3',
         },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        wordmark: ['var(--font-wordmark)', 'Impact', 'sans-serif'],
       },
       maxWidth: {
         content: '1180px',

@@ -5,7 +5,7 @@ import { ProjectGallery } from '@/components/project-gallery';
 export const metadata: Metadata = {
   title: 'Referenzen',
   description:
-    'Ausgeführte Trockenbauprojekte in Berlin, Potsdam und Brandenburg: Altbausanierung, Dachausbau, Akustikdecken, Feuchtraum.',
+    'Ausgeführte Projekte in Berlin, Potsdam und Brandenburg: Trockenbau, Fliesen, Maler, Innenausbau, Sanierung und Boden.',
 };
 
 export default function ReferenzenPage() {

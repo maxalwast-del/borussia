@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
  * eine Seite mit einem Button, und erst dessen POST verändert etwas.
  */
 
-function page(title: string, body: string, accent = '#17212B'): Response {
+function page(title: string, body: string, brand = '#17212B'): Response {
   const html = `<!doctype html><html lang="de"><head><meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex">
@@ -25,7 +25,7 @@ function page(title: string, body: string, accent = '#17212B'): Response {
       display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
     .card{background:#fff;border:1px solid #E4EAF0;border-radius:14px;padding:40px;max-width:520px;width:100%;
       box-shadow:0 18px 44px -16px rgba(23,33,43,.22);}
-    h1{margin:0 0 14px;font-size:22px;color:${accent};}
+    h1{margin:0 0 14px;font-size:22px;color:${brand};}
     p{margin:0 0 14px;font-size:15px;line-height:1.65;color:#2C3A47;}
     .meta{background:#F3F6F9;border-radius:10px;padding:16px;font-size:14px;line-height:1.7;margin:20px 0;}
     button{font:inherit;font-weight:600;padding:13px 22px;border-radius:9px;border:0;cursor:pointer;}

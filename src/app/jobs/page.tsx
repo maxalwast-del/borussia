@@ -88,15 +88,15 @@ export default function JobsPage() {
                 <article key={opening.title} className="card p-7">
                   <div className="flex flex-wrap items-center gap-3">
                     <h3 className="heading-md text-xl">{opening.title}</h3>
-                    <span className="rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent-hover">
+                    <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-hover">
                       {opening.type}
                     </span>
                   </div>
                   <p className="prose-body mt-3">{opening.text}</p>
                   <ul className="mt-4 space-y-2">
                     {opening.requirements.map((requirement) => (
-                      <li key={requirement} className="flex items-start gap-2.5 text-sm text-ink-soft">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                      <li key={requirement} className="flex items-start gap-2.5 text-sm text-navy-soft">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
                         {requirement}
                       </li>
                     ))}

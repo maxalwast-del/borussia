@@ -105,16 +105,16 @@ export function ContactForm() {
         </label>
       </div>
 
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-ink-muted">
+      <label className="flex items-start gap-3 text-sm leading-relaxed text-navy-muted">
         <input
           type="checkbox"
           required
           checked={form.privacy}
           onChange={(e) => setForm({ ...form, privacy: e.target.checked })}
-          className="mt-1 h-4 w-4 rounded border-ink/30 text-accent focus:ring-accent"
+          className="mt-1 h-4 w-4 rounded border-navy/30 text-brand focus:ring-brand"
         />
         <span>
-          Ich habe die <a href="/datenschutz" className="underline hover:text-ink">Datenschutzhinweise</a> gelesen.
+          Ich habe die <a href="/datenschutz" className="underline hover:text-navy">Datenschutzhinweise</a> gelesen.
         </span>
       </label>
 
@@ -124,7 +124,7 @@ export function ContactForm() {
         </p>
       )}
 
-      <button type="submit" disabled={state === 'sending'} className="btn-accent w-full sm:w-auto">
+      <button type="submit" disabled={state === 'sending'} className="btn-brand w-full sm:w-auto">
         {state === 'sending' ? 'Wird gesendet …' : 'Nachricht senden'}
       </button>
     </form>

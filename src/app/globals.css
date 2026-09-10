@@ -5,7 +5,8 @@
 @layer base {
   :root {
     --font-sans: 'Inter', system-ui, sans-serif;
-    --font-display: 'Fraunces', Georgia, serif;
+    --font-display: 'Archivo', system-ui, sans-serif;
+    --font-wordmark: 'Archivo Black', Impact, sans-serif;
   }
 
   html {
@@ -14,15 +15,15 @@
   }
 
   body {
-    @apply bg-gypsum text-ink antialiased;
+    @apply bg-paper text-navy antialiased;
   }
 
   ::selection {
-    @apply bg-accent/20;
+    @apply bg-brand/20;
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-gypsum;
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-paper;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -40,27 +41,27 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand;
   }
 
   .heading-xl {
-    @apply font-display text-[2.6rem] leading-[1.08] tracking-tight sm:text-6xl;
+    @apply font-display text-[2.6rem] font-bold leading-[1.05] tracking-[-0.025em] sm:text-6xl;
   }
 
   .heading-lg {
-    @apply font-display text-3xl leading-[1.15] tracking-tight sm:text-[2.6rem];
+    @apply font-display text-3xl font-bold leading-[1.12] tracking-[-0.022em] sm:text-[2.5rem];
   }
 
   .heading-md {
-    @apply font-display text-2xl leading-snug tracking-tight sm:text-[1.75rem];
+    @apply font-display text-xl font-semibold leading-snug tracking-[-0.015em] sm:text-2xl;
   }
 
   .lede {
-    @apply text-lg leading-relaxed text-ink-soft sm:text-xl;
+    @apply text-lg leading-relaxed text-navy-soft sm:text-xl;
   }
 
   .prose-body {
-    @apply text-[15px] leading-relaxed text-ink-muted sm:text-base;
+    @apply text-[15px] leading-relaxed text-navy-muted sm:text-base;
   }
 
   .btn {
@@ -69,32 +70,32 @@
   }
 
   .btn-primary {
-    @apply btn bg-ink text-gypsum hover:bg-ink-soft hover:shadow-lift;
+    @apply btn bg-navy text-paper hover:bg-navy-soft hover:shadow-lift;
   }
 
-  .btn-accent {
-    @apply btn bg-accent text-white hover:bg-accent-hover hover:shadow-lift;
+  .btn-brand {
+    @apply btn bg-brand text-white hover:bg-brand-hover hover:shadow-lift;
   }
 
   .btn-ghost {
-    @apply btn border border-ink/15 bg-white/70 text-ink hover:border-ink/35 hover:bg-white;
+    @apply btn border border-navy/15 bg-white/70 text-navy hover:border-navy/35 hover:bg-white;
   }
 
   .card {
-    @apply rounded-card border border-ink/10 bg-white shadow-card;
+    @apply rounded-card border border-navy/10 bg-white shadow-card;
   }
 
   .field-label {
-    @apply mb-1.5 block text-sm font-medium text-ink-soft;
+    @apply mb-1.5 block text-sm font-medium text-navy-soft;
   }
 
   .field {
-    @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] text-ink
-           placeholder:text-ink-muted/60 transition focus:border-accent focus:outline-none
-           focus:ring-2 focus:ring-accent/25;
+    @apply w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-[15px] text-navy
+           placeholder:text-navy-muted/60 transition focus:border-brand focus:outline-none
+           focus:ring-2 focus:ring-brand/25;
   }
 
   .hairline {
-    @apply border-t border-ink/10;
+    @apply border-t border-navy/10;
   }
 }

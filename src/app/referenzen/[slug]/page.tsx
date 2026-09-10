@@ -28,7 +28,7 @@ export default async function ProjectPage({ params }: Params) {
   return (
     <article>
       <div className="container-page pt-10">
-        <Link href="/referenzen" className="text-sm font-medium text-ink-muted hover:text-ink">
+        <Link href="/referenzen" className="text-sm font-medium text-navy-muted hover:text-navy">
           ← Alle Referenzen
         </Link>
       </div>
@@ -52,9 +52,9 @@ export default async function ProjectPage({ params }: Params) {
           <Block title="Ergebnis" text={project.result} />
 
           {project.testimonial && (
-            <blockquote className="rounded-card border-l-4 border-accent bg-white p-7 shadow-card">
+            <blockquote className="rounded-card border-l-4 border-brand bg-white p-7 shadow-card">
               <p className="font-display text-xl leading-relaxed">„{project.testimonial.quote}"</p>
-              <footer className="mt-4 text-sm text-ink-muted">— {project.testimonial.author}</footer>
+              <footer className="mt-4 text-sm text-navy-muted">— {project.testimonial.author}</footer>
             </blockquote>
           )}
         </div>
@@ -68,26 +68,26 @@ export default async function ProjectPage({ params }: Params) {
               ['Bauzeit', project.duration],
               ['Jahr', String(project.year)],
             ].map(([label, value]) => (
-              <div key={label} className="flex justify-between gap-4 border-b border-ink/8 pb-3 last:border-0">
-                <dt className="text-ink-muted">{label}</dt>
+              <div key={label} className="flex justify-between gap-4 border-b border-navy/8 pb-3 last:border-0">
+                <dt className="text-navy-muted">{label}</dt>
                 <dd className="text-right font-medium">{value}</dd>
               </div>
             ))}
           </dl>
 
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">
+          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-navy-muted">
             Ausgeführte Gewerke
           </p>
           <ul className="mt-3 space-y-2">
             {project.scope.map((item) => (
-              <li key={item} className="flex items-start gap-2.5 text-sm text-ink-soft">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <li key={item} className="flex items-start gap-2.5 text-sm text-navy-soft">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
                 {item}
               </li>
             ))}
           </ul>
 
-          <Link href="/termin" className="btn-accent mt-7 w-full">
+          <Link href="/termin" className="btn-brand mt-7 w-full">
             Ähnliches Projekt? Termin anfragen
           </Link>
         </aside>
@@ -103,7 +103,7 @@ export default async function ProjectPage({ params }: Params) {
                 label={other.title}
                 className="aspect-[4/3] rounded-card transition group-hover:shadow-lift"
               />
-              <h3 className="heading-md mt-3 text-lg group-hover:text-accent">{other.title}</h3>
+              <h3 className="heading-md mt-3 text-lg group-hover:text-brand">{other.title}</h3>
               <p className="prose-body mt-1.5 text-sm">{other.location}</p>
             </Link>
           ))}

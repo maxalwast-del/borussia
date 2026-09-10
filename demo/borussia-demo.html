@@ -1,29 +1,30 @@
 <title>Borussia Baudienstleistungen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Archivo:wght@500;600;700&family=Archivo+Black&display=swap">
 
 <style>
 /* Diese Demo übernimmt die Tokens aus dem Projekt (tailwind.config.ts).
    Bewusst einfarbig hell: die spätere Website rendert genauso, unabhängig
    davon, ob der Betrachter sein System auf dunkel gestellt hat. */
 :root {
-  --ink: #17212B;
-  --ink-soft: #2C3A47;
-  --ink-muted: #5C6B7A;
-  --gypsum: #F3F6F9;
-  --gypsum-deep: #E4EAF0;
+  --ink: #122C5E;
+  --ink-soft: #2C4478;
+  --ink-muted: #5C6B87;
+  --gypsum: #F4F7FA;
+  --gypsum-deep: #E3EBF3;
   --white: #FFFFFF;
-  --accent: #1F6FB2;
-  --accent-hover: #17588F;
-  --accent-soft: #DCEAF6;
-  --accent-bright: #4A9BD8;
-  --line: rgba(23, 33, 43, 0.10);
-  --line-strong: rgba(23, 33, 43, 0.18);
-  --shadow-card: 0 1px 2px rgba(23,33,43,.04), 0 8px 28px -12px rgba(23,33,43,.16);
-  --shadow-lift: 0 2px 4px rgba(23,33,43,.05), 0 18px 44px -16px rgba(31,111,178,.22);
+  --accent: #1A72BC;
+  --accent-hover: #145C99;
+  --accent-soft: #DCEBF8;
+  --accent-bright: #2E9BE8;
+  --line: rgba(18, 44, 94, 0.10);
+  --line-strong: rgba(18, 44, 94, 0.18);
+  --shadow-card: 0 1px 2px rgba(18,44,94,.05), 0 8px 28px -12px rgba(18,44,94,.18);
+  --shadow-lift: 0 2px 4px rgba(18,44,94,.06), 0 18px 44px -16px rgba(26,114,188,.28);
   --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --display: 'Archivo', system-ui, sans-serif;
+  --wordmark: 'Archivo Black', Impact, sans-serif;
   --page: 1180px;
 }
 
@@ -71,10 +72,23 @@ header.site {
   background: var(--ink); color: var(--gypsum);
   display: grid; place-items: center;
 }
-.brand-name {
-  font-family: var(--display); font-weight: 600; font-size: 17px;
-  letter-spacing: -.01em; white-space: nowrap;
-}
+.brand-lockup { display: flex; flex-direction: column; line-height: 1; }
+.brand-word { font-family: var(--wordmark); font-size: 19px; text-transform: uppercase; letter-spacing: .01em; color: var(--ink); }
+.brand-sub { margin-top: 3px; font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .155em; color: var(--accent); }
+.mark { background: var(--white); box-shadow: inset 0 0 0 1px var(--line); }
+.slogan-rule { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0;
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); }
+.slogan-rule .bar { color: rgba(92,107,135,.45); }
+.claim { font-family: var(--display); font-style: italic; font-size: 1.05rem; margin: 16px 0 0; color: rgba(244,247,250,.85); }
+.tradeicon { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+  display: grid; place-items: center; transition: background .18s, color .18s; }
+.grid-hair > div:hover .tradeicon, .tradelink:hover .tradeicon { background: var(--accent); color: #fff; }
+.tradeicon.solid { background: var(--accent); color: #fff; width: 48px; height: 48px; flex-basis: 48px; }
+.tradenav { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+@media (min-width: 640px) { .tradenav { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .tradenav { grid-template-columns: repeat(3, 1fr); } }
+.tradelink { display: flex; align-items: center; gap: 16px; background: var(--white); padding: 20px; text-decoration: none; color: inherit; font-weight: 600; transition: background .18s; }
+.tradelink:hover { background: var(--gypsum); }
 nav.main { display: none; gap: 2px; }
 nav.main button {
   font: inherit; font-size: 15px; background: none; border: 0; cursor: pointer;
@@ -125,10 +139,10 @@ nav.main button[aria-current="page"] { color: var(--ink); font-weight: 600; }
   font-size: 12px; font-weight: 600; text-transform: uppercase;
   letter-spacing: .18em; color: var(--accent); margin: 0;
 }
-h1, h2, h3 { font-family: var(--display); letter-spacing: -.02em; text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(2.5rem, 5.5vw, 3.75rem); line-height: 1.06; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.022em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.5rem, 5.5vw, 3.7rem); line-height: 1.04; letter-spacing: -.028em; }
 .h-lg { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.14; }
-.h-md { font-size: 1.35rem; line-height: 1.3; }
+.h-md { font-size: 1.28rem; font-weight: 600; line-height: 1.3; letter-spacing: -.015em; }
 .lede { font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 62ch; }
 .body { font-size: 15px; line-height: 1.65; color: var(--ink-muted); margin: 0; }
 .body-dark { color: var(--ink-soft); }
@@ -151,7 +165,7 @@ section.block { padding: 72px 0; }
 .herobtns { display: flex; flex-direction: column; gap: 12px; }
 @media (min-width: 640px) { .herobtns { flex-direction: row; } }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 1px solid var(--line); padding-top: 28px; max-width: 520px; }
-.stats dt { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; }
+.stats dt { font-family: var(--display); font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; }
 .stats dd { margin: 4px 0 0; font-size: 14px; color: var(--ink-muted); }
 .herovisual { position: relative; }
 .floatcard { position: absolute; left: -16px; bottom: -24px; max-width: 250px; padding: 20px; display: none; }
@@ -195,7 +209,7 @@ section.block { padding: 72px 0; }
 .zonefee { margin: 8px 0 0; font-size: 14px; font-weight: 500; color: var(--accent); }
 
 /* ---------- Leistungen ---------- */
-.svc { display: grid; gap: 40px; align-items: center; }
+.svc { display: grid; gap: 40px; align-items: center; scroll-margin-top: 96px; }
 @media (min-width: 1024px) { .svc { grid-template-columns: 1fr 1fr; } .svc.flip > *:first-child { order: 2; } }
 .svc .lede-accent { color: var(--accent); font-weight: 500; font-size: 1.05rem; margin: 12px 0 0; }
 .ticks { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -345,7 +359,7 @@ textarea.inp { min-height: 130px; resize: vertical; }
 footer.site { background: var(--ink); color: var(--gypsum); margin-top: 88px; }
 footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom: 64px; }
 @media (min-width: 768px) { footer.site .wrap { grid-template-columns: 2fr 1fr 1fr; } }
-.fname { font-family: var(--display); font-size: 1.5rem; letter-spacing: -.02em; margin: 0; }
+.fname { font-family: var(--wordmark); font-size: 1.9rem; text-transform: uppercase; letter-spacing: .01em; line-height: 1; margin: 0; }
 .fslogan { margin: 8px 0 0; font-size: 14px; font-weight: 500; letter-spacing: .02em; color: var(--accent-bright); }
 .ftag { margin: 12px 0 0; max-width: 36ch; font-size: 15px; line-height: 1.65; color: rgba(243,246,249,.65); }
 .faddr { margin: 24px 0 0; font-style: normal; font-size: 15px; line-height: 1.7; color: rgba(243,246,249,.8); }
@@ -378,9 +392,17 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
   <div class="wrap headrow">
     <a class="brand" href="#" data-go="start">
       <span class="mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 4h8v6H3V4Zm10 0h8v6h-8V4ZM3 12h5v8H3v-8Zm7 0h11v8H10v-8Z"/></svg>
+        <svg viewBox="0 0 40 40" width="28" height="28">
+          <path d="M2 20 11 9.5 20 20v9H2v-9Z" fill="#2E9BE8"/>
+          <path d="M13 20 25 5.5 37 20v9H13v-9Z" fill="#122C5E"/>
+          <rect x="22.5" y="15" width="4.6" height="7" fill="#F4F7FA"/>
+          <path d="M1.5 32.5c7 3.4 13.2 4.6 18.5 3.6 5.3-1 11-3.6 18.5-8" fill="none" stroke="#2E9BE8" stroke-width="3" stroke-linecap="round"/>
+        </svg>
       </span>
-      <span class="brand-name">Borussia Baudienstleistungen</span>
+      <span class="brand-lockup">
+        <span class="brand-word">Borussia</span>
+        <span class="brand-sub">Baudienstleistungen</span>
+      </span>
     </a>
 
     <nav class="main" aria-label="Hauptnavigation" id="desknav"></nav>
@@ -403,9 +425,13 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
 <footer class="site">
   <div class="wrap">
     <div>
-      <p class="fname">Borussia Baudienstleistungen</p>
-      <p class="fslogan">Renovieren. Sanieren. Modernisieren.</p>
-      <p class="ftag">Trockenbau und Innenausbau für Altbau und Sanierung in Berlin und Brandenburg</p>
+      <p class="fname">Borussia</p>
+      <p class="fslogan" style="letter-spacing:.22em;font-size:11px;text-transform:uppercase">Baudienstleistungen</p>
+      <p class="slogan-rule" style="margin-top:18px;color:var(--accent-bright)">
+        <span>Renovieren</span><span class="bar">|</span><span>Sanieren</span><span class="bar">|</span><span>Modernisieren</span>
+      </p>
+      <p class="ftag" style="margin-top:18px">Sechs Gewerke aus einer Hand für Sanierung, Umbau und Renovierung in Berlin und Brandenburg</p>
+      <p class="claim">Qualität, auf die Sie bauen können.</p>
       <address class="faddr">
         Musterstraße 12<br>12437 Berlin<br><br>
         <a href="tel:+493012345670">+49 30 1234567</a><br>
@@ -451,14 +477,28 @@ const PAGES = [
   ['kontakt', 'Kontakt'],
 ];
 
-const SERVICES_SHORT = [
-  ['Trennwände & Grundrisse', 'Neue Raumaufteilung in Metallständerbauweise, mit Schallschutz und ausgesteiften Türöffnungen. Anschlüsse an Bestandswände bekommen einen Trennschnitt, damit dort später keine Risse aufgehen.'],
-  ['Abgehängte Decken', 'Leitungen verschwinden, Spots sitzen dort, wo sie hingehören. Unebene Altbaudecken gleichen wir über die Unterkonstruktion aus.'],
-  ['Dachgeschossausbau', 'Dämmung, luftdichte Dampfbremse, Dachschrägen und Kniestock. Jede Durchdringung der Dampfbremse fotografieren wir, bevor beplankt wird.'],
-  ['Vorsatzschalen & Schallschutz', 'Freistehende Schalen gegen Lärm von nebenan. Installationsvorwände fürs Bad stimmen wir vorher mit den Sanitärleuten ab.'],
-  ['Feuchtraum & Bad', 'Imprägnierte Platten und Verbundabdichtung nach Norm. Bei großformatigen Fliesen setzen wir die Ständer enger, sonst wird der Untergrund nicht eben genug.'],
-  ['Spachtelarbeiten Q1 bis Q4', 'Beim Aufmaß sagen wir Ihnen, welche Qualitätsstufe Ihr Raum braucht. Q4 kostet Aufpreis und lohnt sich längst nicht in jedem Zimmer.'],
+const TRADES = [
+  ['trockenbau', 'Trockenbau', 'Trennwände, abgehängte Decken, Vorsatzschalen und Dachschrägen in Metallständerbauweise.'],
+  ['fliesen', 'Fliesenarbeiten', 'Bad, Küche und Bodenflächen, vom Untergrund über die Abdichtung bis zur letzten Fuge.'],
+  ['maler', 'Malerarbeiten', 'Spachteln, Grundieren, Streichen und Tapezieren, innen wie in Treppenhäusern.'],
+  ['innenausbau', 'Innenausbau', 'Dachgeschosse, Einbauten, Türen und alles, was einen Rohbau bewohnbar macht.'],
+  ['sanierung', 'Sanierung', 'Komplette Wohnungen und Häuser, mit einem Ansprechpartner für alle Gewerke.'],
+  ['boden', 'Bodenlegerarbeiten', 'Untergrund vorbereiten, spachteln und Parkett, Vinyl oder Laminat verlegen.'],
 ];
+
+/* Symbole in Anlehnung an die Icon-Reihe des Firmenschilds. */
+const ICONS = {
+  trockenbau: '<path d="M2.5 3h8.2v7.2H2.5zM13.3 3h8.2v7.2h-8.2zM2.5 12.8h5.2V21H2.5zM10.3 12.8h11.2V21H10.3z"/>',
+  fliesen: '<path d="m12 2 4.6 4.6L12 11.2 7.4 6.6 12 2ZM5.6 9.4l4.6 4.6-4.6 4.6L1 14l4.6-4.6ZM18.4 9.4 23 14l-4.6 4.6L13.8 14l4.6-4.6Z"/>',
+  maler: '<rect x="2.6" y="3.4" width="12.4" height="5.4" rx="1.2"/><rect x="15" y="5.3" width="4.6" height="1.6"/><rect x="18" y="5.3" width="1.6" height="6.2"/><rect x="11.8" y="9.9" width="7.8" height="1.6"/><rect x="10.5" y="11.5" width="3" height="9.1" rx="1.4"/>',
+  innenausbau: '<path d="M12 2.4 1.6 10.9l1.5 1.9L4.8 11.4V21.6h5.4v-5.9h3.6v5.9h5.4V11.4l1.7 1.4 1.5-1.9L12 2.4Z"/>',
+  sanierung: '<path d="M2 4.2h6.6v4H2zM10 4.2h12v4H10zM2 9.6h12v4H2zM15.4 9.6H22v4h-6.6zM2 15h6.6v4H2zM10 15h12v4H10z"/>',
+  boden: '<path d="M2.4 3.6h5.6v16.8H2.4zM9.4 3.6H15v16.8H9.4zM16.4 3.6H22v16.8h-5.6Z"/>',
+};
+
+function icon(id, extra) {
+  return `<span class="tradeicon ${extra || ''}"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">${ICONS[id]}</svg></span>`;
+}
 
 const REASONS = [
   ['Festpreis nach Aufmaß', 'Nach dem Aufmaß bekommen Sie ein Angebot mit Positionen, Mengen und Preisen. Daran halten wir uns auch dann, wenn wir uns beim Aufwand verschätzt haben.'],
@@ -468,106 +508,169 @@ const REASONS = [
 ];
 
 const SERVICES_FULL = [
-  {
-    title: 'Trennwände & Grundrissänderung',
-    lede: 'Wenn der Grundriss nicht mehr zum Leben passt.',
-    body: 'Metallständerwände mit ein- oder doppelter Beplankung, auf Wunsch mit erhöhtem Schallschutz. Türöffnungen bekommen eine Aussteifung, Anschlüsse an Bestandswände einen Trennschnitt. Das ist die Stelle, an der Altbauwände sonst nach einem Jahr aufreißen.',
-    facts: ['Einfach- bis Dreifachbeplankung', 'Schallschutz bis 60 dB möglich', 'Statisch ausgesteifte Türöffnungen'],
-  },
-  {
-    title: 'Abgehängte Decken & Akustik',
-    lede: 'Leitungen verstecken, Raumklang verbessern.',
-    body: 'Abhängungen auf Nonius- oder Direktabhängern. Revisionsöffnungen setzen wir dorthin, wo später wirklich jemand ranmuss, nicht dorthin, wo sie am wenigsten stören. Für Praxen und Büros auch als Akustikdecke mit Lochplatten und Vliesauflage.',
-    facts: ['Ausgleich unebener Altbaudecken', 'Lochplatten für Nachhallreduktion', 'Vorbereitung für Spots und Lüftung'],
-  },
-  {
-    title: 'Dachgeschossausbau',
-    lede: 'Viel Raumgewinn, wenn die Bauphysik stimmt.',
-    body: 'Zwischensparrendämmung, luftdichte Dampfbremse, Dachschrägen- und Kniestockbekleidung. Jede Durchdringung führen wir systemkonform aus und fotografieren sie, bevor wir beplanken. Wer die Dampfbremse pfuscht, sieht den Schaden erst nach drei Wintern.',
-    facts: ['Dokumentation der Luftdichtheitsebene', 'Vorbereitung für Blower-Door-Test', 'Kniestockschränke auf Wunsch'],
-  },
-  {
-    title: 'Vorsatzschalen & Schallschutz',
-    lede: 'Gegen Lärm von nebenan und für Leitungen an der Wand.',
-    body: 'Freistehende oder angesetzte Vorsatzschalen mit Mineralwolle, entkoppelt vom Bestandsmauerwerk. Eine einzige starre Verbindung reicht, um den Schallschutz wieder aufzuheben.',
-    facts: ['Installationsvorwände fürs Bad', 'Entkoppelte Unterkonstruktion', 'Dämmung nach Anforderung'],
-  },
-  {
-    title: 'Feuchtraum & Bad',
-    lede: 'Am Untergrund hängt, wie lange die Fliesen halten.',
-    body: 'Imprägnierte Bauplatten und Verbundabdichtung in der passenden Belastungsklasse. Für großformatige Fliesen setzen wir die Ständer enger. Nischen und Ablagen planen wir gleich mit, weil sie nachträglich teuer werden.',
-    facts: ['Verbundabdichtung nach Norm', 'Ebenheitskontrolle vor Übergabe', 'Nischen und Ablagen integriert'],
-  },
-  {
-    title: 'Spachtelarbeiten Q1 bis Q4',
-    lede: 'Die Oberfläche, die Sie später jeden Tag sehen.',
-    body: 'Q2 reicht für gewöhnliche Anstriche. Q3 wird bei Streiflicht sinnvoll, Q4 bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation an und sagen Ihnen, welche Stufe Ihr Raum braucht. Meistens ist es eine niedrigere, als Sie erwarten.',
-    facts: ['Beratung zur passenden Qualitätsstufe', 'Streiflichtprüfung vor Abnahme', 'Aufpreise transparent im Angebot'],
-  },
+  { id: 'trockenbau', lede: 'Wenn der Grundriss nicht mehr zum Leben passt.',
+    body: 'Metallständerwände mit ein- oder doppelter Beplankung, abgehängte Decken, Vorsatzschalen und Dachschrägen. Türöffnungen bekommen eine Aussteifung, Anschlüsse an Bestandswände einen Trennschnitt. Das ist die Stelle, an der Altbauwände sonst nach einem Jahr aufreißen.',
+    facts: ['Schallschutz bis 60 dB möglich', 'Ausgleich unebener Altbaudecken', 'Spachtelqualität Q1 bis Q4'] },
+  { id: 'fliesen', lede: 'Am Untergrund hängt, wie lange die Fliesen halten.',
+    body: 'Bad, Küche, Flur und Bodenflächen. Vor der ersten Fliese kommt die Verbundabdichtung in der passenden Belastungsklasse. Bei großformatigen Platten setzen wir den Untergrund enger und prüfen die Ebenheit, bevor wir anfangen, statt hinterher zu spachteln.',
+    facts: ['Verbundabdichtung nach Norm', 'Großformat bis 120 × 120 cm', 'Silikonfugen und Übergänge inklusive'] },
+  { id: 'maler', lede: 'Der Teil, den am Ende jeder sieht.',
+    body: 'Spachteln, Grundieren, Streichen, Tapezieren. In bewohnten Wohnungen arbeiten wir mit Abklebung und Abdeckung bis in die Ecken, nicht nur über der Mitte des Raums. Treppenhäuser und Hausflure machen wir abschnittsweise, damit die Bewohner durchkommen.',
+    facts: ['Anstriche, Raufaser und Vliestapeten', 'Farbberatung vor der Bestellung', 'Treppenhäuser im laufenden Betrieb'] },
+  { id: 'innenausbau', lede: 'Aus Rohbau wird Wohnraum.',
+    body: 'Dachgeschossausbau mit Zwischensparrendämmung und luftdichter Dampfbremse, Kniestockschränke, Innentüren, Einbauten. Jede Durchdringung der Dampfbremse führen wir systemkonform aus und fotografieren sie, bevor wir beplanken. Wer hier pfuscht, sieht den Schaden erst nach drei Wintern.',
+    facts: ['Dokumentation der Luftdichtheitsebene', 'Vorbereitung für Blower-Door-Test', 'Türen, Zargen und Einbauten'] },
+  { id: 'sanierung', lede: 'Eine Wohnung, ein Ansprechpartner, ein Termin.',
+    body: 'Komplettsanierung von Wohnungen und Häusern. Wir übernehmen die Gewerke, die wir selbst ausführen, und koordinieren Elektro und Sanitär mit festen Partnerbetrieben aus der Region. Sie bekommen einen Bauzeitenplan und rufen bei Rückfragen nicht vier Nummern an.',
+    facts: ['Bauzeitenplan über alle Gewerke', 'Feste Partner für Elektro und Sanitär', 'Auch im bewohnten Zustand möglich'] },
+  { id: 'boden', lede: 'Der Boden verzeiht nichts, was darunter schiefgeht.',
+    body: 'Parkett, Vinyl, Laminat und Designbeläge. Vorher messen wir die Restfeuchte des Estrichs, grundieren und spachteln den Untergrund. Ein Belag auf zu feuchtem oder unebenem Estrich wirft sich, und dann liegt es nie am Belag.',
+    facts: ['Restfeuchtemessung vor Verlegung', 'Spachteln und Grundieren im Angebot', 'Sockelleisten und Übergangsprofile'] },
 ];
 
+/* Aus src/content/projects.ts übernommen, damit Demo und Website
+   dieselben Referenzen zeigen. */
 const PROJECTS = [
   {
-    slug: 'altbau-prenzlauer-berg', title: 'Altbauwohnung mit neuem Grundriss',
-    location: 'Berlin Prenzlauer Berg', year: 2025, category: 'Altbausanierung',
-    summary: 'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer. Der Stuck ist geblieben.',
-    duration: '3 Wochen', area: '112 m²',
+    slug: 'altbau-prenzlauer-berg',
+    title: 'Altbauwohnung mit neuem Grundriss',
+    location: 'Berlin Prenzlauer Berg',
+    year: 2025,
+    category: 'Trockenbau',
+    summary:
+      'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer. Der Stuck ist geblieben.',
+    duration: '3 Wochen',
+    area: '112 m²',
     scope: ['Trennwände in Metallständerbauweise', 'Schiebetürsystem', 'Stuckerhalt an Anschlüssen', 'Q3-Spachtelung'],
-    challenge: 'Der originale Deckenstuck sollte bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Dazu kam eine Altbaudecke mit bis zu vier Zentimetern Höhenunterschied.',
-    solution: 'Die Wandanschlüsse haben wir mit Trennschnitt und Gleitanschluss ausgeführt, damit der Stuck rissfrei stehen bleibt. Die Unebenheit der Decke fängt eine justierbare Unterkonstruktion ab.',
-    result: 'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten waren an den Anschlüssen keine Setzrisse zu sehen.',
-    testimonial: { quote: 'Zeitplan gehalten, Baustelle jeden Abend besenrein. An zwei Stellen haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.', author: 'Eigentümerin, Prenzlauer Berg' },
+    challenge:
+      'Der originale Deckenstuck sollte bleiben, gleichzeitig mussten zwei tragende Anschlüsse neu gefasst werden. Dazu kam eine Altbaudecke mit bis zu vier Zentimetern Höhenunterschied.',
+    solution:
+      'Die Wandanschlüsse haben wir mit Trennschnitt und Gleitanschluss ausgeführt, damit der Stuck rissfrei stehen bleibt. Die Unebenheit der Decke fängt eine justierbare Unterkonstruktion ab.',
+    result:
+      'Offener Wohnbereich mit sauberer Kante zum Bestand. Nach zwölf Monaten waren an den Anschlüssen keine Setzrisse zu sehen.',
+    testimonial: {
+      quote:
+        'Zeitplan gehalten, Baustelle jeden Abend besenrein. An zwei Stellen haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.',
+      author: 'Eigentümerin, Prenzlauer Berg',
+    },
   },
   {
-    slug: 'dachausbau-koepenick', title: 'Dachgeschossausbau mit Gaube',
-    location: 'Berlin Köpenick', year: 2025, category: 'Dachausbau',
+    slug: 'dachausbau-koepenick',
+    title: 'Dachgeschossausbau mit Gaube',
+    location: 'Berlin Köpenick',
+    year: 2025,
+    category: 'Innenausbau',
     summary: 'Ungenutzter Spitzboden wurde zu zwei Kinderzimmern mit Dachschrägen und Kniestock.',
-    duration: '4 Wochen', area: '68 m²',
+    duration: '4 Wochen',
+    area: '68 m²',
     scope: ['Zwischensparrendämmung', 'Dampfbremse mit Blower-Door-Vorbereitung', 'Dachschrägenbekleidung', 'Kniestockschränke'],
-    challenge: 'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede undichte Stelle wäre später ein Bauschaden geworden.',
-    solution: 'Alle Durchdringungen haben wir mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln fotografiert.',
+    challenge:
+      'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Jede undichte Stelle wäre später ein Bauschaden geworden.',
+    solution:
+      'Alle Durchdringungen haben wir mit Manschetten und Anschlussklebeband systemkonform ausgeführt und vor dem Beplanken einzeln fotografiert.',
     result: 'Der Blower-Door-Test ging durch. Die Fotos der Anschlüsse hat der Bauherr bekommen.',
   },
   {
-    slug: 'akustikdecke-praxis-mitte', title: 'Akustikdecke für eine Praxis',
-    location: 'Berlin Mitte', year: 2024, category: 'Decken & Akustik',
+    slug: 'akustikdecke-praxis-mitte',
+    title: 'Akustikdecke für eine Praxis',
+    location: 'Berlin Mitte',
+    year: 2024,
+    category: 'Trockenbau',
     summary: 'Abgehängte Lochplattendecke für Sprachverständlichkeit und Diskretion zwischen Behandlungsräumen.',
-    duration: '2 Wochen', area: '190 m²',
+    duration: '2 Wochen',
+    area: '190 m²',
     scope: ['Abgehängte Decke', 'Akustik-Lochplatten', 'Integrierte Beleuchtung', 'Revisionsöffnungen'],
-    challenge: 'Der Umbau lief im laufenden Praxisbetrieb. Gearbeitet werden durfte nur zwischen 16 und 22 Uhr, und das möglichst staubarm.',
-    solution: 'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Am nächsten Morgen war der Bereich wieder nutzbar.',
+    challenge:
+      'Der Umbau lief im laufenden Praxisbetrieb. Gearbeitet werden durfte nur zwischen 16 und 22 Uhr, und das möglichst staubarm.',
+    solution:
+      'Wir haben in Abschnitten gearbeitet, mit Staubschutzwänden und Absaugung an jedem Schnitt. Am nächsten Morgen war der Bereich wieder nutzbar.',
     result: 'Die Praxis hatte keinen einzigen Ausfalltag. Im Wartebereich ist der Nachhall deutlich zurückgegangen.',
-    testimonial: { quote: 'Wir konnten durchgehend behandeln. Morgens war nichts mehr von der Baustelle zu sehen.', author: 'Praxisinhaber, Berlin-Mitte' },
+    testimonial: {
+      quote: 'Wir konnten durchgehend behandeln. Morgens war nichts mehr von der Baustelle zu sehen.',
+      author: 'Praxisinhaber, Berlin-Mitte',
+    },
   },
   {
-    slug: 'wohnungsumbau-potsdam', title: 'Wohnungszusammenlegung',
-    location: 'Potsdam', year: 2024, category: 'Wohnungsumbau',
+    slug: 'wohnungsumbau-potsdam',
+    title: 'Wohnungszusammenlegung als Komplettsanierung',
+    location: 'Potsdam',
+    year: 2024,
+    category: 'Sanierung',
     summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung, mit neuem Schallschutz zur Nachbarwohnung.',
-    duration: '5 Wochen', area: '140 m²',
-    scope: ['Vorsatzschalen mit Schallschutz', 'Neue Trennwände', 'Installationswand', 'Q4 in Wohnbereichen'],
+    duration: '5 Wochen',
+    area: '140 m²',
+    scope: ['Vorsatzschalen mit Schallschutz', 'Neue Trennwände', 'Bad neu gefliest', 'Maler- und Bodenarbeiten', 'Koordination Elektro und Sanitär'],
     challenge: 'Die Wohnungstrennwand zum Nachbarn lag deutlich unter heutigem Schallschutzniveau.',
-    solution: 'Eine freistehende Vorsatzschale mit Mineralwolle, entkoppelt und ohne starre Verbindung zum Bestandsmauerwerk.',
-    result: 'Der Schallschutz ist messbar besser, die Schlafräume merklich ruhiger.',
+    solution:
+      'Eine freistehende Vorsatzschale mit Mineralwolle, entkoppelt und ohne starre Verbindung zum Bestandsmauerwerk.',
+    result: 'Der Schallschutz ist messbar besser, die Schlafräume merklich ruhiger. Die Familie hatte über fünf Wochen einen Ansprechpartner statt fünf.',
   },
   {
-    slug: 'bad-feuchtraum-charlottenburg', title: 'Feuchtraumausbau Bad',
-    location: 'Berlin Charlottenburg', year: 2024, category: 'Bad & Feuchtraum',
+    slug: 'bad-feuchtraum-charlottenburg',
+    title: 'Feuchtraumausbau Bad',
+    location: 'Berlin Charlottenburg',
+    year: 2024,
+    category: 'Fliesenarbeiten',
     summary: 'Installationsvorwand und Feuchtraumbeplankung als Untergrund für großformatige Fliesen.',
-    duration: '8 Tage', area: '14 m²',
+    duration: '8 Tage',
+    area: '14 m²',
     scope: ['Installationsvorwand', 'Imprägnierte Bauplatten', 'Verbundabdichtung', 'Nischen und Ablagen'],
     challenge: 'Großformatfliesen verzeihen keine Toleranzen. Der Untergrund musste entsprechend eben werden.',
-    solution: 'Engere Ständerabstände, doppelte Beplankung und eine Ebenheitskontrolle, bevor der Fliesenleger übernommen hat.',
-    result: 'Der Fliesenleger konnte ohne Nacharbeit anfangen.',
+    solution: 'Engere Ständerabstände, doppelte Beplankung und eine Ebenheitskontrolle, bevor die erste Fliese lag.',
+    result: 'Weil Untergrund und Belag aus demselben Betrieb kamen, gab es keine Schnittstelle, an der sich zwei Gewerke die Schuld zuschieben.',
   },
   {
-    slug: 'buero-loft-friedrichshain', title: 'Büroloft mit Besprechungsboxen',
-    location: 'Berlin Friedrichshain', year: 2023, category: 'Wohnungsumbau',
+    slug: 'buero-loft-friedrichshain',
+    title: 'Büroloft mit Besprechungsboxen',
+    location: 'Berlin Friedrichshain',
+    year: 2023,
+    category: 'Innenausbau',
     summary: 'Drei freistehende Besprechungsboxen in einer offenen Hallenfläche, akustisch entkoppelt.',
-    duration: '3 Wochen', area: '85 m²',
+    duration: '3 Wochen',
+    area: '85 m²',
     scope: ['Freistehende Raum-in-Raum-Konstruktion', 'Doppelbeplankung', 'Glaselemente', 'Deckenanschluss entkoppelt'],
     challenge: 'Die Boxen sollten rückbaubar sein und die Sichtbetondecke nicht beschädigen.',
     solution: 'Die Konstruktion steht auf eigenen Schwellen und ist oben nur gleitend geführt. In die Decke haben wir nicht eingegriffen.',
     result: 'Vollständig rückbaubar, weil der Mietvertrag nichts anderes zuließ.',
+  },
+  {
+    slug: 'renovierung-neukoelln',
+    title: 'Wohnungsrenovierung zum Mieterwechsel',
+    location: 'Berlin Neukölln',
+    year: 2025,
+    category: 'Malerarbeiten',
+    summary:
+      'Vier Zimmer streichen, Risse schließen und ein Treppenhaus mitmachen, alles zwischen Auszug und Einzug.',
+    duration: '9 Tage',
+    area: '86 m²',
+    scope: ['Risse schließen und spachteln', 'Raufaser und Anstrich', 'Lackierung der Innentüren', 'Treppenhaus im Erdgeschoss'],
+    challenge:
+      'Zwischen Auszug und Übergabe an den neuen Mieter lagen zwei Wochen. In dieser Zeit mussten auch Kleinreparaturen erledigt sein.',
+    solution:
+      'Wir haben raumweise gearbeitet statt gewerkeweise, damit die fertigen Zimmer nicht wieder zugestellt wurden. Die Türen kamen zum Lackieren in einen leeren Raum.',
+    result: 'Übergabe zwei Tage vor dem vereinbarten Termin. Der Vermieter hatte keinen Mietausfall.',
+    testimonial: {
+      quote:
+        'Ich hatte mit einer Woche Verzug gerechnet, weil das sonst immer so läuft. Diesmal nicht.',
+      author: 'Vermieter, Berlin-Neukölln',
+    },
+  },
+  {
+    slug: 'parkett-altbau-schoeneberg',
+    title: 'Parkett auf altem Dielenboden',
+    location: 'Berlin Schöneberg',
+    year: 2025,
+    category: 'Bodenlegerarbeiten',
+    summary:
+      'Eichenparkett über einem schwingenden Altbaudielenboden, ohne dass der Bestand herausgerissen wurde.',
+    duration: '6 Tage',
+    area: '74 m²',
+    scope: ['Dielenboden verschrauben und ausgleichen', 'Trittschalldämmung', 'Eichenparkett schwimmend', 'Sockelleisten'],
+    challenge:
+      'Der Dielenboden federte an mehreren Stellen und lag bis zu zwei Zentimeter uneben. Ein Parkett darauf hätte in den Fugen gearbeitet.',
+    solution:
+      'Wir haben die Dielen zunächst auf den Balken nachverschraubt, dann mit einer Ausgleichsschüttung und Trockenestrichplatten eine ebene Fläche hergestellt.',
+    result: 'Der Boden liegt ruhig, und die alten Dielen sind unter dem Aufbau erhalten geblieben.',
   },
 ];
 
@@ -581,9 +684,9 @@ const STEPS = [
 ];
 
 const FAQS = [
-  ['Was kostet Trockenbau pro Quadratmeter?', 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Der Preis hängt an der Beplankungsart, der Schallschutzanforderung, der Spachtelqualität und daran, wie gut wir mit Material an die Baustelle kommen. Eine einfache Trennwand liegt in einem ganz anderen Bereich als eine entkoppelte Vorsatzschale mit Q4-Oberfläche. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.'],
+  ['Was kostet das pro Quadratmeter?', 'Ehrlich gesagt lässt sich das erst nach dem Aufmaß beantworten. Bei einer Trennwand hängt der Preis an Beplankung, Schallschutz und Spachtelqualität, beim Boden am Zustand des Estrichs, beim Bad an Format und Abdichtung. Dazu kommt, wie gut wir mit Material an die Baustelle kommen. Deshalb messen wir kostenfrei auf, statt am Telefon Zahlen zu raten.'],
   ['Kann ich während der Arbeiten in der Wohnung bleiben?', 'Meistens ja. Wir arbeiten abschnittsweise mit Staubschutzwänden und Absaugung. Bei größeren Umbauten mit Grundrissänderung ist ein Auszug für ein paar Wochen oft die entspanntere Lösung. Das sprechen wir beim Aufmaß offen an.'],
-  ['Übernehmen Sie auch Elektro und Malerarbeiten?', 'Trockenbau ist unser Gewerk. Für Elektro, Sanitär und Malerarbeiten haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.'],
+  ['Welche Gewerke machen Sie selbst?', 'Trockenbau, Fliesen, Maler, Innenausbau und Boden führen wir mit eigenen Leuten aus. Für Elektro und Sanitär haben wir feste Partnerbetriebe aus der Region. Die Reihenfolge stimmen wir ab, damit nicht einer auf den anderen wartet.'],
   ['Welche Spachtelqualität brauche ich?', 'Q2 reicht für gewöhnliche Anstriche und Raufaser. Q3 ist bei glatten Anstrichen sinnvoll, Q4 bei Streiflicht durch große Fenster oder bei glänzenden Beschichtungen. Wir schauen uns die Lichtsituation vor Ort an. In den meisten Wohnungen ist Q4 rausgeworfenes Geld.'],
   ['Wie schnell können Sie anfangen?', 'Die aktuelle Vorlaufzeit nennen wir Ihnen beim Aufmaß verbindlich. Kleinere Arbeiten schieben sich manchmal kurzfristig dazwischen, für größere Projekte brauchen wir einige Wochen Vorlauf.'],
   ['Kann ich Handwerkerleistungen steuerlich absetzen?', 'Für Privathaushalte sind Lohn-, Fahrt- und Maschinenkosten nach § 35a EStG anteilig steuerlich begünstigt. Materialkosten zählen nicht dazu. Unsere Rechnungen weisen den Lohnanteil deshalb getrennt aus, und wir bitten um Überweisung statt Barzahlung, weil das Finanzamt sonst nicht mitspielt. Was in Ihrem Fall herauskommt, sagt Ihnen Ihr Steuerbüro.'],
@@ -621,7 +724,7 @@ const ZONES = [
 
 const TYPES = [
   { id: 'aufmass', label: 'Aufmaß & Beratung vor Ort', minutes: 60,
-    desc: 'Wir kommen zu Ihnen, messen auf und besprechen die Ausführung. Danach bekommen Sie ein Festpreisangebot.',
+    desc: 'Wir kommen zu Ihnen, sehen uns an, was ansteht, und messen auf. Danach bekommen Sie ein Festpreisangebot über alle beteiligten Gewerke.',
     price: 'kostenfrei im Einsatzgebiet' },
   { id: 'telefon', label: 'Telefonische Erstberatung', minutes: 20,
     desc: 'Kurzes Gespräch über Machbarkeit, Preisrahmen und Terminlage. Sinnvoll, solange Sie noch planen.',
@@ -745,11 +848,11 @@ function viewStart() {
   return `
   <div class="hero"><div class="wrap">
     <div>
-      <p class="eyebrow">Renovieren. Sanieren. Modernisieren.</p>
+      <p class="slogan-rule"><span>Renovieren</span><span class="bar">|</span><span>Sanieren</span><span class="bar">|</span><span>Modernisieren</span></p>
       <h1 style="margin-top:20px">Neue Räume im<br>alten Grundriss.</h1>
-      <p class="lede" style="margin-top:24px">Trockenbau und Innenausbau in Berlin und Brandenburg. Wir bauen Trennwände,
-        Decken und Dachgeschosse für Sanierung und Wohnungsumbau. Nach dem Aufmaß bekommen Sie
-        einen Festpreis, und bis zur Abnahme haben Sie denselben Ansprechpartner.</p>
+      <p class="lede" style="margin-top:24px">Trockenbau, Fliesen, Maler, Innenausbau, Sanierung und Boden in Berlin
+        und Brandenburg. Nach dem Aufmaß bekommen Sie einen Festpreis über alle Gewerke, und bis zur
+        Abnahme haben Sie denselben Ansprechpartner.</p>
       <div class="herobtns" style="margin-top:36px">
         <button class="btn btn-accent" data-go="termin">Aufmaßtermin anfragen &nbsp;→</button>
         <a class="btn btn-ghost" href="tel:+493012345670">+49 30 1234567</a>
@@ -771,13 +874,14 @@ function viewStart() {
 
   <section class="block"><div class="wrap">
     <p class="eyebrow">Leistungen</p>
-    <h2 class="h-lg" style="margin-top:16px">Was wir bauen</h2>
-    <p class="body" style="margin-top:16px;max-width:60ch">Schwerpunkt ist Sanierung und Umbau im bewohnten Bestand.
-      Neubau machen wir, wenn es zeitlich passt.</p>
+    <h2 class="h-lg" style="margin-top:16px">Sechs Gewerke, ein Ansprechpartner</h2>
+    <p class="body" style="margin-top:16px;max-width:60ch">Wer eine Wohnung saniert, koordiniert sonst vier Betriebe
+      und wartet auf jeden einzelnen. Bei uns kommt alles aus einem Haus, und die Reihenfolge planen wir gleich mit.</p>
     <div class="grid-hair" style="margin-top:48px">
-      ${SERVICES_SHORT.map(([t, x]) => `<div><h3 class="h-md">${esc(t)}</h3><p class="body" style="margin-top:12px">${esc(x)}</p></div>`).join('')}
+      ${TRADES.map(([id, t, x]) => `<div>${icon(id)}<h3 class="h-md" style="margin-top:20px">${esc(t)}</h3>
+        <p class="body" style="margin-top:10px">${esc(x)}</p></div>`).join('')}
     </div>
-    <p style="margin-top:32px"><button class="backlink" style="color:var(--accent);font-weight:600;font-size:16px" data-go="leistungen">Alle Leistungen im Detail →</button></p>
+    <p style="margin-top:32px"><button class="backlink" style="color:var(--accent);font-weight:600;font-size:16px" data-go="leistungen">Alle Gewerke im Detail →</button></p>
   </div></section>
 
   <div class="dark-band"><div class="wrap">
@@ -833,22 +937,29 @@ function projectCard(p, i) {
 
 /* ---------- Leistungen ---------- */
 function viewLeistungen() {
-  return pagehead('Leistungen', 'Trockenbau von der Trennwand bis zur Q4-Oberfläche',
-    'Schwerpunkt ist Sanierung im bewohnten Bestand. Wir sagen Ihnen vorher, was sinnvoll ist und was Sie sich sparen können.') + `
+  return pagehead('Leistungen', 'Sechs Gewerke aus einer Hand',
+    'Schwerpunkt ist Sanierung und Renovierung im bewohnten Bestand. Wir sagen Ihnen vorher, was sinnvoll ist und was Sie sich sparen können.') + `
   <section class="block"><div class="wrap stack" style="gap:80px">
-    ${SERVICES_FULL.map((s, i) => `<div class="svc ${i % 2 ? 'flip' : ''}">
+    <nav class="tradenav" aria-label="Gewerke">
+      ${TRADES.map(([id, label]) => `<a class="tradelink" href="#${id}" data-trade="${id}">${icon(id)}<span>${esc(label)}</span></a>`).join('')}
+    </nav>
+    ${SERVICES_FULL.map((s, i) => {
+      const label = TRADES.find((t) => t[0] === s.id)[1];
+      return `<div class="svc ${i % 2 ? 'flip' : ''}" id="${s.id}">
       ${visual(i, '5/4')}
       <div>
-        <h2 class="h-lg">${esc(s.title)}</h2>
+        ${icon(s.id, 'solid')}
+        <h2 class="h-lg" style="margin-top:20px">${esc(label)}</h2>
         <p class="lede-accent">${esc(s.lede)}</p>
         <p class="body" style="margin-top:16px">${esc(s.body)}</p>
         <ul class="ticks">${s.facts.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
       </div>
-    </div>`).join('')}
+    </div>`;
+    }).join('')}
     <div class="card" style="padding:48px;text-align:center">
-      <h2 class="h-lg">Unsicher, was Ihr Projekt braucht?</h2>
-      <p class="body" style="margin:16px auto 0;max-width:52ch">Das Aufmaß vor Ort ist kostenfrei und unverbindlich.
-        Danach wissen Sie schriftlich, was machbar ist und was es kostet.</p>
+      <h2 class="h-lg">Mehrere Gewerke gleichzeitig?</h2>
+      <p class="body" style="margin:16px auto 0;max-width:52ch">Genau dafür ist der Betrieb aufgestellt. Das Aufmaß vor
+        Ort ist kostenfrei, und Sie bekommen ein Angebot, das alle beteiligten Arbeiten abdeckt.</p>
       <button class="btn btn-accent" style="margin-top:32px" data-go="termin">Aufmaßtermin anfragen</button>
     </div>
   </div></section>`;
@@ -1207,8 +1318,15 @@ function go(page) {
 }
 
 document.addEventListener('click', (e) => {
-  const el = e.target.closest('[data-go],[data-project],[data-back],[data-filter],[data-type],[data-week],[data-slot],[data-reset]');
+  const el = e.target.closest('[data-go],[data-project],[data-back],[data-filter],[data-type],[data-week],[data-slot],[data-reset],[data-trade]');
   if (!el) return;
+
+  // Sprungmarke innerhalb der Leistungsseite: sanft scrollen statt Seitenwechsel.
+  if (el.dataset.trade) {
+    e.preventDefault();
+    document.getElementById(el.dataset.trade)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
 
   if (el.dataset.go) { e.preventDefault(); go(el.dataset.go); return; }
   if (el.dataset.project) { state.page = 'referenzen'; state.project = el.dataset.project; render(); return; }

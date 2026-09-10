@@ -13,9 +13,9 @@ export default function ImpressumPage() {
   return (
     <>
       <PageHeader eyebrow="Rechtliches" title="Impressum" />
-      <section className="container-page grid max-w-3xl gap-8 py-16 text-[15px] leading-relaxed text-ink-soft">
+      <section className="container-page grid max-w-3xl gap-8 py-16 text-[15px] leading-relaxed text-navy-soft">
         <div>
-          <h2 className="heading-md text-xl text-ink">Angaben gemäß § 5 DDG</h2>
+          <h2 className="heading-md text-xl text-navy">Angaben gemäß § 5 DDG</h2>
           <p className="mt-3">
             {company.legalName}
             <br />
@@ -26,12 +26,12 @@ export default function ImpressumPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Vertreten durch</h2>
+          <h2 className="heading-md text-xl text-navy">Vertreten durch</h2>
           <p className="mt-3">{company.managingDirector}</p>
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Kontakt</h2>
+          <h2 className="heading-md text-xl text-navy">Kontakt</h2>
           <p className="mt-3">
             Telefon: {company.phone}
             <br />
@@ -40,17 +40,17 @@ export default function ImpressumPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Registereintrag</h2>
+          <h2 className="heading-md text-xl text-navy">Registereintrag</h2>
           <p className="mt-3">{company.register}</p>
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Umsatzsteuer-Identifikationsnummer</h2>
+          <h2 className="heading-md text-xl text-navy">Umsatzsteuer-Identifikationsnummer</h2>
           <p className="mt-3">Gemäß § 27 a UStG: {company.vatId}</p>
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Berufsrechtliche Angaben</h2>
+          <h2 className="heading-md text-xl text-navy">Berufsrechtliche Angaben</h2>
           <p className="mt-3">
             Gesetzliche Berufsbezeichnung: Trockenbaumonteur (verliehen in der Bundesrepublik Deutschland)
             <br />
@@ -62,7 +62,7 @@ export default function ImpressumPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Verbraucherstreitbeilegung</h2>
+          <h2 className="heading-md text-xl text-navy">Verbraucherstreitbeilegung</h2>
           <p className="mt-3">
             Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
             Verbraucherschlichtungsstelle teilzunehmen.
@@ -70,7 +70,7 @@ export default function ImpressumPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-ink">Haftung für Inhalte und Links</h2>
+          <h2 className="heading-md text-xl text-navy">Haftung für Inhalte und Links</h2>
           <p className="mt-3">
             Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen
             Gesetzen verantwortlich. Für Inhalte externer Links ist der jeweilige Anbieter
@@ -79,7 +79,7 @@ export default function ImpressumPage() {
           </p>
         </div>
 
-        <p className="rounded-xl bg-accent-soft/50 p-5 text-sm">
+        <p className="rounded-xl bg-brand-soft/50 p-5 text-sm">
           Hinweis für die Übernahme: Dieser Text ist ein Gerüst mit Platzhalterdaten. Vor dem Livegang
           durch die tatsächlichen Angaben ersetzen und juristisch prüfen lassen.
         </p>

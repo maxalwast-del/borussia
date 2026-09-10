@@ -127,17 +127,17 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
         </label>
       </div>
 
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-ink-muted">
+      <label className="flex items-start gap-3 text-sm leading-relaxed text-navy-muted">
         <input
           type="checkbox"
           required
           checked={form.privacy}
           onChange={(e) => setForm({ ...form, privacy: e.target.checked })}
-          className="mt-1 h-4 w-4 rounded border-ink/30 text-accent focus:ring-accent"
+          className="mt-1 h-4 w-4 rounded border-navy/30 text-brand focus:ring-brand"
         />
         <span>
           Ich bin mit der Verarbeitung meiner Angaben im Bewerbungsverfahren einverstanden
-          (<a href="/datenschutz" className="underline hover:text-ink">Datenschutz</a>).
+          (<a href="/datenschutz" className="underline hover:text-navy">Datenschutz</a>).
         </span>
       </label>
 
@@ -147,13 +147,13 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
         </p>
       )}
 
-      <button type="submit" disabled={state === 'sending'} className="btn-accent w-full">
+      <button type="submit" disabled={state === 'sending'} className="btn-brand w-full">
         {state === 'sending' ? 'Wird gesendet …' : 'Bewerbung senden'}
       </button>
 
-      <p className="text-center text-sm text-ink-muted">
+      <p className="text-center text-sm text-navy-muted">
         Lieber direkt?{' '}
-        <a href={`https://wa.me/${company.whatsapp}`} className="font-medium text-accent hover:underline">
+        <a href={`https://wa.me/${company.whatsapp}`} className="font-medium text-brand hover:underline">
           Per WhatsApp melden
         </a>{' '}
         oder anrufen: {company.phone}

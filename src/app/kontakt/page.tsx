@@ -25,20 +25,20 @@ export default function KontaktPage() {
               <h2 className="heading-md text-xl">Direkt erreichbar</h2>
               <div className="mt-5 space-y-4 text-[15px]">
                 <p>
-                  <span className="block text-sm text-ink-muted">Telefon</span>
-                  <a href={`tel:${company.phoneHref}`} className="font-semibold hover:text-accent">
+                  <span className="block text-sm text-navy-muted">Telefon</span>
+                  <a href={`tel:${company.phoneHref}`} className="font-semibold hover:text-brand">
                     {company.phone}
                   </a>
                 </p>
                 <p>
-                  <span className="block text-sm text-ink-muted">E-Mail</span>
-                  <a href={`mailto:${company.email}`} className="font-semibold hover:text-accent">
+                  <span className="block text-sm text-navy-muted">E-Mail</span>
+                  <a href={`mailto:${company.email}`} className="font-semibold hover:text-brand">
                     {company.email}
                   </a>
                 </p>
                 <p>
-                  <span className="block text-sm text-ink-muted">WhatsApp</span>
-                  <a href={`https://wa.me/${company.whatsapp}`} className="font-semibold hover:text-accent">
+                  <span className="block text-sm text-navy-muted">WhatsApp</span>
+                  <a href={`https://wa.me/${company.whatsapp}`} className="font-semibold hover:text-brand">
                     Nachricht schreiben
                   </a>
                 </p>
@@ -47,14 +47,14 @@ export default function KontaktPage() {
 
             <div className="card p-7">
               <h2 className="heading-md text-xl">Anschrift</h2>
-              <address className="mt-4 not-italic text-[15px] leading-relaxed text-ink-soft">
+              <address className="mt-4 not-italic text-[15px] leading-relaxed text-navy-soft">
                 {company.legalName}
                 <br />
                 {company.street}
                 <br />
                 {company.zip} {company.city}
               </address>
-              <p className="mt-4 text-sm text-ink-muted">
+              <p className="mt-4 text-sm text-navy-muted">
                 Das Büro ist nur nach Vereinbarung besetzt. Wir sind meistens auf der Baustelle.
               </p>
             </div>
@@ -64,20 +64,20 @@ export default function KontaktPage() {
               <ul className="mt-4 space-y-2 text-[15px]">
                 {company.openingHours.map((entry) => (
                   <li key={entry.days} className="flex justify-between gap-4">
-                    <span className="text-ink-muted">{entry.days}</span>
+                    <span className="text-navy-muted">{entry.days}</span>
                     <span className="font-medium">{entry.time}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-card bg-ink p-7 text-gypsum">
+            <div className="rounded-card bg-navy p-7 text-paper">
               <h2 className="heading-md text-xl">Konkreter Termin?</h2>
-              <p className="mt-2 text-[15px] leading-relaxed text-gypsum/70">
+              <p className="mt-2 text-[15px] leading-relaxed text-paper/70">
                 Über die Online-Anfrage sehen Sie die freien Zeiten sofort und sparen sich das
                 Hin und Her.
               </p>
-              <Link href="/termin" className="btn-accent mt-5 w-full">
+              <Link href="/termin" className="btn-brand mt-5 w-full">
                 Termin anfragen
               </Link>
             </div>
