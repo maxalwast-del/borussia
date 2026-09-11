@@ -1,0 +1,891 @@
+<title>Borussia Werkschau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* =========================================================================
+   Zweite Gestaltungsrichtung: dunkel, kapitelweise, mit Maßangaben.
+   Dieselbe Marke wie Demo 1, anderer Auftritt. Auf dunklem Grund trägt das
+   helle Logoblau #2E9BE8 endlich als Akzent, auf Weiß wäre es zu schwach.
+   Bewusst einfarbig, so wie die spätere Website.
+   ========================================================================= */
+:root {
+  color-scheme: dark;
+  --night: #07142C;
+  --night-2: #0C1E3E;
+  --night-3: #13294F;
+  --paper: #EEF3F9;
+  --muted: #9CAEC8;
+  --blue: #2E9BE8;
+  --blue-deep: #1A72BC;
+  --hair: rgba(238, 243, 249, 0.14);
+  --hair-soft: rgba(238, 243, 249, 0.07);
+  --display: 'Archivo Black', Impact, sans-serif;
+  --sans: 'Archivo', system-ui, -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --page: 1280px;
+  --rail: 132px;
+}
+
+* { box-sizing: border-box; }
+button, input, select, textarea { font: inherit; color: inherit; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--blue); color: #04101F; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+a { color: inherit; }
+
+.wrap { width: 100%; max-width: var(--page); margin: 0 auto; padding: 0 22px; }
+@media (min-width: 900px) { .wrap { padding: 0 40px; } }
+
+/* Filmisches Korn über der ganzen Seite, damit die Flächen nicht flach wirken */
+.grain {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  opacity: .16; mix-blend-mode: overlay;
+}
+
+/* ---------- Typografie ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  margin: 0;
+  text-wrap: balance;
+}
+.d-xl { font-size: clamp(2.9rem, 9vw, 7rem); }
+.d-lg { font-size: clamp(2.1rem, 5.2vw, 4rem); }
+.d-md { font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+h1, h2, h3 { margin: 0; }
+.lede { font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.55; color: var(--paper); max-width: 52ch; margin: 0; }
+.body { font-size: 15px; line-height: 1.7; color: var(--muted); margin: 0; max-width: 60ch; }
+.mono {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin: 0;
+}
+.mono-dim { color: var(--muted); }
+
+/* ---------- Kopfzeile ---------- */
+header.top {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  border-bottom: 1px solid transparent;
+  transition: background .35s, border-color .35s, backdrop-filter .35s;
+}
+header.top.solid { background: rgba(7, 20, 44, .82); backdrop-filter: blur(14px); border-bottom-color: var(--hair-soft); }
+.toprow { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; }
+.brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+.brand svg { display: block; }
+.brand-word { font-family: var(--display); font-size: 17px; text-transform: uppercase; letter-spacing: .012em; line-height: 1; }
+.brand-sub { display: block; margin-top: 3px; font-family: var(--mono); font-size: 8.5px; letter-spacing: .2em; color: var(--blue); }
+.topnav { display: none; gap: 26px; }
+.topnav button {
+  background: none; border: 0; cursor: pointer; padding: 6px 0;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); position: relative; transition: color .2s;
+}
+.topnav button::after {
+  content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+  background: var(--blue); transition: right .3s cubic-bezier(.22,1,.36,1);
+}
+.topnav button:hover, .topnav button[aria-current="true"] { color: var(--paper); }
+.topnav button:hover::after, .topnav button[aria-current="true"]::after { right: 0; }
+@media (min-width: 1024px) { .topnav { display: flex; } }
+
+/* ---------- Schaltflächen ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase;
+  padding: 15px 26px; border-radius: 2px; border: 1px solid transparent; cursor: pointer;
+  text-decoration: none; transition: background .22s, color .22s, border-color .22s;
+}
+.btn-solid { background: var(--blue); color: #04101F; font-weight: 500; }
+.btn-solid:hover { background: var(--paper); }
+.btn-solid:disabled { opacity: .4; cursor: not-allowed; background: var(--blue); }
+.btn-line { border-color: var(--hair); color: var(--paper); }
+.btn-line:hover { border-color: var(--blue); color: var(--blue); }
+.btn-sm { padding: 11px 18px; font-size: 10.5px; }
+
+/* ---------- Kapitel ---------- */
+.chapter { position: relative; padding: 104px 0; border-top: 1px solid var(--hair-soft); scroll-margin-top: 124px; }
+.chapter:first-of-type { border-top: 0; }
+.chead { display: flex; align-items: baseline; gap: 20px; margin-bottom: 44px; }
+.chead .num { font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em; color: var(--blue); }
+.chead .rule { flex: 1; height: 1px; background: var(--hair); }
+
+/* ---------- Auftakt ---------- */
+.hero { position: relative; padding: 172px 0 88px; overflow: hidden; }
+.hero::before {
+  content: ''; position: absolute; left: 50%; top: -180px; width: 900px; height: 900px;
+  transform: translateX(-50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,155,232,.22), transparent 62%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; }
+.hero .display { margin-top: 26px; }
+.hero .display em { font-style: normal; color: var(--blue); }
+.herofoot {
+  display: grid; gap: 28px; margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--hair);
+}
+@media (min-width: 800px) { .herofoot { grid-template-columns: 1.3fr 1fr; align-items: end; } }
+.figures { display: flex; flex-wrap: wrap; gap: 40px; }
+.fig dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.fig dd { margin: 6px 0 0; font-family: var(--display); font-size: 1.8rem; letter-spacing: -.02em; }
+
+/* ---------- Gewerke als Liste ---------- */
+.trades { border-top: 1px solid var(--hair); }
+.trade {
+  display: grid; grid-template-columns: auto 1fr; gap: 18px 22px; align-items: center;
+  width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--hair);
+  padding: 26px 0; cursor: pointer; color: inherit; transition: padding .3s cubic-bezier(.22,1,.36,1);
+}
+@media (min-width: 900px) { .trade { grid-template-columns: 68px 1fr 1.15fr auto; gap: 32px; } }
+.trade:hover, .trade[aria-expanded="true"] { padding-left: 14px; }
+.trade .tnum { font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .12em; }
+.trade .tname { font-family: var(--display); font-size: clamp(1.25rem, 2.4vw, 1.9rem); text-transform: uppercase; letter-spacing: -.02em; line-height: 1; transition: color .25s; }
+.trade:hover .tname, .trade[aria-expanded="true"] .tname { color: var(--blue); }
+.trade .tdesc { display: none; font-size: 14px; line-height: 1.65; color: var(--muted); }
+@media (min-width: 900px) { .trade .tdesc { display: block; } }
+.trade .tmark { font-family: var(--mono); font-size: 18px; color: var(--blue); transition: transform .3s; }
+.trade[aria-expanded="true"] .tmark { transform: rotate(45deg); }
+.tpanel { display: none; padding: 0 0 34px; }
+.tpanel.open { display: grid; gap: 28px; }
+@media (min-width: 900px) { .tpanel.open { grid-template-columns: 68px 1fr 1.15fr; gap: 32px; } }
+.tpanel .spacer { display: none; }
+@media (min-width: 900px) { .tpanel .spacer { display: block; } }
+.specs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.specs li { display: flex; gap: 14px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+.specs li::before { content: '—'; color: var(--blue); }
+
+/* ---------- Platten ---------- */
+.plate { position: relative; overflow: hidden; background: var(--night-2); border: 1px solid var(--hair-soft); }
+.plate svg { display: block; width: 100%; height: 100%; }
+.plate .tag {
+  position: absolute; left: 16px; bottom: 14px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Werkschau ---------- */
+.works { display: flex; flex-direction: column; gap: 96px; }
+.work { display: grid; gap: 30px; align-items: center; }
+@media (min-width: 900px) { .work { grid-template-columns: 1.15fr .85fr; gap: 56px; } .work.flip > *:first-child { order: 2; } }
+.work .plate { aspect-ratio: 16/10; }
+.worktitle { margin-top: 16px; }
+.datarow { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hair); }
+.datarow div { display: flex; flex-direction: column; gap: 5px; }
+.datarow dt { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.datarow dd { margin: 0; font-family: var(--mono); font-size: 14px; color: var(--paper); }
+.quote { margin: 26px 0 0; padding-left: 20px; border-left: 2px solid var(--blue); }
+.quote p { margin: 0; font-size: 16px; line-height: 1.6; }
+.quote footer { margin-top: 10px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Verfahren ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.step { display: grid; gap: 8px 28px; padding: 26px 0; border-bottom: 1px solid var(--hair-soft); }
+@media (min-width: 800px) { .step { grid-template-columns: 68px 1fr 1.4fr; align-items: baseline; } }
+.step .snum { font-family: var(--mono); font-size: 11.5px; color: var(--blue); letter-spacing: .12em; }
+.step .sname { font-family: var(--display); font-size: 1.05rem; text-transform: uppercase; letter-spacing: -.01em; }
+.step .swhen { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+/* ---------- Termin ---------- */
+.booking { display: grid; gap: 44px; align-items: start; }
+@media (min-width: 1000px) { .booking { grid-template-columns: 1.2fr .8fr; gap: 56px; } }
+.panel { background: var(--night-2); border: 1px solid var(--hair-soft); padding: 28px; }
+.step-label { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.step-label .mono { color: var(--blue); }
+.typelist { display: flex; flex-direction: column; gap: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); }
+.typebtn {
+  background: var(--night-2); border: 0; text-align: left; padding: 20px; cursor: pointer;
+  color: var(--paper); transition: background .2s;
+}
+.typebtn:hover { background: var(--night-3); }
+.typebtn[aria-pressed="true"] { background: var(--night-3); box-shadow: inset 3px 0 0 var(--blue); }
+.typebtn .row { display: flex; justify-content: space-between; gap: 18px; align-items: baseline; }
+.typebtn .tt { font-family: var(--display); font-size: 15px; text-transform: uppercase; letter-spacing: -.01em; }
+.typebtn[aria-pressed="true"] .tt { color: var(--blue); }
+.typebtn .td { margin: 8px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.typebtn .tp { margin: 10px 0 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+.weekbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.daygrid { display: grid; gap: 1px; background: var(--hair-soft); border: 1px solid var(--hair-soft); align-items: stretch; }
+@media (min-width: 620px) { .daygrid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1000px) { .daygrid { grid-template-columns: repeat(4, 1fr); } }
+.day { background: var(--night-2); padding: 14px; min-height: 104px; }
+.day .dname { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.day .none { margin: 10px 0 0; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+.slots { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.slot {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+  background: var(--night-3); color: var(--paper); border: 1px solid transparent;
+  padding: 6px 9px; cursor: pointer; transition: background .18s, color .18s, border-color .18s;
+}
+.slot:hover { border-color: var(--blue); color: var(--blue); }
+.slot[aria-pressed="true"] { background: var(--blue); color: #04101F; font-weight: 500; }
+form.bf { display: flex; flex-direction: column; gap: 18px; }
+.frow { display: grid; gap: 18px; }
+@media (min-width: 620px) { .frow.two { grid-template-columns: 1fr 1fr; } .frow.addr { grid-template-columns: 1fr 150px; } }
+.flabel { display: block; margin-bottom: 7px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.inp {
+  width: 100%; background: var(--night); color: var(--paper);
+  border: 1px solid var(--hair); border-radius: 0; padding: 13px 14px; font-size: 15px;
+  transition: border-color .18s;
+}
+.inp::placeholder { color: rgba(156,174,200,.55); }
+.inp:focus { outline: none; border-color: var(--blue); }
+textarea.inp { min-height: 120px; resize: vertical; }
+.zonebox { border-left: 2px solid var(--blue); background: var(--night-3); padding: 14px 16px; font-size: 13.5px; line-height: 1.6; color: var(--paper); }
+.zonebox .mono { margin-bottom: 5px; }
+.zonebox.out { border-left-color: var(--muted); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.check input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--blue); }
+.summary dl { margin: 20px 0 0; display: flex; flex-direction: column; gap: 0; }
+.summary dl div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hair-soft); }
+.summary dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.summary dd { margin: 0; font-family: var(--mono); font-size: 13px; text-align: right; }
+.done { text-align: center; padding: 52px 28px; }
+.done .ring { width: 54px; height: 54px; margin: 0 auto 22px; border: 1px solid var(--blue); border-radius: 50%; display: grid; place-items: center; color: var(--blue); }
+
+/* ---------- Betrieb ---------- */
+.split { display: grid; gap: 48px; }
+@media (min-width: 900px) { .split { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.joblist { display: flex; flex-direction: column; }
+.job { padding: 20px 0; border-bottom: 1px solid var(--hair-soft); display: flex; justify-content: space-between; gap: 20px; align-items: baseline; }
+.job .jt { font-family: var(--display); font-size: 15px; text-transform: uppercase; letter-spacing: -.01em; }
+.job .jm { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); white-space: nowrap; }
+.contactlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.contactlist li { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--hair-soft); }
+.contactlist dt, .contactlist .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.contactlist .v { font-size: 15px; text-align: right; }
+
+/* ---------- Fußzeile ---------- */
+footer.end { border-top: 1px solid var(--hair); padding: 72px 0 34px; }
+.endgrid { display: grid; gap: 40px; }
+@media (min-width: 800px) { .endgrid { grid-template-columns: 1.4fr 1fr 1fr; } }
+.claim { font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 1.9rem); text-transform: uppercase; letter-spacing: -.022em; line-height: 1.1; margin: 18px 0 0; }
+.claim span { color: var(--blue); }
+.endlist { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; font-size: 14.5px; color: var(--muted); }
+.endlist button { background: none; border: 0; padding: 0; cursor: pointer; text-align: left; color: inherit; font: inherit; transition: color .18s; }
+.endlist button:hover { color: var(--blue); }
+.endbar { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--hair-soft);
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Demo-Hinweis ---------- */
+.demobar {
+  background: var(--night-3); border-bottom: 1px solid var(--hair-soft);
+  padding: 10px 22px; text-align: center; line-height: 1.4;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+.demobar b { color: var(--blue); font-weight: 500; }
+
+/* ---------- Einblenden beim Scrollen ----------
+   Ohne JavaScript bleibt alles sichtbar. Erst wenn das Skript läuft,
+   wird der Ausgangszustand gesetzt, damit nichts unsichtbar hängen bleibt. */
+body.anim .reveal { opacity: 0; transform: translateY(18px); }
+body.anim .reveal.shown { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+@media (prefers-reduced-motion: reduce) {
+  body.anim .reveal { opacity: 1; transform: none; }
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+[hidden] { display: none !important; }
+</style>
+
+<svg class="grain" aria-hidden="true">
+  <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+</svg>
+
+<header class="top" id="top">
+  <div class="demobar">
+    <b>Demo</b> &nbsp;·&nbsp; Firmendaten, Projekte und Kundenstimmen sind Platzhalter &nbsp;·&nbsp; Anfragen werden nicht versendet
+  </div>
+  <div class="wrap toprow">
+    <a class="brand" href="#auftakt" data-jump="auftakt">
+      <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true">
+        <path d="M2 20 11 9.5 20 20v9H2v-9Z" fill="#2E9BE8"/>
+        <path d="M13 20 25 5.5 37 20v9H13v-9Z" fill="#EEF3F9"/>
+        <rect x="22.5" y="15" width="4.6" height="7" fill="#07142C"/>
+        <path d="M1.5 32.5c7 3.4 13.2 4.6 18.5 3.6 5.3-1 11-3.6 18.5-8" fill="none" stroke="#2E9BE8" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span>
+        <span class="brand-word">Borussia</span>
+        <span class="brand-sub">Baudienstleistungen</span>
+      </span>
+    </a>
+    <nav class="topnav" id="chapternav" aria-label="Kapitel"></nav>
+    <button class="btn btn-solid btn-sm" data-jump="termin">Termin</button>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<footer class="end">
+  <div class="wrap">
+    <div class="endgrid">
+      <div>
+        <p class="mono">Borussia Baudienstleistungen</p>
+        <p class="claim">Qualität,<br>auf die Sie<br><span>bauen können.</span></p>
+      </div>
+      <div>
+        <p class="mono mono-dim">Kapitel</p>
+        <ul class="endlist" id="endnav"></ul>
+      </div>
+      <div>
+        <p class="mono mono-dim">Kontakt</p>
+        <ul class="endlist">
+          <li>Musterstraße 12</li>
+          <li>12437 Berlin</li>
+          <li><a href="tel:+493012345670" style="text-decoration:none">+49 30 1234567</a></li>
+          <li><a href="mailto:info@borussia-bau.de" style="text-decoration:none">info@borussia-bau.de</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="endbar">
+      <span>© 2026 Borussia Baudienstleistungen GmbH</span>
+      <span>Renovieren · Sanieren · Modernisieren</span>
+      <span>Demo-Ansicht</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================================
+   Inhalte. Texte und Projekte stimmen mit Demo 1 und der gebauten Website
+   überein, nur die Darstellung unterscheidet sich.
+   ========================================================================= */
+
+const CHAPTERS = [
+  ['gewerke', 'Gewerke'],
+  ['werkschau', 'Werkschau'],
+  ['verfahren', 'Verfahren'],
+  ['termin', 'Termin'],
+  ['betrieb', 'Betrieb'],
+];
+
+const TRADES = [
+  { id: 'trockenbau', label: 'Trockenbau',
+    desc: 'Trennwände, abgehängte Decken, Vorsatzschalen und Dachschrägen in Metallständerbauweise.',
+    specs: ['Schallschutz bis 60 dB', 'Ein- bis dreifach beplankt', 'Spachtelqualität Q1 bis Q4'] },
+  { id: 'fliesen', label: 'Fliesenarbeiten',
+    desc: 'Bad, Küche und Bodenflächen, vom Untergrund über die Abdichtung bis zur letzten Fuge.',
+    specs: ['Verbundabdichtung nach Norm', 'Großformat bis 120 × 120 cm', 'Silikonfugen und Übergänge'] },
+  { id: 'maler', label: 'Malerarbeiten',
+    desc: 'Spachteln, Grundieren, Streichen und Tapezieren, innen wie in Treppenhäusern.',
+    specs: ['Anstriche, Raufaser, Vliestapete', 'Farbberatung vor Bestellung', 'Treppenhäuser im Betrieb'] },
+  { id: 'innenausbau', label: 'Innenausbau',
+    desc: 'Dachgeschosse, Einbauten, Türen und alles, was einen Rohbau bewohnbar macht.',
+    specs: ['Luftdichtheitsebene dokumentiert', 'Vorbereitung Blower-Door', 'Türen, Zargen, Einbauten'] },
+  { id: 'sanierung', label: 'Sanierung',
+    desc: 'Komplette Wohnungen und Häuser, mit einem Ansprechpartner für alle Gewerke.',
+    specs: ['Bauzeitenplan über alle Gewerke', 'Feste Partner Elektro und Sanitär', 'Auch im bewohnten Zustand'] },
+  { id: 'boden', label: 'Bodenlegerarbeiten',
+    desc: 'Untergrund vorbereiten, spachteln und Parkett, Vinyl oder Laminat verlegen.',
+    specs: ['Restfeuchtemessung vor Verlegung', 'Spachteln und Grundieren inklusive', 'Sockelleisten und Profile'] },
+];
+
+const PROJECTS = [
+  { title: 'Altbauwohnung mit neuem Grundriss', location: 'Berlin Prenzlauer Berg', year: 2025,
+    category: 'Trockenbau', area: '112 m²', duration: '3 Wochen',
+    summary: 'Aus vier verwinkelten Zimmern wurde ein offener Wohnbereich mit abgetrenntem Arbeitszimmer. Der Stuck ist geblieben.',
+    detail: 'Die Wandanschlüsse haben wir mit Trennschnitt und Gleitanschluss ausgeführt, damit der Stuck rissfrei stehen bleibt. Die Altbaudecke lag bis zu vier Zentimeter uneben, das fängt eine justierbare Unterkonstruktion ab.',
+    quote: { text: 'Zeitplan gehalten, Baustelle jeden Abend besenrein. An zwei Stellen haben sie von sich aus nachgebessert, ohne dass wir fragen mussten.', author: 'Eigentümerin, Prenzlauer Berg' } },
+  { title: 'Bad komplett, vom Ständerwerk bis zur Fuge', location: 'Berlin Charlottenburg', year: 2024,
+    category: 'Fliesenarbeiten', area: '14 m²', duration: '8 Tage',
+    summary: 'Installationsvorwand, Abdichtung und großformatige Fliesen. Trockenbau und Fliesenarbeiten aus einer Hand.',
+    detail: 'Großformatfliesen verzeihen keine Toleranzen. Engere Ständerabstände, doppelte Beplankung und eine Ebenheitskontrolle, bevor die erste Fliese lag. Weil Untergrund und Belag aus demselben Betrieb kamen, gab es keine Schnittstelle, an der sich zwei Gewerke die Schuld zuschieben.' },
+  { title: 'Dachgeschossausbau mit Gaube', location: 'Berlin Köpenick', year: 2025,
+    category: 'Innenausbau', area: '68 m²', duration: '4 Wochen',
+    summary: 'Ungenutzter Spitzboden wurde zu zwei Kinderzimmern mit Dachschrägen und Kniestock.',
+    detail: 'Die Dampfbremse musste luftdicht an 14 Sparren, zwei Gauben und den Kaminzug anschließen. Alle Durchdringungen sind systemkonform ausgeführt und vor dem Beplanken einzeln fotografiert. Der Blower-Door-Test ging durch.' },
+  { title: 'Wohnungszusammenlegung als Komplettsanierung', location: 'Potsdam', year: 2024,
+    category: 'Sanierung', area: '140 m²', duration: '5 Wochen',
+    summary: 'Zwei kleine Wohnungen wurden zu einer Familienwohnung, mit neuem Schallschutz zur Nachbarwohnung.',
+    detail: 'Eine freistehende Vorsatzschale mit Mineralwolle, entkoppelt und ohne starre Verbindung zum Bestandsmauerwerk. Die Familie hatte über fünf Wochen einen Ansprechpartner statt fünf.' },
+  { title: 'Wohnungsrenovierung zum Mieterwechsel', location: 'Berlin Neukölln', year: 2025,
+    category: 'Malerarbeiten', area: '86 m²', duration: '9 Tage',
+    summary: 'Vier Zimmer streichen, Risse schließen und ein Treppenhaus mitmachen, alles zwischen Auszug und Einzug.',
+    detail: 'Wir haben raumweise gearbeitet statt gewerkeweise, damit die fertigen Zimmer nicht wieder zugestellt wurden. Übergabe zwei Tage vor dem vereinbarten Termin.',
+    quote: { text: 'Ich hatte mit einer Woche Verzug gerechnet, weil das sonst immer so läuft. Diesmal nicht.', author: 'Vermieter, Berlin-Neukölln' } },
+  { title: 'Parkett auf altem Dielenboden', location: 'Berlin Schöneberg', year: 2025,
+    category: 'Bodenlegerarbeiten', area: '74 m²', duration: '6 Tage',
+    summary: 'Eichenparkett über einem schwingenden Altbaudielenboden, ohne dass der Bestand herausgerissen wurde.',
+    detail: 'Die Dielen federten und lagen bis zu zwei Zentimeter uneben. Erst auf den Balken nachverschraubt, dann mit Ausgleichsschüttung und Trockenestrichplatten eine ebene Fläche hergestellt. Die alten Dielen sind unter dem Aufbau erhalten geblieben.' },
+];
+
+const STEPS = [
+  ['Anfrage', 'Tag 0', 'Sie wählen online einen Termin oder rufen an. Meist bestätigen wir innerhalb eines Werktages. Wenn wir keine Kapazität haben, sagen wir das auch so.'],
+  ['Aufmaß vor Ort', 'Woche 1', 'Wir sehen uns die Räume an, messen auf und prüfen die Untergründe. Das dauert meist eine Stunde und kostet im Einsatzgebiet nichts.'],
+  ['Festpreisangebot', '3 bis 5 Werktage', 'Positionen, Mengen, Qualitätsstufen und Preis schriftlich. Was Sie nicht brauchen, nehmen wir gar nicht erst auf.'],
+  ['Terminplanung', 'nach Auftrag', 'Starttermin gemeinsam festlegen, Reihenfolge mit den anderen Gewerken abstimmen.'],
+  ['Ausführung', 'je nach Umfang', 'Der Staubschutz steht, bevor der erste Schnitt fällt. Bei Unerwartetem rufen wir an, bevor wir weiterbauen.'],
+  ['Abnahme', 'Bauende', 'Gemeinsamer Rundgang, Restpunkte innerhalb von zwei Wochen erledigt. Rechnung erst danach.'],
+];
+
+const OPENINGS = [
+  ['Trockenbaumonteur (m/w/d)', 'Vollzeit'],
+  ['Vorarbeiter Trockenbau (m/w/d)', 'Vollzeit'],
+  ['Auszubildender Trockenbaumonteur (m/w/d)', 'Ausbildung'],
+];
+
+const ZONES = [
+  { label: 'Berlin, gesamtes Stadtgebiet', prefixes: ['10','12','13','14'],
+    note: 'Anfahrt inklusive. Aufmaßtermine meist innerhalb von fünf Werktagen.', fee: 'ohne Anfahrtspauschale' },
+  { label: 'Berliner Umland und Potsdam', prefixes: ['144','145','146','147','148','150','153','154','155','163','164','165'],
+    note: 'Regulär im Einsatzgebiet. Anfahrtspauschale je nach Entfernung.', fee: 'Anfahrtspauschale ab 45 €' },
+  { label: 'Brandenburg, weiteres Umland', prefixes: ['03','15','16','17','19'],
+    note: 'Auf Anfrage. Wir prüfen vor der Zusage, ob wir das zeitlich schaffen.', fee: 'nach Absprache' },
+];
+
+const TYPES = [
+  { id: 'aufmass', label: 'Aufmaß vor Ort', minutes: 60,
+    desc: 'Wir kommen zu Ihnen, sehen uns an, was ansteht, und messen auf. Danach bekommen Sie ein Festpreisangebot über alle beteiligten Gewerke.',
+    price: 'kostenfrei im Einsatzgebiet' },
+  { id: 'telefon', label: 'Telefonische Beratung', minutes: 20,
+    desc: 'Kurzes Gespräch über Machbarkeit, Preisrahmen und Terminlage. Sinnvoll, solange Sie noch planen.',
+    price: 'kostenfrei' },
+  { id: 'abnahme', label: 'Abnahme', minutes: 45,
+    desc: 'Für laufende Projekte: Zwischenabnahme, offene Restpunkte, Übergabe.',
+    price: 'kostenfrei für Bestandskunden' },
+];
+
+/* ---------- Hilfsfunktionen ---------- */
+const esc = (v) => String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const two = (n) => String(n).padStart(2, '0');
+
+function matchZone(zip) {
+  const clean = String(zip).replace(/\D/g, '');
+  let best = null;
+  for (const z of ZONES) for (const p of z.prefixes) {
+    if (clean.startsWith(p) && (!best || p.length > best.len)) best = { zone: z, len: p.length };
+  }
+  if (!best) return { label: 'Außerhalb des regulären Einsatzgebiets', fee: 'auf Anfrage',
+    note: 'Wir sehen uns die Anfrage trotzdem an. Ab einer gewissen Projektgröße fahren wir auch weiter.', inside: false };
+  return { ...best.zone, inside: true };
+}
+
+/* Platzhalterplatte. [PLATZHALTER] Später durch echte Fotos ersetzen. */
+function plate(i, tag) {
+  const id = 'g' + i;
+  const shapes = [
+    `<rect x="60" y="70" width="180" height="230" fill="#2E9BE8" opacity=".16"/>
+     <rect x="260" y="130" width="230" height="170" fill="#EEF3F9" opacity=".06"/>
+     <path d="M60 70h180" stroke="#2E9BE8" stroke-width="2" opacity=".55"/>`,
+    `<path d="M0 250 280 110l280 140v110H0Z" fill="#2E9BE8" opacity=".13"/>
+     <path d="M280 110 560 250" stroke="#EEF3F9" stroke-width="1.5" opacity=".3" fill="none"/>`,
+    `<rect y="60" width="560" height="30" fill="#2E9BE8" opacity=".16"/>
+     <rect y="112" width="560" height="30" fill="#2E9BE8" opacity=".1"/>
+     <rect y="164" width="560" height="30" fill="#2E9BE8" opacity=".06"/>
+     <rect x="330" y="220" width="160" height="140" fill="#EEF3F9" opacity=".05"/>`,
+    `<circle cx="410" cy="120" r="92" fill="#2E9BE8" opacity=".12"/>
+     <rect x="50" y="190" width="280" height="150" fill="#EEF3F9" opacity=".05"/>
+     <path d="M50 190h280" stroke="#2E9BE8" stroke-width="2" opacity=".5"/>`,
+  ][i % 4];
+  return `<div class="plate">
+    <svg viewBox="0 0 560 360" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Platzhalter, echtes Projektfoto folgt">
+      <rect width="560" height="360" fill="#0C1E3E"/>
+      <defs><pattern id="${id}" width="56" height="56" patternUnits="userSpaceOnUse">
+        <path d="M56 0H0v56" fill="none" stroke="#EEF3F9" stroke-width="1" opacity=".07"/></pattern></defs>
+      <rect width="560" height="360" fill="url(#${id})"/>${shapes}
+    </svg>
+    ${tag ? `<span class="tag">${esc(tag)}</span>` : ''}
+  </div>`;
+}
+
+/* ---------- Terminplanung ---------- */
+/* Beispielbelegung nach denselben Regeln wie die echte Anwendung:
+   Mo bis Do 07:30 bis 16:00, Fr bis 13:00, Wochenende gesperrt,
+   24 Stunden Vorlauf, dazwischen Fahrzeit. */
+const WEEK = { 1: ['07:30','16:00'], 2: ['07:30','16:00'], 3: ['07:30','16:00'], 4: ['07:30','16:00'], 5: ['07:30','13:00'] };
+const seeded = (n) => { const x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); };
+
+function slotsFor(date, type) {
+  const rule = WEEK[date.getDay()];
+  if (!rule) return [];
+  const toMin = (t) => Number(t.slice(0, 2)) * 60 + Number(t.slice(3));
+  const [start, end] = [toMin(rule[0]), toMin(rule[1])];
+  const buffer = type.id === 'telefon' ? 10 : type.id === 'abnahme' ? 30 : 45;
+  const key = Math.floor(date.getTime() / 86400000);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  if (date <= new Date(today.getTime() + 86400000)) return [];
+  const out = [];
+  for (let m = start; m + type.minutes <= end; m += 30) {
+    if (seeded(key * 100 + m) > (type.id === 'telefon' ? 0.55 : 0.72)) continue;
+    if (out.length && m - out[out.length - 1] < type.minutes + buffer) continue;
+    out.push(m);
+  }
+  return out.map((m) => ({ minutes: m, label: `${two(Math.floor(m / 60))}:${two(m % 60)}` }));
+}
+
+const DAY = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const MON = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const DAY_L = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const MON_L = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+const state = { openTrade: null, typeId: 'aufmass', week: 0, selected: null, zip: '', sent: null };
+
+function prettySlot(key) {
+  const [iso, time] = key.split('T');
+  const d = new Date(iso + 'T12:00:00');
+  return `${DAY_L[d.getDay()]}, ${d.getDate()}. ${MON_L[d.getMonth()]}, ${time}`;
+}
+
+/* =========================================================================
+   Ansichten
+   ========================================================================= */
+
+function chapterHead(num, title) {
+  return `<div class="chead">
+    <span class="num">${num}</span>
+    <h2 class="display d-md">${esc(title)}</h2>
+    <span class="rule"></span>
+  </div>`;
+}
+
+function viewHero() {
+  return `<section class="hero" id="auftakt">
+    <div class="wrap hero-inner">
+      <p class="mono">Renovieren · Sanieren · Modernisieren</p>
+      <h1 class="display d-xl reveal">Neue Räume<br>im alten<br><em>Grundriss.</em></h1>
+      <div class="herofoot reveal">
+        <p class="lede">Sechs Gewerke aus einer Hand für Sanierung, Umbau und Renovierung in
+          Berlin und Brandenburg. Nach dem Aufmaß bekommen Sie einen Festpreis über alle
+          Gewerke, und bis zur Abnahme denselben Ansprechpartner.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-solid" data-jump="termin">Termin anfragen</button>
+          <a class="btn btn-line" href="tel:+493012345670">+49 30 1234567</a>
+        </div>
+      </div>
+      <dl class="figures reveal" style="margin-top:40px">
+        <div class="fig"><dt>Am Markt seit</dt><dd>2009</dd></div>
+        <div class="fig"><dt>Eigenes Team</dt><dd>12</dd></div>
+        <div class="fig"><dt>Gewerke</dt><dd>06</dd></div>
+        <div class="fig"><dt>Rückmeldung</dt><dd>24 h</dd></div>
+      </dl>
+    </div>
+  </section>`;
+}
+
+function viewTrades() {
+  return `<section class="chapter" id="gewerke"><div class="wrap">
+    ${chapterHead('01', 'Gewerke')}
+    <p class="body reveal" style="margin-bottom:36px">Wer eine Wohnung saniert, koordiniert sonst vier Betriebe
+      und wartet auf jeden einzelnen. Bei uns kommt alles aus einem Haus, und die Reihenfolge planen wir gleich mit.</p>
+    <div class="trades reveal">
+      ${TRADES.map((t, i) => `
+        <button class="trade" data-trade="${t.id}" aria-expanded="${state.openTrade === t.id}" aria-controls="p-${t.id}">
+          <span class="tnum">${two(i + 1)}</span>
+          <span class="tname">${esc(t.label)}</span>
+          <span class="tdesc">${esc(t.desc)}</span>
+          <span class="tmark" aria-hidden="true">+</span>
+        </button>
+        <div class="tpanel ${state.openTrade === t.id ? 'open' : ''}" id="p-${t.id}">
+          <span class="spacer"></span>
+          <ul class="specs">${t.specs.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>
+          ${plate(i, t.label)}
+        </div>`).join('')}
+    </div>
+  </div></section>`;
+}
+
+function viewWorks() {
+  return `<section class="chapter" id="werkschau"><div class="wrap">
+    ${chapterHead('02', 'Werkschau')}
+    <p class="body reveal" style="margin-bottom:52px">Zu jedem Projekt steht dabei, was daran schwierig war.</p>
+    <div class="works">
+      ${PROJECTS.map((p, i) => `<article class="work reveal ${i % 2 ? 'flip' : ''}">
+        ${plate(i, `${p.category} · ${p.year}`)}
+        <div>
+          <p class="mono">${two(i + 1)} / ${two(PROJECTS.length)} &nbsp;·&nbsp; ${esc(p.location)}</p>
+          <h3 class="display d-lg worktitle">${esc(p.title)}</h3>
+          <p class="body" style="margin-top:18px">${esc(p.summary)}</p>
+          <p class="body" style="margin-top:14px">${esc(p.detail)}</p>
+          <dl class="datarow">
+            <div><dt>Fläche</dt><dd>${esc(p.area)}</dd></div>
+            <div><dt>Bauzeit</dt><dd>${esc(p.duration)}</dd></div>
+            <div><dt>Jahr</dt><dd>${p.year}</dd></div>
+            <div><dt>Gewerk</dt><dd>${esc(p.category)}</dd></div>
+          </dl>
+          ${p.quote ? `<blockquote class="quote"><p>„${esc(p.quote.text)}"</p>
+            <footer>${esc(p.quote.author)}</footer></blockquote>` : ''}
+        </div>
+      </article>`).join('')}
+    </div>
+  </div></section>`;
+}
+
+function viewSteps() {
+  return `<section class="chapter" id="verfahren"><div class="wrap">
+    ${chapterHead('03', 'Verfahren')}
+    <p class="body reveal" style="margin-bottom:36px">Sie wissen zu jedem Zeitpunkt, was als Nächstes passiert
+      und wer dafür zuständig ist.</p>
+    <ol class="steps reveal">
+      ${STEPS.map(([name, when, text], i) => `<li class="step">
+        <span class="snum">${two(i + 1)}</span>
+        <span><span class="sname">${esc(name)}</span><span class="swhen">${esc(when)}</span></span>
+        <p class="body">${esc(text)}</p>
+      </li>`).join('')}
+    </ol>
+  </div></section>`;
+}
+
+function viewBooking() {
+  const type = TYPES.find((t) => t.id === state.typeId);
+
+  if (state.sent) {
+    return `<section class="chapter" id="termin"><div class="wrap">
+      ${chapterHead('04', 'Termin')}
+      <div class="panel done">
+        <div class="ring"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></svg></div>
+        <h3 class="display d-md">Anfrage ist raus</h3>
+        <p class="body" style="margin:16px auto 0">${esc(state.sent)}</p>
+        <p class="body" style="margin:14px auto 0">Der Termin ist vorgemerkt, aber noch nicht verbindlich.
+          Sobald wir zugesagt haben, bekommen Sie die Bestätigung per E-Mail.</p>
+        <div class="zonebox" style="margin-top:26px;text-align:left;max-width:620px;margin-left:auto;margin-right:auto">
+          <p class="mono">In der Demo endet der Ablauf hier</p>
+          In der fertigen Anwendung wird der Termin jetzt als vorgemerkter Eintrag im Google Kalender
+          angelegt. Der Betrieb bekommt eine E-Mail mit zwei Schaltflächen, bestätigen oder absagen.
+          Erst die Bestätigung löst die verbindliche Terminmail an den Kunden aus.
+        </div>
+        <button class="btn btn-line" style="margin-top:26px" data-reset="1">Noch einmal ansehen</button>
+      </div>
+    </div></section>`;
+  }
+
+  const monday = new Date(); monday.setHours(0, 0, 0, 0);
+  monday.setDate(monday.getDate() + state.week * 8);
+  const days = Array.from({ length: 8 }, (_, k) => {
+    const d = new Date(monday); d.setDate(d.getDate() + k);
+    return { date: d, slots: slotsFor(d, type) };
+  });
+  const zone = state.zip.length === 5 ? matchZone(state.zip) : null;
+
+  return `<section class="chapter" id="termin"><div class="wrap">
+    ${chapterHead('04', 'Termin')}
+    <div class="booking">
+      <div style="display:flex;flex-direction:column;gap:40px">
+
+        <div class="reveal">
+          <div class="step-label"><span class="mono">Schritt 01</span><span class="rule" style="flex:1;height:1px;background:var(--hair)"></span></div>
+          <h3 class="display d-md">Worum geht es?</h3>
+          <div class="typelist" style="margin-top:18px">
+            ${TYPES.map((t) => `<button class="typebtn" data-type="${t.id}" aria-pressed="${t.id === state.typeId}">
+              <span class="row"><span class="tt">${esc(t.label)}</span>
+              <span class="mono mono-dim">${t.minutes} Min</span></span>
+              <p class="td">${esc(t.desc)}</p>
+              <p class="tp">${esc(t.price)}</p>
+            </button>`).join('')}
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="step-label"><span class="mono">Schritt 02</span><span class="rule" style="flex:1;height:1px;background:var(--hair)"></span></div>
+          <h3 class="display d-md">Wunschtermin</h3>
+          <p class="body" style="margin:12px 0 20px">Angezeigt werden nur Zeiten, die im Kalender tatsächlich
+            frei sind. Die Fahrzeit zwischen den Baustellen ist dabei schon abgezogen.</p>
+          <div class="weekbar">
+            <button class="btn btn-line btn-sm" data-week="-1" ${state.week <= 0 ? 'disabled' : ''}>← Früher</button>
+            <span class="mono mono-dim">${days[0].date.getDate()}. ${MON[days[0].date.getMonth()]} – ${days[7].date.getDate()}. ${MON[days[7].date.getMonth()]}</span>
+            <button class="btn btn-line btn-sm" data-week="1">Später →</button>
+          </div>
+          <div class="daygrid">
+            ${days.map((d) => `<div class="day">
+              <p class="dname">${DAY[d.date.getDay()]} ${two(d.date.getDate())}.${two(d.date.getMonth() + 1)}</p>
+              ${d.slots.length
+                ? `<div class="slots">${d.slots.map((s) => {
+                    const key = `${d.date.getFullYear()}-${two(d.date.getMonth() + 1)}-${two(d.date.getDate())}T${s.label}`;
+                    return `<button class="slot" data-slot="${key}" aria-pressed="${state.selected === key}">${s.label}</button>`;
+                  }).join('')}</div>`
+                : `<p class="none">belegt</p>`}
+            </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="step-label"><span class="mono">Schritt 03</span><span class="rule" style="flex:1;height:1px;background:var(--hair)"></span></div>
+          <h3 class="display d-md">Kontaktdaten</h3>
+          <form class="bf" id="bf" style="margin-top:20px" novalidate>
+            <div class="frow two">
+              <label><span class="flabel">Name *</span><input class="inp" name="name" required autocomplete="name"></label>
+              <label><span class="flabel">Telefon *</span><input class="inp" name="phone" type="tel" required autocomplete="tel"></label>
+            </div>
+            <label><span class="flabel">E-Mail *</span><input class="inp" name="email" type="email" required autocomplete="email"></label>
+            <div class="frow addr">
+              <label><span class="flabel">Objektanschrift *</span><input class="inp" name="address" required autocomplete="street-address"></label>
+              <label><span class="flabel">PLZ *</span><input class="inp" id="zip" inputmode="numeric" maxlength="5" required value="${esc(state.zip)}"></label>
+            </div>
+            <div id="zoneslot">${zone ? `<div class="zonebox ${zone.inside ? '' : 'out'}">
+              <p class="mono">${esc(zone.label)} · ${esc(zone.fee)}</p>${esc(zone.note)}</div>` : ''}</div>
+            <label><span class="flabel">Was ist geplant?</span>
+              <textarea class="inp" name="message" placeholder="Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot."></textarea></label>
+            <label class="check"><input type="checkbox" required>
+              <span>Ich habe die Datenschutzhinweise gelesen und bin mit der Verarbeitung meiner Angaben
+                zur Terminbearbeitung einverstanden.</span></label>
+            <div>
+              <button class="btn btn-solid" type="submit" ${state.selected ? '' : 'disabled'}>Termin verbindlich anfragen</button>
+              ${state.selected ? '' : '<p class="body" style="margin-top:12px">Bitte oben zuerst einen Zeitpunkt auswählen.</p>'}
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <aside class="panel summary reveal">
+        <p class="mono">Ihre Auswahl</p>
+        <h3 class="display d-md" style="margin-top:12px">${esc(type.label)}</h3>
+        <p class="body" style="margin-top:12px">${esc(type.desc)}</p>
+        <dl>
+          <div><dt>Dauer</dt><dd>${type.minutes} Minuten</dd></div>
+          <div><dt>Kosten</dt><dd>${esc(type.price)}</dd></div>
+          <div><dt>Zeitpunkt</dt><dd>${state.selected ? esc(prettySlot(state.selected)) : 'offen'}</dd></div>
+        </dl>
+        <p class="body" style="margin-top:20px">Die gewählte Zeit ist ab sofort für andere gesperrt.
+          Verbindlich wird der Termin mit unserer Bestätigungsmail.</p>
+        <a class="btn btn-line" style="margin-top:20px;width:100%" href="tel:+493012345670">Lieber telefonisch</a>
+      </aside>
+    </div>
+  </div></section>`;
+}
+
+function viewCompany() {
+  return `<section class="chapter" id="betrieb"><div class="wrap">
+    ${chapterHead('05', 'Betrieb')}
+    <div class="split">
+      <div class="reveal">
+        <h3 class="display d-lg">Wir suchen Leute,<br>die bleiben wollen</h3>
+        <p class="body" style="margin-top:18px">Kein Anschreiben, kein Portal-Account. Anrufen oder per
+          WhatsApp schreiben, wir melden uns. Zeugnisse brauchen wir erst, wenn wir uns kennengelernt haben.</p>
+        <div class="joblist" style="margin-top:26px">
+          ${OPENINGS.map(([t, k]) => `<div class="job"><span class="jt">${esc(t)}</span><span class="jm">${esc(k)}</span></div>`).join('')}
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+          <a class="btn btn-line" href="tel:+493012345670">Anrufen</a>
+          <a class="btn btn-line" href="https://wa.me/4915112345678">WhatsApp</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3 class="display d-lg">Einsatzgebiet</h3>
+        <ul class="contactlist" style="margin-top:26px">
+          ${ZONES.map((z) => `<li><span class="k">${esc(z.label)}</span><span class="v">${esc(z.fee)}</span></li>`).join('')}
+        </ul>
+        <h3 class="display d-md" style="margin-top:44px">Bürozeiten</h3>
+        <ul class="contactlist" style="margin-top:18px">
+          <li><span class="k">Mo bis Do</span><span class="v">07:00 – 16:30 Uhr</span></li>
+          <li><span class="k">Freitag</span><span class="v">07:00 – 14:00 Uhr</span></li>
+          <li><span class="k">Sa und So</span><span class="v">geschlossen</span></li>
+        </ul>
+        <p class="body" style="margin-top:22px">Das Büro ist nur nach Vereinbarung besetzt.
+          Wir sind meistens auf der Baustelle.</p>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+/* =========================================================================
+   Steuerung
+   ========================================================================= */
+
+function render() {
+  document.getElementById('main').innerHTML =
+    viewHero() + viewTrades() + viewWorks() + viewSteps() + viewBooking() + viewCompany();
+  observeReveals();
+}
+
+function buildNav() {
+  document.getElementById('chapternav').innerHTML =
+    CHAPTERS.map(([id, label], i) => `<button data-jump="${id}">${two(i + 1)} ${esc(label)}</button>`).join('');
+  document.getElementById('endnav').innerHTML =
+    CHAPTERS.map(([id, label]) => `<li><button data-jump="${id}">${esc(label)}</button></li>`).join('');
+}
+
+let revealObserver;
+let revealFailsafe;
+function observeReveals() {
+  if (!('IntersectionObserver' in window)) return;
+  revealObserver?.disconnect();
+  revealObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('shown'); revealObserver.unobserve(e.target); }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  document.querySelectorAll('.reveal:not(.shown)').forEach((el) => {
+    const box = el.getBoundingClientRect();
+    // Alles, was beim Laden schon im Bild steht, bleibt sofort sichtbar.
+    if (box.top < window.innerHeight) el.classList.add('shown');
+    else revealObserver.observe(el);
+  });
+  clearTimeout(revealFailsafe);
+  revealFailsafe = setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.shown)').forEach((el) => el.classList.add('shown'));
+  }, 4000);
+}
+
+function jump(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - 118;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-jump],[data-trade],[data-type],[data-week],[data-slot],[data-reset]');
+  if (!el) return;
+
+  if (el.dataset.jump) { e.preventDefault(); jump(el.dataset.jump); return; }
+  if (el.dataset.trade) {
+    state.openTrade = state.openTrade === el.dataset.trade ? null : el.dataset.trade;
+    render(); jump('gewerke'); return;
+  }
+  if (el.dataset.type) { state.typeId = el.dataset.type; state.selected = null; render(); jump('termin'); return; }
+  if (el.dataset.week) { state.week = Math.max(0, state.week + Number(el.dataset.week)); state.selected = null; render(); jump('termin'); return; }
+  if (el.dataset.slot) { state.selected = el.dataset.slot; render(); jump('termin'); return; }
+  if (el.dataset.reset) { state.sent = null; state.selected = null; state.zip = ''; render(); jump('termin'); return; }
+});
+
+document.addEventListener('input', (e) => {
+  if (e.target.id !== 'zip') return;
+  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+  state.zip = e.target.value;
+  const box = document.getElementById('zoneslot');
+  if (!box) return;
+  if (state.zip.length !== 5) { box.innerHTML = ''; return; }
+  const z = matchZone(state.zip);
+  box.innerHTML = `<div class="zonebox ${z.inside ? '' : 'out'}">
+    <p class="mono">${esc(z.label)} · ${esc(z.fee)}</p>${esc(z.note)}</div>`;
+});
+
+document.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target;
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+  const type = TYPES.find((t) => t.id === state.typeId);
+  state.sent = `${type.label} · ${prettySlot(state.selected)}`;
+  render();
+  jump('termin');
+});
+
+// Kopfzeile wird beim Scrollen hinterlegt, aktives Kapitel wird markiert
+function onScroll() {
+  document.getElementById('top').classList.toggle('solid', window.scrollY > 40);
+  let active = '';
+  for (const [id] of CHAPTERS) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top <= 190) active = id;
+  }
+  document.querySelectorAll('#chapternav button').forEach((b) => {
+    b.setAttribute('aria-current', String(b.dataset.jump === active));
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+document.body.classList.add('anim');
+buildNav();
+render();
+onScroll();
+</script>
