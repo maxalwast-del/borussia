@@ -52,12 +52,14 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
 export function SloganRule({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   return (
     <p
-      className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold uppercase tracking-[0.2em] ${
+      className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-[10.5px] font-semibold uppercase tracking-[0.12em] min-[560px]:gap-x-3 min-[560px]:text-xs min-[560px]:tracking-[0.2em] ${
         tone === 'dark' ? 'text-brand-bright' : 'text-brand'
       }`}
     >
       {company.sloganParts.map((part, index) => (
-        <span key={part} className="flex items-center gap-3">
+        // Strich und Folgewort bleiben zusammen, damit auf schmalen Geräten
+        // kein Trennstrich allein am Zeilenrand steht.
+        <span key={part} className="flex items-center gap-2 whitespace-nowrap min-[560px]:gap-3">
           {index > 0 && (
             <span className={tone === 'dark' ? 'text-paper/75' : 'text-navy-muted'}>|</span>
           )}

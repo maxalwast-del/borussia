@@ -49,7 +49,19 @@
   }
 
   .heading-xl {
-    @apply font-display text-[2.6rem] font-bold leading-[1.05] tracking-[-0.025em] sm:text-6xl;
+    /* Die erste Zeile "Neue Räume im" braucht rund das 8,5-fache der
+       Schriftgröße. Unter etwa 415px Breite greift deshalb
+       (Breite - 40px Seitenrand) / 8,5, sonst fällt "im" als Waise in eine
+       eigene Zeile. Darüber bleibt es bei 2,6rem, ab 640px bei text-6xl. */
+    font-size: min(2.6rem, calc(11.2vw - 4.5px));
+    @apply font-display font-bold leading-[1.05] tracking-[-0.025em] sm:text-6xl;
+    /* Ab 1024px steht der Aufmacher zweispaltig, die Textspalte misst dann nur
+       noch (Breite - 120px) * 0,525. Maßgeblich ist die zweite Zeile
+       "alten Grundriss.": sie braucht rund das 8,7-fache der Schriftgröße,
+       mehr als die erste. Zwischen 1024 und rund 1130px reicht 3,75rem nicht. */
+    @media (min-width: 1024px) {
+      font-size: min(3.75rem, calc(5.95vw - 7.5px));
+    }
   }
 
   .heading-lg {
