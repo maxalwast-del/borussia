@@ -88,12 +88,17 @@ export function BookingFlow() {
     }
   }, [typeId, weekStart]);
 
+  // Slots laden, sobald Terminart oder Woche wechseln.
+  //
+  // Ausnahme von react-hooks/set-state-in-effect: loadSlots setzt vor dem
+  // ersten await synchron setLoadingSlots(true), damit beim Wochenwechsel
+  // sofort der Ladezustand erscheint. Zieht man den Aufruf hinter das await,
+  // entfällt er. Die von der Regel empfohlene Alternative wäre ein
+  // Data-Fetching-Layer statt fetch im Effect – ein eigener Umbau.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadSlots();
   }, [loadSlots]);
-
-  // Terminart gewechselt: bisherige Auswahl ist nicht mehr gültig.
-  useEffect(() => setSelected(null), [typeId]);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -153,7 +158,11 @@ export function BookingFlow() {
               <button
                 key={entry.id}
                 type="button"
-                onClick={() => setTypeId(entry.id)}
+                onClick={() => {
+                  setTypeId(entry.id);
+                  // Terminart gewechselt: bisherige Auswahl ist nicht mehr gültig.
+                  setSelected(null);
+                }}
                 aria-pressed={entry.id === typeId}
                 className={`rounded-card border p-5 text-left transition ${
                   entry.id === typeId

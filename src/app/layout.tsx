@@ -47,6 +47,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/*
+          Ausnahme von @next/next/no-page-custom-font: Die Regel stammt aus dem
+          Pages Router und warnt, die Schrift lade nur für eine einzelne Seite.
+          Hier ist sie das Root-Layout des App Routers, der Link gilt also für
+          jede Route. Langfristig besser wäre next/font/google – eigener Umbau,
+          da tailwind.config.ts die Familien über CSS-Variablen bezieht.
+        */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Archivo:wght@500;600;700&family=Archivo+Black&display=swap"

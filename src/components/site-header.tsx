@@ -19,7 +19,14 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => setOpen(false), [pathname]);
+  // Menü schließen, sobald die Route wechselt. Anpassung während des Renders
+  // statt im Effect: React verwirft den laufenden Render und startet neu, das
+  // offene Menü blitzt auf der neuen Seite also nie auf.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
