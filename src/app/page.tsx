@@ -26,11 +26,11 @@ const reasons = [
 ];
 
 /** Pfeil für weiterführende Hinweise. Wandert beim Zeigen ein Stück nach rechts. */
-function Arrow() {
+function Arrow({ className = 'h-3.5 w-3.5' }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 16 16"
-      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+      className={`${className} transition-transform duration-200 group-hover:translate-x-0.5`}
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -45,6 +45,7 @@ function Arrow() {
 
 export default function HomePage() {
   const featured = projects.slice(0, 3);
+  const voices = projects.filter((project) => project.testimonial);
 
   return (
     <>
@@ -207,8 +208,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Referenzen */}
+      {/* Kundenstimmen. Jede Karte führt auf das Projekt, aus dem sie stammt. */}
       <section className="container-page py-20">
+        <p className="eyebrow">Kundenstimmen</p>
+        <h2 className="heading-lg mt-4">Was Auftraggeber hinterher gesagt haben</h2>
+        <div className="mt-12 grid gap-6 min-[900px]:grid-cols-3">
+          {voices.map((project) => {
+            // Letztes Wort und Pfeil bleiben zusammen, sonst steht der Pfeil
+            // allein in der nächsten Zeile.
+            const words = project.title.split(' ');
+            const lastWord = words.pop();
+            return (
+            <Link
+              key={project.slug}
+              href={`/referenzen/${project.slug}`}
+              className="card group flex flex-col p-7 transition hover:border-navy/25 hover:shadow-lift"
+            >
+              <p className="font-display text-[1.06rem] leading-normal">
+                „{project.testimonial!.quote}“
+              </p>
+              <p className="mt-4 text-sm text-navy-muted">{project.testimonial!.author}</p>
+              <span className="mt-auto pt-4 text-sm font-semibold text-brand">
+                {words.join(' ')}{' '}
+                <span className="whitespace-nowrap">
+                  {lastWord}
+                  <Arrow className="ml-1.5 inline h-3.5 w-3.5 align-[-2px]" />
+                </span>
+              </span>
+            </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Referenzen */}
+      <section className="container-page pb-20">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
             <p className="eyebrow">Referenzen</p>
@@ -231,6 +265,11 @@ export default function HomePage() {
                 {project.category} · {project.location}
               </p>
               <h3 className="heading-md mt-2 text-xl group-hover:text-brand">{project.title}</h3>
+              {/* Harte Zahlen vor dem Fließtext: Fläche und Bauzeit sind konkreter
+                  als jede Beschreibung. */}
+              <p className="mt-2.5 text-[13px] font-medium tabular-nums text-navy-soft">
+                {project.area} · {project.duration} · {project.year}
+              </p>
               <p className="prose-body mt-2 line-clamp-3">{project.summary}</p>
               <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 text-sm font-semibold text-brand">
                 Projekt ansehen

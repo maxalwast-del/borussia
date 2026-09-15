@@ -29,6 +29,7 @@ export function SiteFooter() {
                 {company.email}
               </a>
             </p>
+            <p className="pt-3 text-paper/65">{company.chamber}</p>
           </div>
         </div>
 

@@ -251,6 +251,26 @@ button:hover .more svg, button:focus-visible .more svg { transform: translateX(3
 .projcard:hover h3 { color: var(--accent); }
 .projmeta { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-muted); margin: 16px 0 0; }
 .projcard h3 { margin: 8px 0 0; font-size: 1.2rem; transition: color .18s; }
+/* Harte Zahlen zum Projekt. Stehen vor dem Fliesstext, weil Flaeche und
+   Bauzeit konkreter sind als jede Beschreibung. */
+.projspec { margin: 10px 0 0; font-size: 13px; font-weight: 500; color: var(--ink-soft);
+  font-variant-numeric: tabular-nums; }
+
+/* Kundenstimmen. Jede Karte fuehrt auf das Projekt, aus dem sie stammt. */
+.voices { display: grid; gap: 24px; margin-top: 48px; }
+@media (min-width: 900px) { .voices { grid-template-columns: repeat(3, 1fr); } }
+.voice { text-align: left; font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 28px;
+  box-shadow: var(--shadow-card); transition: box-shadow .2s, border-color .18s; }
+.voice:hover { box-shadow: var(--shadow-lift); border-color: var(--line-strong); }
+.voicetext { font-family: var(--display); font-size: 1.06rem; line-height: 1.5; margin: 0; }
+.voicemeta { margin: 16px 0 0; font-size: 14px; color: var(--ink-muted); }
+.voiceproj { margin: auto 0 0; padding-top: 18px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.voiceproj svg { margin-left: 6px; vertical-align: -2px; transition: transform .18s; }
+/* Letztes Wort und Pfeil bleiben zusammen, sonst steht der Pfeil allein
+   in der naechsten Zeile. */
+.nowrap { white-space: nowrap; }
+.voice:hover .voiceproj svg { transform: translateX(3px); }
 
 .vis { border-radius: 14px; overflow: hidden; background: var(--gypsum-deep); display: block; }
 .vis svg { display: block; width: 100%; height: 100%; }
@@ -492,7 +512,7 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
       <p class="fname">Borussia</p>
       <p class="fslogan" style="letter-spacing:.22em;font-size:11px;text-transform:uppercase">Baudienstleistungen</p>
       <p class="slogan-rule" style="margin-top:18px;color:var(--accent-bright)" data-tone="dark">
-        <span>Renovieren</span><span class="bar">|</span><span>Sanieren</span><span class="bar">|</span><span>Modernisieren</span>
+        <span>Renovieren</span><span class="pair"><span class="bar">|</span><span>Sanieren</span></span><span class="pair"><span class="bar">|</span><span>Modernisieren</span></span>
       </p>
       <p class="ftag" style="margin-top:18px">Sechs Gewerke aus einer Hand für Sanierung, Umbau und Renovierung in Berlin und Brandenburg</p>
       <p class="claim">Qualität, auf die Sie bauen können.</p>
@@ -501,6 +521,7 @@ footer.site .wrap { display: grid; gap: 48px; padding-top: 64px; padding-bottom:
         <a href="tel:+493012345670">+49 30 1234567</a><br>
         <a href="mailto:info@borussia-bau.de">info@borussia-bau.de</a>
       </address>
+      <p class="ftag" style="margin-top:20px">Handwerkskammer Berlin</p>
     </div>
     <div>
       <p class="fhead">Seiten</p>
@@ -974,6 +995,19 @@ function viewStart() {
   </div></div>
 
   <section class="block"><div class="wrap">
+    <p class="eyebrow">Kundenstimmen</p>
+    <h2 class="h-lg" style="margin-top:16px">Was Auftraggeber hinterher gesagt haben</h2>
+    <div class="voices">
+      ${PROJECTS.filter((p) => p.testimonial).map((p) => { const w = p.title.split(' '); const last = w.pop();
+        return `<button class="voice" data-project="${esc(p.slug)}">
+        <p class="voicetext">„${esc(p.testimonial.quote)}“</p>
+        <p class="voicemeta">${esc(p.testimonial.author)}</p>
+        <span class="voiceproj">${esc(w.join(' '))} <span class="nowrap">${esc(last)}${ARROW}</span></span>
+      </button>`; }).join('')}
+    </div>
+  </div></section>
+
+  <section class="block" style="padding-top:0"><div class="wrap">
     <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between">
       <div><p class="eyebrow">Referenzen</p><h2 class="h-lg" style="margin-top:16px">Zuletzt gebaut</h2></div>
       <button class="btn btn-ghost" data-go="referenzen">Alle Projekte</button>
@@ -1016,6 +1050,7 @@ function projectCard(p, i) {
     ${visual(i)}
     <p class="projmeta">${esc(p.category)} · ${esc(p.location)}</p>
     <h3>${esc(p.title)}</h3>
+    <p class="projspec">${esc(p.area)} · ${esc(p.duration)} · ${p.year}</p>
     <p class="body" style="margin-top:8px">${esc(p.summary)}</p>
     <span class="more">Projekt ansehen ${ARROW}</span>
   </button>`;
@@ -1082,7 +1117,7 @@ function viewProject(slug) {
       <div><h2 class="h-md">Die Herausforderung</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.challenge)}</p></div>
       <div><h2 class="h-md">Unsere Lösung</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.solution)}</p></div>
       <div><h2 class="h-md">Ergebnis</h2><p class="body body-dark" style="margin-top:12px;font-size:16px">${esc(p.result)}</p></div>
-      ${p.testimonial ? `<blockquote class="quote"><p>„${esc(p.testimonial.quote)}"</p>
+      ${p.testimonial ? `<blockquote class="quote"><p>„${esc(p.testimonial.quote)}“</p>
         <footer>${esc(p.testimonial.author)}</footer></blockquote>` : ''}
     </div>
     <aside class="card" style="padding:28px">
