@@ -8,7 +8,15 @@ export const metadata: Metadata = {
     'Aufmaßtermin oder telefonische Beratung online anfragen. Sie sehen nur Zeiten, die im Kalender wirklich frei sind.',
 };
 
-export default function TerminPage() {
+export default async function TerminPage({
+  searchParams,
+}: {
+  // Die Startseite reicht eine geprüfte Postleitzahl als ?plz= weiter.
+  searchParams: Promise<{ plz?: string }>;
+}) {
+  const { plz } = await searchParams;
+  const initialZip = (plz ?? '').replace(/\D/g, '').slice(0, 5);
+
   return (
     <>
       <PageHeader
@@ -17,7 +25,7 @@ export default function TerminPage() {
         lede="Sie wählen eine Zeit aus, wir bestätigen sie. Meistens noch am selben oder am nächsten Werktag."
       />
       <section className="container-page pb-24">
-        <BookingFlow />
+        <BookingFlow initialZip={initialZip} />
       </section>
     </>
   );

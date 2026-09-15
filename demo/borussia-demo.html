@@ -86,11 +86,20 @@ header.site {
 .slogan-rule { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0;
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); }
 .slogan-rule .bar { color: #4F5E78; }
+/* Strich und Folgewort bleiben zusammen. Sonst steht auf schmalen Geraeten
+   ein Trennstrich allein am Zeilenende. */
+.slogan-rule .pair { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+/* Unter 560px enger gesetzt, damit die drei Woerter mit ihren Trennstrichen
+   in eine Zeile passen: gemessen 316px bei 350px verfuegbarer Breite. */
+@media (max-width: 559px) {
+  .slogan-rule, .slogan-rule .pair { font-size: 10.5px; letter-spacing: .12em; gap: 8px; }
+}
 .slogan-rule[data-tone="dark"] .bar { color: rgba(244,247,250,.75); }
 .claim { font-family: var(--display); font-style: italic; font-size: 1.05rem; margin: 16px 0 0; color: rgba(244,247,250,.85); }
 .tradeicon { width: 44px; height: 44px; flex: 0 0 44px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
   display: grid; place-items: center; transition: background .18s, color .18s; }
-.grid-hair > div:hover .tradeicon, .tradelink:hover .tradeicon { background: var(--accent); color: #fff; }
+.grid-hair > *:hover .tradeicon, .grid-hair > *:focus-visible .tradeicon,
+.tradelink:hover .tradeicon { background: var(--accent); color: #fff; }
 .tradeicon.solid { background: var(--accent); color: #fff; width: 48px; height: 48px; flex-basis: 48px; }
 .tradenav { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
 @media (min-width: 640px) { .tradenav { grid-template-columns: repeat(2, 1fr); } }
@@ -149,7 +158,11 @@ nav.main button[aria-current="page"] { color: var(--ink); font-weight: 600; }
   letter-spacing: .18em; color: var(--accent); margin: 0;
 }
 h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.022em; text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(2.5rem, 5.5vw, 3.7rem); line-height: 1.04; letter-spacing: -.028em; }
+/* Die erste Zeile "Neue Räume im" braucht rund das 8,5-fache der
+   Schriftgroesse. Bei schmalen Geraeten greift deshalb (Breite - 40px) / 8,5,
+   sonst faellt "im" als Waise in eine eigene Zeile. Ab etwa 415px Breite
+   bleibt die urspruengliche Groesse. */
+h1 { font-size: min(clamp(2.5rem, 5.5vw, 3.7rem), calc(11.2vw - 4.5px)); line-height: 1.04; letter-spacing: -.028em; }
 .h-lg { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.14; }
 .h-md { font-size: 1.28rem; font-weight: 600; line-height: 1.3; letter-spacing: -.015em; }
 .lede { font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 62ch; }
@@ -172,13 +185,41 @@ section.block { padding: 72px 0; }
 .hero .wrap { position: relative; display: grid; gap: 56px; padding-top: 64px; padding-bottom: 64px; }
 @media (min-width: 1024px) { .hero .wrap { grid-template-columns: 1.05fr .95fr; align-items: center; } }
 .herobtns { display: flex; flex-direction: column; gap: 12px; }
-@media (min-width: 640px) { .herobtns { flex-direction: row; } }
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 1px solid var(--line); padding-top: 28px; max-width: 520px; }
+/* Die Beschriftungen bleiben einzeilig. Reicht die Breite fuer beide
+   Schaltflaechen nebeneinander nicht, rutscht die zweite in die naechste
+   Zeile, statt dass die Schrift umbricht. */
+@media (min-width: 640px) { .herobtns { flex-direction: row; flex-wrap: wrap; } }
+.herobtns .btn { white-space: nowrap; }
+/* Unter 560px stehen die drei Kennzahlen als Liste untereinander. Dreispaltig
+   brechen "seit 2009" und "12 Leute" sonst mitten im Wert um. */
+.stats { display: grid; border-top: 1px solid var(--line); max-width: 520px; }
+.stats > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 13px 0; border-bottom: 1px solid var(--line); }
 .stats dt { font-family: var(--display); font-weight: 700; font-size: 1.5rem; letter-spacing: -.02em; }
-.stats dd { margin: 4px 0 0; font-size: 14px; color: var(--ink-muted); }
+.stats dd { margin: 0; font-size: 14px; color: var(--ink-muted); text-align: right; }
+@media (min-width: 560px) {
+  .stats { grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 28px; }
+  .stats > div { display: block; padding: 0; border-bottom: 0; }
+  .stats dd { margin-top: 4px; text-align: left; }
+}
 .herovisual { position: relative; }
-.floatcard { position: absolute; left: -16px; bottom: -24px; max-width: 250px; padding: 20px; display: none; }
-@media (min-width: 640px) { .floatcard { display: block; } }
+/* Auf schmalen Geraeten sitzt die Karte unter dem Bild statt darueber.
+   Vorher war sie ausgeblendet, damit ging der Hinweis auf die echte
+   Kalenderverfuegbarkeit auf dem Handy verloren. */
+.floatcard { margin-top: 16px; padding: 18px; }
+@media (min-width: 640px) {
+  .floatcard { position: absolute; left: -16px; bottom: -24px; max-width: 250px; margin-top: 0; padding: 20px; }
+}
+
+/* Zusicherung direkt unter den Schaltflaechen im Aufmacher. */
+.hero-assure { display: flex; align-items: flex-start; gap: 9px; margin: 18px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-muted); }
+.hero-assure svg { flex: 0 0 16px; margin-top: 2px; color: var(--accent); }
+
+/* Weiterfuehrender Hinweis auf Kacheln. Der Pfeil wandert beim Zeigen. */
+.more { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.more svg { transition: transform .18s; }
+a:hover .more svg, a:focus-visible .more svg,
+button:hover .more svg, button:focus-visible .more svg { transform: translateX(3px); }
 
 .grid-hair {
   display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line);
@@ -186,8 +227,12 @@ section.block { padding: 72px 0; }
 }
 @media (min-width: 640px) { .grid-hair { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .grid-hair { grid-template-columns: repeat(3, 1fr); } }
-.grid-hair > div { background: var(--white); padding: 28px; transition: background .18s; }
-.grid-hair > div:hover { background: var(--gypsum); }
+.grid-hair > * { background: var(--white); padding: 28px; transition: background .18s; }
+.grid-hair > *:hover { background: var(--gypsum); }
+/* Spaltenweise Ausrichtung, damit der Weiter-Hinweis in allen Kacheln einer
+   Reihe auf derselben Hoehe steht, auch wenn die Texte verschieden lang sind. */
+.tradecard { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+.tradecard .more, .projcard .more { margin-top: auto; padding-top: 14px; }
 
 .dark-band { background: var(--ink); color: var(--gypsum); padding: 76px 0; }
 .dark-band .wrap { display: grid; gap: 48px; }
@@ -334,6 +379,12 @@ textarea.inp { min-height: 130px; resize: vertical; }
 .hint { display: block; margin-top: 6px; font-size: 12px; color: var(--ink-muted); }
 .zonebox { border-radius: 12px; padding: 16px; font-size: 14px; line-height: 1.6; background: rgba(220,234,246,.5); color: var(--ink-soft); }
 .zonebox.outside { background: rgba(23,33,43,.05); }
+/* Schnellpruefung der Postleitzahl auf der Startseite. Nutzt dieselbe
+   Zonenlogik wie das Buchungsformular, die Eingabe wird dorthin uebernommen. */
+.zipcheck { margin-top: 28px; }
+.zipcheck .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.zipcheck input.inp { flex: 0 0 auto; width: 130px; }
+.zipcheck .zonebox { margin-top: 14px; }
 .check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.6; color: var(--ink-muted); }
 .check input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--accent); }
 .summary { padding: 28px; position: sticky; top: 92px; }
@@ -847,6 +898,10 @@ const state = {
   contactSent: false,
 };
 
+const ARROW = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4"/></svg>';
+const PHONE = '<svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5 8 6.4 6.4 7.9a9.4 9.4 0 0 0 5.7 5.7l1.5-1.6 2.9 1.4v2.8c0 .6-.5 1.1-1.1 1.1A13.6 13.6 0 0 1 2.7 3.6c0-.6.5-1.1 1.1-1.1h2.8Z"/></svg>';
+const CHECK = '<svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10.5 4 4 8-9"/></svg>';
+
 function pagehead(eyebrow, title, lede) {
   return `<div class="pagehead"><div class="wrap">
     <p class="eyebrow">${esc(eyebrow)}</p>
@@ -856,21 +911,28 @@ function pagehead(eyebrow, title, lede) {
 }
 
 /* ---------- Start ---------- */
+function zoneBox(z) {
+  return `<div class="zonebox ${z.inside ? '' : 'outside'}">
+    <strong>${esc(z.label)}</strong> · ${esc(z.fee)}<br>${esc(z.note)}</div>`;
+}
+
 function viewStart() {
   const featured = PROJECTS.slice(0, 3);
+  const homeZone = state.zip.length === 5 ? matchZone(state.zip) : null;
   return `
   <div class="hero"><div class="wrap">
     <div>
-      <p class="slogan-rule"><span>Renovieren</span><span class="bar">|</span><span>Sanieren</span><span class="bar">|</span><span>Modernisieren</span></p>
+      <p class="slogan-rule"><span>Renovieren</span><span class="pair"><span class="bar">|</span><span>Sanieren</span></span><span class="pair"><span class="bar">|</span><span>Modernisieren</span></span></p>
       <h1 style="margin-top:20px">Neue Räume im<br>alten Grundriss.</h1>
       <p class="lede" style="margin-top:24px">Trockenbau, Fliesen, Maler, Innenausbau, Sanierung und Boden in Berlin
         und Brandenburg. Nach dem Aufmaß bekommen Sie einen Festpreis über alle Gewerke, und bis zur
         Abnahme haben Sie denselben Ansprechpartner.</p>
       <div class="herobtns" style="margin-top:36px">
-        <button class="btn btn-accent" data-go="termin">Aufmaßtermin anfragen &nbsp;→</button>
-        <a class="btn btn-ghost" href="tel:+493012345670">+49 30 1234567</a>
+        <button class="btn btn-accent" data-go="termin">Aufmaßtermin anfragen ${ARROW}</button>
+        <a class="btn btn-ghost" href="tel:+493012345670" aria-label="Anrufen: +49 30 1234567">${PHONE}+49 30 1234567</a>
       </div>
-      <dl class="stats" style="margin-top:48px">
+      <p class="hero-assure">${CHECK}<span>Aufmaß und Beratung vor Ort sind im Einsatzgebiet kostenfrei.</span></p>
+      <dl class="stats" style="margin-top:36px">
         <div><dt>seit 2009</dt><dd>am Markt</dd></div>
         <div><dt>12 Leute</dt><dd>im eigenen Team</dd></div>
         <div><dt>24 h</dt><dd>Rückmeldung auf Anfragen</dd></div>
@@ -891,8 +953,10 @@ function viewStart() {
     <p class="body" style="margin-top:16px;max-width:60ch">Wer eine Wohnung saniert, koordiniert sonst vier Betriebe
       und wartet auf jeden einzelnen. Bei uns kommt alles aus einem Haus, und die Reihenfolge planen wir gleich mit.</p>
     <div class="grid-hair" style="margin-top:48px">
-      ${TRADES.map(([id, t, x]) => `<div>${icon(id)}<h3 class="h-md" style="margin-top:20px">${esc(t)}</h3>
-        <p class="body" style="margin-top:10px">${esc(x)}</p></div>`).join('')}
+      ${TRADES.map(([id, t, x]) => `<a class="tradecard" href="#${id}" data-go="leistungen" data-anchor="${id}">
+        ${icon(id)}<h3 class="h-md" style="margin-top:20px">${esc(t)}</h3>
+        <p class="body" style="margin-top:10px">${esc(x)}</p>
+        <span class="more">Zum Gewerk ${ARROW}</span></a>`).join('')}
     </div>
     <p style="margin-top:32px"><button class="backlink" style="color:var(--accent);font-weight:600;font-size:16px" data-go="leistungen">Alle Gewerke im Detail →</button></p>
   </div></section>
@@ -927,7 +991,15 @@ function viewStart() {
           <h2 class="h-lg" style="margin-top:16px">Berlin, Potsdam und das nähere Umland</h2>
           <p class="body" style="margin-top:16px">Wir fahren nur so weit, wie wir Termine zuverlässig halten können.
             Weiter draußen wird die Anfahrt zum Risiko für alle anderen Termine des Tages.</p>
-          <button class="btn btn-dark" style="margin-top:28px" data-go="termin">Verfügbarkeit prüfen</button>
+          <div class="zipcheck">
+            <form class="row" id="zipform-home" novalidate>
+              <input class="inp" id="zipinput-home" name="zip" inputmode="numeric" maxlength="5"
+                placeholder="PLZ" aria-label="Postleitzahl" aria-describedby="ziphint-home" value="${esc(state.zip)}">
+              <button class="btn btn-dark" type="submit">Verfügbarkeit prüfen</button>
+            </form>
+            <span class="hint" id="ziphint-home">Fünfstellig. Sie sehen sofort, ob Ihre Adresse im Einsatzgebiet liegt.</span>
+            <div id="zoneslot-home">${homeZone ? zoneBox(homeZone) : ''}</div>
+          </div>
         </div>
         <ul class="zonelist">
           ${ZONES.map((z) => `<li><strong>${esc(z.label)}</strong>
@@ -945,6 +1017,7 @@ function projectCard(p, i) {
     <p class="projmeta">${esc(p.category)} · ${esc(p.location)}</p>
     <h3>${esc(p.title)}</h3>
     <p class="body" style="margin-top:8px">${esc(p.summary)}</p>
+    <span class="more">Projekt ansehen ${ARROW}</span>
   </button>`;
 }
 
@@ -1140,8 +1213,7 @@ function viewTermin() {
             <label class="field"><span class="flabel">PLZ <span class="req">*</span></span>
               <input class="inp" name="zip" id="zipinput" inputmode="numeric" maxlength="5" required value="${esc(state.zip)}"></label>
           </div>
-          <div id="zoneslot">${zone ? `<div class="zonebox ${zone.inside ? '' : 'outside'}">
-            <strong>${esc(zone.label)}</strong> · ${esc(zone.fee)}<br>${esc(zone.note)}</div>` : ''}</div>
+          <div id="zoneslot">${zone ? zoneBox(zone) : ''}</div>
           <label class="field"><span class="flabel">Was ist geplant?</span>
             <textarea class="inp" name="message"></textarea>
             <span class="hint">Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot</span></label>
@@ -1341,7 +1413,15 @@ document.addEventListener('click', (e) => {
     return;
   }
 
-  if (el.dataset.go) { e.preventDefault(); go(el.dataset.go); return; }
+  if (el.dataset.go) {
+    e.preventDefault();
+    const anchor = el.dataset.anchor;
+    go(el.dataset.go);
+    // Erst nach dem Neuzeichnen scrollen, sonst gibt es das Ziel noch nicht.
+    if (anchor) requestAnimationFrame(() =>
+      document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    return;
+  }
   if (el.dataset.project) { state.page = 'referenzen'; state.project = el.dataset.project; render(); return; }
   if (el.dataset.back) { state.project = null; render(); return; }
   if (el.dataset.filter) { state.filter = el.dataset.filter; render(false); return; }
@@ -1362,22 +1442,22 @@ document.getElementById('burger').addEventListener('click', () => {
 });
 
 /* PLZ-Zone live einblenden, ohne die ganze Seite neu zu zeichnen. */
+const ZIP_FIELDS = { zipinput: 'zoneslot', 'zipinput-home': 'zoneslot-home' };
 document.addEventListener('input', (e) => {
-  if (e.target.id !== 'zipinput') return;
+  const slot = ZIP_FIELDS[e.target.id];
+  if (!slot) return;
   e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
   state.zip = e.target.value;
-  const box = document.getElementById('zoneslot');
+  const box = document.getElementById(slot);
   if (!box) return;
-  if (state.zip.length !== 5) { box.innerHTML = ''; return; }
-  const z = matchZone(state.zip);
-  box.innerHTML = `<div class="zonebox ${z.inside ? '' : 'outside'}">
-    <strong>${esc(z.label)}</strong> · ${esc(z.fee)}<br>${esc(z.note)}</div>`;
+  box.innerHTML = state.zip.length === 5 ? zoneBox(matchZone(state.zip)) : '';
 });
 
 document.addEventListener('submit', (e) => {
   e.preventDefault();
   const form = e.target;
   if (!form.checkValidity()) { form.reportValidity(); return; }
+  if (form.id === 'zipform-home') { go('termin'); return; }
   if (form.id === 'bookingform') {
     const type = TYPES.find((t) => t.id === state.typeId);
     state.sent = `${type.label} am ${prettySlot(state.selected)}`;

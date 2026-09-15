@@ -39,7 +39,7 @@ function formatSelection(iso: string) {
   }).format(new Date(iso));
 }
 
-export function BookingFlow() {
+export function BookingFlow({ initialZip = '' }: { initialZip?: string }) {
   const [typeId, setTypeId] = useState<AppointmentTypeId>(appointmentTypes[0].id);
   const [weekStart, setWeekStart] = useState(todayIso());
   const [days, setDays] = useState<Day[]>([]);
@@ -52,7 +52,7 @@ export function BookingFlow() {
     email: '',
     phone: '',
     address: '',
-    zip: '',
+    zip: initialZip,
     message: '',
     privacy: false,
     website: '',

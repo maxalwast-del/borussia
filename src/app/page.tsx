@@ -4,6 +4,7 @@ import { TradeIcon } from '@/components/trade-icon';
 import { SloganRule } from '@/components/logo';
 import { projects } from '@/content/projects';
 import { Visual } from '@/components/visual';
+import { ZoneCheck } from '@/components/zone-check';
 
 const reasons = [
   {
@@ -23,6 +24,24 @@ const reasons = [
     text: 'Wir sagen nur zu, was wir mit eigenen Leuten schaffen. Wenn sich doch etwas verschiebt, rufen wir an, bevor Sie vergeblich warten.',
   },
 ];
+
+/** Pfeil für weiterführende Hinweise. Wandert beim Zeigen ein Stück nach rechts. */
+function Arrow() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 8h9M8.5 4l4 4-4 4" />
+    </svg>
+  );
+}
 
 export default function HomePage() {
   const featured = projects.slice(0, 3);
@@ -50,27 +69,68 @@ export default function HomePage() {
               bis zur Abnahme haben Sie denselben Ansprechpartner.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/termin" className="btn-brand">
+            {/* Die Beschriftungen bleiben einzeilig. Reicht die Breite nicht für
+                beide Schaltflächen, rutscht die zweite in die nächste Zeile. */}
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link href="/termin" className="btn-brand whitespace-nowrap">
                 Aufmaßtermin anfragen
                 <svg viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                   <path d="M11.3 4.3a1 1 0 0 1 1.4 0l5 5a1 1 0 0 1 0 1.4l-5 5a1 1 0 1 1-1.4-1.4L14.6 11H3a1 1 0 1 1 0-2h11.6l-3.3-3.3a1 1 0 0 1 0-1.4Z" />
                 </svg>
               </Link>
-              <a href={`tel:${company.phoneHref}`} className="btn-ghost">
+              <a
+                href={`tel:${company.phoneHref}`}
+                className="btn-ghost whitespace-nowrap"
+                aria-label={`Anrufen: ${company.phone}`}
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6.6 3.5 8 6.4 6.4 7.9a9.4 9.4 0 0 0 5.7 5.7l1.5-1.6 2.9 1.4v2.8c0 .6-.5 1.1-1.1 1.1A13.6 13.6 0 0 1 2.7 3.6c0-.6.5-1.1 1.1-1.1h2.8Z" />
+                </svg>
                 {company.phone}
               </a>
             </div>
 
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-navy/10 pt-8">
+            <p className="mt-4 flex items-start gap-2.5 text-sm leading-snug text-navy-muted">
+              <svg
+                viewBox="0 0 20 20"
+                className="mt-0.5 h-4 w-4 flex-none text-brand"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m4 10.5 4 4 8-9" />
+              </svg>
+              <span>Aufmaß und Beratung vor Ort sind im Einsatzgebiet kostenfrei.</span>
+            </p>
+
+            {/* Unter 560px stehen die Kennzahlen als Liste untereinander.
+                Dreispaltig brechen "seit 2009" und "12 Leute" sonst im Wert um. */}
+            <dl className="mt-9 grid max-w-lg border-t border-navy/10 min-[560px]:mt-12 min-[560px]:grid-cols-3 min-[560px]:gap-6 min-[560px]:pt-8">
               {[
                 [`seit ${company.foundedYear}`, 'am Markt'],
                 [`${company.teamSize} Leute`, 'im eigenen Team'],
                 ['24 h', 'Rückmeldung auf Anfragen'],
               ].map(([value, label]) => (
-                <div key={label}>
+                <div
+                  key={label}
+                  className="flex items-baseline justify-between gap-4 border-b border-navy/10 py-3.5 min-[560px]:block min-[560px]:border-b-0 min-[560px]:py-0"
+                >
                   <dt className="font-display text-2xl tracking-tight">{value}</dt>
-                  <dd className="mt-1 text-sm text-navy-muted">{label}</dd>
+                  <dd className="text-right text-sm text-navy-muted min-[560px]:mt-1 min-[560px]:text-left">
+                    {label}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -78,7 +138,9 @@ export default function HomePage() {
 
           <div className="relative animate-fade-up [animation-delay:120ms]">
             <Visual variant={0} label="Trockenbau-Trennwand im Rohbau" className="aspect-[4/3] rounded-card shadow-lift" />
-            <div className="card absolute -bottom-6 -left-4 hidden max-w-[240px] p-5 sm:block">
+            {/* Auf schmalen Geräten sitzt die Karte unter dem Bild. Vorher war sie
+                ausgeblendet, damit fehlte der Hinweis auf die echte Verfügbarkeit. */}
+            <div className="card mt-4 max-w-none p-5 sm:absolute sm:-bottom-6 sm:-left-4 sm:mt-0 sm:max-w-[240px]">
               <p className="text-sm font-semibold">Termin online anfragen</p>
               <p className="mt-1.5 text-sm leading-relaxed text-navy-muted">
                 Sie sehen nur Zeiten, die im Kalender wirklich frei sind.
@@ -101,19 +163,28 @@ export default function HomePage() {
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-card border border-navy/10 bg-navy/10 sm:grid-cols-2 lg:grid-cols-3">
           {trades.map((trade) => (
-            <div key={trade.id} className="group bg-white p-7 transition hover:bg-paper">
+            <Link
+              key={trade.id}
+              href={`/leistungen#${trade.id}`}
+              className="group flex flex-col bg-white p-7 transition hover:bg-paper"
+            >
               <span className="grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white">
                 <TradeIcon id={trade.id} className="h-5 w-5" />
               </span>
               <h3 className="heading-md mt-5 text-xl">{trade.label}</h3>
               <p className="prose-body mt-2.5">{trade.short}</p>
-            </div>
+              {/* mt-auto hält den Hinweis in allen Kacheln einer Reihe auf gleicher Höhe. */}
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 text-sm font-semibold text-brand">
+                Zum Gewerk
+                <Arrow />
+              </span>
+            </Link>
           ))}
         </div>
 
-        <Link href="/leistungen" className="mt-8 inline-flex items-center gap-2 font-semibold text-brand hover:text-brand-hover">
+        <Link href="/leistungen" className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand hover:text-brand-hover">
           Alle Gewerke im Detail
-          <span aria-hidden="true">→</span>
+          <Arrow />
         </Link>
       </section>
 
@@ -150,7 +221,7 @@ export default function HomePage() {
 
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {featured.map((project, index) => (
-            <Link key={project.slug} href={`/referenzen/${project.slug}`} className="group">
+            <Link key={project.slug} href={`/referenzen/${project.slug}`} className="group flex flex-col">
               <Visual
                 variant={index}
                 label={project.title}
@@ -161,6 +232,10 @@ export default function HomePage() {
               </p>
               <h3 className="heading-md mt-2 text-xl group-hover:text-brand">{project.title}</h3>
               <p className="prose-body mt-2 line-clamp-3">{project.summary}</p>
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-3.5 text-sm font-semibold text-brand">
+                Projekt ansehen
+                <Arrow />
+              </span>
             </Link>
           ))}
         </div>
@@ -177,9 +252,7 @@ export default function HomePage() {
                 Wir fahren nur so weit, wie wir Termine zuverlässig halten können. Weiter draußen
                 wird die Anfahrt zum Risiko für alle anderen Termine des Tages.
               </p>
-              <Link href="/termin" className="btn-primary mt-7">
-                Verfügbarkeit prüfen
-              </Link>
+              <ZoneCheck />
             </div>
             <ul className="space-y-4">
               {serviceZones.map((zone) => (

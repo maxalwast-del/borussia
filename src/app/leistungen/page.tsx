@@ -146,7 +146,7 @@ export default function LeistungenPage() {
             Genau dafür ist der Betrieb aufgestellt. Das Aufmaß vor Ort ist kostenfrei, und Sie
             bekommen ein Angebot, das alle beteiligten Arbeiten abdeckt.
           </p>
-          <Link href="/termin" className="btn-accent mt-8">
+          <Link href="/termin" className="btn-brand mt-8">
             Aufmaßtermin anfragen
           </Link>
         </div>
