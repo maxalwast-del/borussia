@@ -10,3 +10,8 @@ next-env.d.ts
 .DS_Store
 .vercel
 .screenshots/
+
+# Agent-Skills: Quelle in skills-lock.json gepinnt,
+# Wiederherstellung via `npx skills experimental_install`
+.agents/
+.claude/skills/
