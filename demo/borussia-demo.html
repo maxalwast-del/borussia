@@ -163,6 +163,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -.02
    sonst faellt "im" als Waise in eine eigene Zeile. Ab etwa 415px Breite
    bleibt die urspruengliche Groesse. */
 h1 { font-size: min(clamp(2.5rem, 5.5vw, 3.7rem), calc(11.2vw - 4.5px)); line-height: 1.04; letter-spacing: -.028em; }
+/* Ab 1024px steht der Aufmacher zweispaltig, die Textspalte misst dann nur
+   noch (Breite - 120px) * 0,525. Massgeblich ist die zweite Zeile
+   "alten Grundriss.": sie braucht rund das 8,7-fache der Schriftgroesse,
+   mehr als die erste. Zwischen 1024 und rund 1130px reicht 3,7rem nicht. */
+@media (min-width: 1024px) {
+  h1 { font-size: min(clamp(2.5rem, 5.5vw, 3.7rem), calc(5.95vw - 7.5px)); }
+}
 .h-lg { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.14; }
 .h-md { font-size: 1.28rem; font-weight: 600; line-height: 1.3; letter-spacing: -.015em; }
 .lede { font-size: clamp(1.05rem, 1.6vw, 1.2rem); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 62ch; }
@@ -234,7 +241,13 @@ button:hover .more svg, button:focus-visible .more svg { transform: translateX(3
 .tradecard { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
 .tradecard .more, .projcard .more { margin-top: auto; padding-top: 14px; }
 
+/* Arbeitsweise und Kundenstimmen bilden zusammen den dunklen Mittelteil:
+   erst die eigene Zusage, dann die Bestaetigung durch Auftraggeber. Vorher
+   folgten auf das dunkle Band drei helle Abschnitte mit gleicher
+   Kartenoptik, die optisch ineinander verschwammen. */
 .dark-band { background: var(--ink); color: var(--gypsum); padding: 76px 0; }
+.dark-claim { font-family: var(--display); font-style: italic; font-size: 1.1rem; margin: 20px 0 0; color: rgba(244,247,250,.85); }
+.dark-split { margin-top: 64px; padding-top: 64px; border-top: 1px solid rgba(243,246,249,.15); }
 .dark-band .wrap { display: grid; gap: 48px; }
 @media (min-width: 1024px) { .dark-band .wrap { grid-template-columns: .8fr 1.2fr; } }
 .dark-band .eyebrow { color: var(--accent-bright); }
@@ -259,13 +272,19 @@ button:hover .more svg, button:focus-visible .more svg { transform: translateX(3
 /* Kundenstimmen. Jede Karte fuehrt auf das Projekt, aus dem sie stammt. */
 .voices { display: grid; gap: 24px; margin-top: 48px; }
 @media (min-width: 900px) { .voices { grid-template-columns: repeat(3, 1fr); } }
-.voice { text-align: left; font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column;
-  background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 28px;
-  box-shadow: var(--shadow-card); transition: box-shadow .2s, border-color .18s; }
-.voice:hover { box-shadow: var(--shadow-lift); border-color: var(--line-strong); }
+.voice { text-align: left; font: inherit; color: var(--gypsum); cursor: pointer; display: flex; flex-direction: column;
+  /* background: none ist noetig: ohne Angabe zeichnet der Browser die
+     Standardflaeche einer Schaltflaeche, und helle Schrift steht dann auf
+     hellem Grau. */
+  background: none;
+  border: 1px solid rgba(243,246,249,.15); border-radius: 14px; padding: 28px;
+  transition: border-color .18s; }
+/* Bewusst ohne Flaeche: jede Aufhellung des Grundes drueckt den Kontrast des
+   hellen Blaus unter 4,5:1. Auf reinem Marineblau liegt es bei 4,50:1. */
+.voice:hover { border-color: rgba(243,246,249,.42); }
 .voicetext { font-family: var(--display); font-size: 1.06rem; line-height: 1.5; margin: 0; }
-.voicemeta { margin: 16px 0 0; font-size: 14px; color: var(--ink-muted); }
-.voiceproj { margin: auto 0 0; padding-top: 18px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.voicemeta { margin: 16px 0 0; font-size: 14px; color: rgba(243,246,249,.66); }
+.voiceproj { margin: auto 0 0; padding-top: 18px; font-size: 14px; font-weight: 600; color: var(--accent-bright); }
 .voiceproj svg { margin-left: 6px; vertical-align: -2px; transition: transform .18s; }
 /* Letztes Wort und Pfeil bleiben zusammen, sonst steht der Pfeil allein
    in der naechsten Zeile. */
@@ -982,32 +1001,34 @@ function viewStart() {
     <p style="margin-top:32px"><button class="backlink" style="color:var(--accent);font-weight:600;font-size:16px" data-go="leistungen">Alle Gewerke im Detail →</button></p>
   </div></section>
 
-  <div class="dark-band"><div class="wrap">
-    <div>
-      <p class="eyebrow">Arbeitsweise</p>
-      <h2 class="h-lg" style="margin-top:16px">Wobei wir uns festlegen</h2>
+  <div class="dark-band">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Arbeitsweise</p>
+        <h2 class="h-lg" style="margin-top:16px">Wobei wir uns festlegen</h2>
+        <p class="dark-claim">Qualität, auf die Sie bauen können.</p>
+      </div>
+      <div class="reasons">
+        ${REASONS.map(([t, x], i) => `<div>
+          <span style="font-family:var(--display);font-size:14px;color:var(--accent-bright)">0${i+1}</span>
+          <h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join('')}
+      </div>
     </div>
-    <div class="reasons">
-      ${REASONS.map(([t, x], i) => `<div>
-        <span style="font-family:var(--display);font-size:14px;color:var(--accent-bright)">0${i+1}</span>
-        <h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join('')}
+    <div class="wrap dark-split">
+      <p class="eyebrow">Kundenstimmen</p>
+      <h2 class="h-lg" style="margin-top:16px">Was Auftraggeber hinterher gesagt haben</h2>
+      <div class="voices">
+        ${PROJECTS.filter((p) => p.testimonial).map((p) => { const w = p.title.split(' '); const last = w.pop();
+          return `<button class="voice" data-project="${esc(p.slug)}">
+          <p class="voicetext">„${esc(p.testimonial.quote)}“</p>
+          <p class="voicemeta">${esc(p.testimonial.author)}</p>
+          <span class="voiceproj">${esc(w.join(' '))} <span class="nowrap">${esc(last)}${ARROW}</span></span>
+        </button>`; }).join('')}
+      </div>
     </div>
-  </div></div>
+  </div>
 
   <section class="block"><div class="wrap">
-    <p class="eyebrow">Kundenstimmen</p>
-    <h2 class="h-lg" style="margin-top:16px">Was Auftraggeber hinterher gesagt haben</h2>
-    <div class="voices">
-      ${PROJECTS.filter((p) => p.testimonial).map((p) => { const w = p.title.split(' '); const last = w.pop();
-        return `<button class="voice" data-project="${esc(p.slug)}">
-        <p class="voicetext">„${esc(p.testimonial.quote)}“</p>
-        <p class="voicemeta">${esc(p.testimonial.author)}</p>
-        <span class="voiceproj">${esc(w.join(' '))} <span class="nowrap">${esc(last)}${ARROW}</span></span>
-      </button>`; }).join('')}
-    </div>
-  </div></section>
-
-  <section class="block" style="padding-top:0"><div class="wrap">
     <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between">
       <div><p class="eyebrow">Referenzen</p><h2 class="h-lg" style="margin-top:16px">Zuletzt gebaut</h2></div>
       <button class="btn btn-ghost" data-go="referenzen">Alle Projekte</button>

@@ -189,12 +189,16 @@ export default function HomePage() {
         </Link>
       </section>
 
-      {/* Warum wir */}
+      {/* Arbeitsweise und Kundenstimmen bilden zusammen den dunklen Mittelteil:
+          erst die eigene Zusage, dann die Bestätigung durch Auftraggeber. Vorher
+          folgten auf das dunkle Band drei helle Abschnitte mit gleicher
+          Kartenoptik, die optisch ineinander verschwammen. */}
       <section className="bg-navy py-20 text-paper">
         <div className="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-bright">Arbeitsweise</p>
             <h2 className="heading-lg mt-4">Wobei wir uns festlegen</h2>
+            <p className="mt-5 font-display text-lg italic text-paper/85">{company.claim}</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2">
             {reasons.map((reason, index) => (
@@ -206,43 +210,46 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Kundenstimmen. Jede Karte führt auf das Projekt, aus dem sie stammt. */}
-      <section className="container-page py-20">
-        <p className="eyebrow">Kundenstimmen</p>
-        <h2 className="heading-lg mt-4">Was Auftraggeber hinterher gesagt haben</h2>
-        <div className="mt-12 grid gap-6 min-[900px]:grid-cols-3">
-          {voices.map((project) => {
-            // Letztes Wort und Pfeil bleiben zusammen, sonst steht der Pfeil
-            // allein in der nächsten Zeile.
-            const words = project.title.split(' ');
-            const lastWord = words.pop();
-            return (
-            <Link
-              key={project.slug}
-              href={`/referenzen/${project.slug}`}
-              className="card group flex flex-col p-7 transition hover:border-navy/25 hover:shadow-lift"
-            >
-              <p className="font-display text-[1.06rem] leading-normal">
-                „{project.testimonial!.quote}“
-              </p>
-              <p className="mt-4 text-sm text-navy-muted">{project.testimonial!.author}</p>
-              <span className="mt-auto pt-4 text-sm font-semibold text-brand">
-                {words.join(' ')}{' '}
-                <span className="whitespace-nowrap">
-                  {lastWord}
-                  <Arrow className="ml-1.5 inline h-3.5 w-3.5 align-[-2px]" />
-                </span>
-              </span>
-            </Link>
-            );
-          })}
+        {/* Kundenstimmen. Jede Karte führt auf das Projekt, aus dem sie stammt. */}
+        <div className="container-page mt-16 border-t border-paper/15 pt-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-bright">Kundenstimmen</p>
+          <h2 className="heading-lg mt-4">Was Auftraggeber hinterher gesagt haben</h2>
+          <div className="mt-10 grid gap-6 min-[900px]:grid-cols-3">
+            {voices.map((project) => {
+              // Letztes Wort und Pfeil bleiben zusammen, sonst steht der Pfeil
+              // allein in der nächsten Zeile.
+              const words = project.title.split(' ');
+              const lastWord = words.pop();
+              return (
+                <Link
+                  key={project.slug}
+                  href={`/referenzen/${project.slug}`}
+                  // Bewusst ohne Flächenfarbe: jede Aufhellung des Grundes drückt
+                  // den Kontrast von brand-bright unter 4,5:1. Auf reinem Marineblau
+                  // liegt es bei 4,50:1.
+                  className="group flex flex-col rounded-card border border-paper/15 p-7 transition hover:border-paper/40"
+                >
+                  <p className="font-display text-[1.06rem] leading-normal">
+                    „{project.testimonial!.quote}“
+                  </p>
+                  <p className="mt-4 text-sm text-paper/65">{project.testimonial!.author}</p>
+                  <span className="mt-auto pt-4 text-sm font-semibold text-brand-bright">
+                    {words.join(' ')}{' '}
+                    <span className="whitespace-nowrap">
+                      {lastWord}
+                      <Arrow className="ml-1.5 inline h-3.5 w-3.5 align-[-2px]" />
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Referenzen */}
-      <section className="container-page pb-20">
+      <section className="container-page py-20">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
             <p className="eyebrow">Referenzen</p>
