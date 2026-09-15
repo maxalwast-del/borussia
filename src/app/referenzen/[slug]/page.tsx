@@ -53,7 +53,7 @@ export default async function ProjectPage({ params }: Params) {
 
           {project.testimonial && (
             <blockquote className="rounded-card border-l-4 border-brand bg-white p-7 shadow-card">
-              <p className="font-display text-xl leading-relaxed">„{project.testimonial.quote}"</p>
+              <p className="font-display text-xl leading-relaxed">„{project.testimonial.quote}“</p>
               <footer className="mt-4 text-sm text-navy-muted">— {project.testimonial.author}</footer>
             </blockquote>
           )}

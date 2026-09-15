@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "tsx scripts/check-booking-logic.ts",
     "check:contrast": "node scripts/contrast-check.mjs"
@@ -24,10 +24,12 @@
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.4",
+    "playwright": "^1.49.0",
     "postcss": "^8.5.28",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3",
     "tsx": "^4.19.2",
-    "playwright": "^1.49.0"
+    "typescript": "^5.7.3"
   }
 }
