@@ -56,7 +56,7 @@ export function ContactForm() {
 
   if (state === 'done') {
     return (
-      <div className="flex flex-col items-center rounded-tile bg-white px-8 py-16 text-center" role="status">
+      <div className="flex flex-col items-center rounded-tile bg-surface px-8 py-16 text-center" role="status">
         <Icon name="check-circle" className="h-14 w-14 text-accent" strokeWidth={1.4} />
         <h2 className="t-title mt-6">Nachricht ist angekommen.</h2>
         <p className="t-body mx-auto mt-3 max-w-md text-mute">Wir antworten in der Regel innerhalb eines Werktages.</p>
@@ -65,7 +65,7 @@ export function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={submit} className="space-y-4 rounded-tile bg-white p-7 sm:p-10" noValidate>
+    <form ref={formRef} onSubmit={submit} className="space-y-4 rounded-tile bg-surface p-7 sm:p-10" noValidate>
       <h2 className="t-title pb-2">
         Schreiben Sie uns.
         <span className="text-mute"> Wir melden uns.</span>

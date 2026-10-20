@@ -44,7 +44,7 @@ export function ProjectGallery() {
           {thumb && (
             <span
               aria-hidden="true"
-              className="absolute bottom-[3px] left-0 top-[3px] rounded-full bg-white shadow-[0_3px_8px_rgba(0,0,0,0.12),0_3px_1px_rgba(0,0,0,0.04)] transition-[transform,width] duration-[400ms] ease-apple motion-reduce:transition-none"
+              className="absolute bottom-[3px] left-0 top-[3px] rounded-full bg-thumb shadow-[0_3px_8px_rgba(0,0,0,0.12),0_3px_1px_rgba(0,0,0,0.04)] transition-[transform,width] duration-[400ms] ease-apple motion-reduce:transition-none"
               style={{ transform: `translateX(${thumb.x}px)`, width: thumb.width }}
             />
           )}
@@ -58,7 +58,7 @@ export function ProjectGallery() {
                 aria-pressed={active}
                 className={`relative z-10 h-9 whitespace-nowrap rounded-full px-4 text-[0.875rem] tracking-[-0.005em] transition-colors duration-200 ${
                   active ? 'font-medium text-ink' : 'text-ink-soft hover:text-ink'
-                } ${active && !thumb ? 'bg-white' : ''}`}
+                } ${active && !thumb ? 'bg-thumb' : ''}`}
               >
                 {option}
               </button>

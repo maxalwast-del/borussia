@@ -4,9 +4,10 @@
  *   node scripts/contrast-check.mjs demo               # die Demo-Datei
  *   node scripts/contrast-check.mjs http://localhost:3000
  *
- * Geprüft wird im Dunkelmodus des Betrachters, weil dort die Fehler
- * auftreten, die im Hellmodus unsichtbar bleiben: Bedienelemente ohne
- * eigene Textfarbe fallen dann auf Weiß.
+ * Die Website wird im hellen und im dunklen Erscheinungsbild geprüft. Die
+ * Demo nur im Dunkelmodus des Betrachters, weil dort die Fehler auftreten,
+ * die im Hellmodus unsichtbar bleiben: Bedienelemente ohne eigene
+ * Textfarbe fallen dann auf Weiß.
  *
  * CHROMIUM_PATH setzen, falls Playwright den Browser nicht selbst findet.
  */
@@ -41,11 +42,15 @@ if (mode === 'demo') {
   console.log('termin gewählt'.padEnd(12), bad.length ? JSON.stringify(bad.slice(0, 4)) : 'ok');
   
 } else {
-  for (const path of ['/', '/termin', '/leistungen', '/referenzen', '/referenzen/altbau-prenzlauer-berg', '/ablauf', '/jobs', '/kontakt', '/impressum', '/datenschutz']) {
-    await p.goto(mode + path, { waitUntil: 'networkidle' });
-    await p.waitForTimeout(900);
-    const bad = await p.evaluate(findLowContrast);
-    console.log(path.padEnd(13), bad.length ? JSON.stringify(bad.slice(0, 4)) : 'ok');
+  for (const scheme of ['light', 'dark']) {
+    const page = await b.newPage({ viewport: { width: 1440, height: 1500 }, locale: 'de-DE', colorScheme: scheme });
+    for (const path of ['/', '/termin', '/leistungen', '/referenzen', '/referenzen/altbau-prenzlauer-berg', '/ablauf', '/jobs', '/kontakt', '/impressum', '/datenschutz']) {
+      await page.goto(mode + path, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(900);
+      const bad = await page.evaluate(findLowContrast);
+      console.log(scheme.padEnd(6), path.padEnd(36), bad.length ? JSON.stringify(bad.slice(0, 4)) : 'ok');
+    }
+    await page.close();
   }
 }
 await b.close();

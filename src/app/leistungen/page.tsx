@@ -146,7 +146,7 @@ export default function LeistungenPage() {
             key={service.id}
             id={service.id}
             aria-labelledby={`${service.id}-titel`}
-            className={`section scroll-mt-[52px] ${onCanvas ? 'bg-canvas' : 'bg-white'}`}
+            className={`section scroll-mt-[52px] ${onCanvas ? 'bg-canvas' : 'bg-page'}`}
           >
             <div className="container-page">
               <p className="t-eyebrow flex items-center gap-2 text-accent" data-reveal>

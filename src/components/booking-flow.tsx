@@ -184,9 +184,9 @@ export function BookingFlow() {
                   type="button"
                   onClick={() => setTypeId(entry.id)}
                   aria-pressed={active}
-                  className={`rounded-ctl border bg-white p-5 text-left transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] ${
+                  className={`rounded-ctl border bg-surface p-5 text-left transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] ${
                     active
-                      ? 'border-accent shadow-[0_0_0_1px_#0A6CCF]'
+                      ? 'border-accent shadow-[0_0_0_1px_rgb(var(--c-accent))]'
                       : 'border-faint/60 hover:border-faint'
                   }`}
                 >
@@ -235,7 +235,7 @@ export function BookingFlow() {
           </div>
 
           {calendarError ? (
-            <div className="mt-6 rounded-card bg-canvas p-6 sm:p-8" role="alert">
+            <div className="mt-6 rounded-card bg-well p-6 sm:p-8" role="alert">
               <Icon name="calendar" className="h-8 w-8 text-mute" strokeWidth={1.5} />
               <p className="t-card mt-4">{calendarError}</p>
               <p className="t-body mt-2 text-mute">
@@ -255,7 +255,7 @@ export function BookingFlow() {
                 : days.map((day) => {
                     const label = formatDayLabel(day.date);
                     return (
-                      <div key={day.date} className="rounded-card bg-canvas p-5">
+                      <div key={day.date} className="rounded-card bg-well p-5">
                         <p className="font-semibold">
                           {label.weekday}
                           <span className="font-normal text-mute">
@@ -278,8 +278,8 @@ export function BookingFlow() {
                                   aria-label={`${label.weekday}, ${label.day}. ${label.month}, ${slot.label} Uhr`}
                                   className={`min-h-[44px] rounded-full px-4 text-[0.9375rem] tabular-nums transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.96] ${
                                     active
-                                      ? 'border border-accent bg-accent font-medium text-white'
-                                      : 'border border-line bg-white text-ink hover:border-accent hover:text-accent'
+                                      ? 'border border-action bg-action font-medium text-white'
+                                      : 'border border-line bg-chip text-ink hover:border-accent hover:text-accent'
                                   }`}
                                 >
                                   {slot.label}
@@ -358,7 +358,7 @@ export function BookingFlow() {
             </div>
 
             {zone && (
-              <div className="fade-in flex items-start gap-3 rounded-ctl bg-canvas p-4 t-small" role="status">
+              <div className="fade-in flex items-start gap-3 rounded-ctl bg-well p-4 t-small" role="status">
                 <Icon
                   name={zone.inside ? 'check-circle' : 'pin'}
                   className={`mt-[1px] h-5 w-5 shrink-0 ${zone.inside ? 'text-accent' : 'text-mute'}`}
@@ -410,7 +410,7 @@ export function BookingFlow() {
             </CheckField>
 
             {/* Zusammenfassung auf kleinen Bildschirmen, direkt über dem Absenden */}
-            <div className="rounded-card bg-canvas p-5 lg:hidden">
+            <div className="rounded-card bg-well p-5 lg:hidden">
               <p className="t-caption font-semibold text-mute">Ihre Auswahl</p>
               <p className="mt-1 font-semibold">{type.label}</p>
               <p className="t-small mt-0.5 text-ink-soft">
@@ -439,7 +439,7 @@ export function BookingFlow() {
 
       {/* Mitlaufende Zusammenfassung */}
       <aside className="hidden lg:block" aria-label="Ihre Auswahl">
-        <div className="sticky top-[76px] rounded-tile bg-canvas p-7">
+        <div className="sticky top-[76px] rounded-tile bg-well p-7">
           <p className="t-caption font-semibold text-mute">Ihre Auswahl</p>
           <p className="t-card mt-2">{type.label}</p>
           <p className="t-small mt-2 text-mute">{type.description}</p>

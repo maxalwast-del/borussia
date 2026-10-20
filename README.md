@@ -21,7 +21,12 @@ Human Interface Guidelines. Kein Apple-Logo, keine Apple-Grafiken, nur die Prinz
   `next/font` vom eigenen Server aus, es gibt keine Verbindung zu Google Fonts.
 - **Farbe:** Neutrale Grautöne tragen die Seite, Farbe kommt nur über einen Akzent im
   Farbton des Logos (`accent` in `tailwind.config.ts`). Alle Textfarben erreichen
-  WCAG AA, geprüft mit `npm run check:contrast`.
+  WCAG AA, geprüft mit `npm run check:contrast` in beiden Erscheinungsbildern.
+- **Dunkelmodus:** Folgt der Systemeinstellung, ohne Schalter auf der Seite. Die Farben
+  sind semantische Tokens (`page`, `canvas`, `surface`, `well`, `inset`, `chip` …), deren
+  Werte in `src/app/globals.css` für hell und dunkel getrennt stehen. Dunkel gelten die
+  Systemfarben von iOS und macOS: Tiefe entsteht über Helligkeit statt über Schatten.
+  Grundriss, Illustrationen, Logo und Favicon haben eigene dunkle Fassungen.
 - **Navigation:** Durchscheinende globale Leiste, auf Unterseiten eine lokale Leiste
   mit Seitentitel und Terminknopf, die beim Scrollen stehen bleibt. Fußzeile mit
   Brotkrumen und Verzeichnis.

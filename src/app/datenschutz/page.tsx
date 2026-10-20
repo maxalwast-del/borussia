@@ -95,7 +95,7 @@ export default function DatenschutzPage() {
           </p>
         </div>
 
-        <p className="t-small rounded-card bg-canvas p-6 text-ink-soft">
+        <p className="t-small rounded-card bg-well p-6 text-ink-soft">
           Hinweis für die Übernahme: Dieser Text beschreibt die technisch umgesetzten Verarbeitungen,
           ersetzt aber keine Rechtsberatung. Vor dem Livegang prüfen lassen und um tatsächlich
           eingesetzte Dienste (Analytics, Kartendienste, Cookie-Banner) ergänzen.

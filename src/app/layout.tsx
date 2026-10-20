@@ -43,7 +43,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#fbfbfd',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fbfbfd' },
+    { media: '(prefers-color-scheme: dark)', color: '#161617' },
+  ],
+  colorScheme: 'light dark',
 };
 
 // Setzt den Ausgangszustand für das Einblenden beim Scrollen, bevor die

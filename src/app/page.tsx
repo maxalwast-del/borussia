@@ -72,7 +72,7 @@ export default function HomePage() {
         </div>
 
         <div className="container-wide mt-14 sm:mt-20" data-reveal style={delay(240)}>
-          <div className="tile relative bg-canvas px-3 pb-7 pt-8 sm:px-12 sm:pb-10 sm:pt-14">
+          <div className="tile relative bg-well px-3 pb-7 pt-8 sm:px-12 sm:pb-10 sm:pt-14">
             <FloorPlan className="mx-auto w-full max-w-[920px]" />
             <FloorPlanLegend className="mt-5 justify-center sm:mt-7" />
           </div>
@@ -110,7 +110,7 @@ export default function HomePage() {
               <li key={trade.id} className="w-[80%] shrink-0 snap-start sm:w-auto" data-reveal style={delay((index % 3) * 80)}>
                 <Link
                   href={`/leistungen#${trade.id}`}
-                  className="card-link group flex h-full flex-col overflow-hidden rounded-tile bg-white"
+                  className="card-link group flex h-full flex-col overflow-hidden rounded-tile bg-surface"
                 >
                   <Artwork trade={trade.id} className="aspect-[16/10]" glyphClassName="w-[21%]" />
                   <div className="flex flex-1 flex-col px-7 pb-7 pt-5">
@@ -169,7 +169,7 @@ export default function HomePage() {
       {/* Termin und Einsatzgebiet */}
       <section className="section bg-canvas">
         <div className="container-page grid gap-5 lg:grid-cols-2">
-          <div className="tile flex flex-col bg-white p-8 sm:p-12" data-reveal>
+          <div className="tile flex flex-col bg-surface p-8 sm:p-12" data-reveal>
             <Icon name="calendar" className="h-10 w-10 text-accent" strokeWidth={1.5} />
             <h2 className="t-title mt-6 sm:text-[2rem] sm:leading-[1.125]">
               Termin online.
@@ -181,14 +181,14 @@ export default function HomePage() {
             </p>
             <div aria-hidden="true" className="mt-8 grid grid-cols-2 gap-3">
               {previewDays.map((day) => (
-                <div key={day.weekday} className="rounded-card bg-canvas p-4">
+                <div key={day.weekday} className="rounded-card bg-inset p-4">
                   <p className="t-small font-semibold">{day.weekday}</p>
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {day.slots.map((slot) => (
                       <span
                         key={slot}
                         className={`rounded-full px-3 py-1.5 t-caption tabular-nums ${
-                          day.selected === slot ? 'bg-accent font-medium text-white' : 'border border-line bg-white text-ink'
+                          day.selected === slot ? 'bg-action font-medium text-white' : 'border border-line bg-chip text-ink'
                         }`}
                       >
                         {slot}
@@ -205,7 +205,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="tile flex flex-col bg-white p-8 sm:p-12" data-reveal style={delay(80)}>
+          <div className="tile flex flex-col bg-surface p-8 sm:p-12" data-reveal style={delay(80)}>
             <Icon name="pin" className="h-10 w-10 text-accent" strokeWidth={1.5} />
             <h2 className="t-title mt-6 sm:text-[2rem] sm:leading-[1.125]">
               Berlin, Potsdam

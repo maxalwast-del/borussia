@@ -120,7 +120,7 @@ export default function JobsPage() {
             <SectionTitle>Offene Stellen.</SectionTitle>
             <ul className="mt-10 space-y-5">
               {openings.map((opening, index) => (
-                <li key={opening.title} className="rounded-tile bg-white p-8" data-reveal style={delay(index * 60)}>
+                <li key={opening.title} className="rounded-tile bg-surface p-8" data-reveal style={delay(index * 60)}>
                   <p className="t-small font-semibold text-accent">{opening.type}</p>
                   <h3 className="t-card mt-1.5">{opening.title}</h3>
                   <p className="t-body mt-3 text-mute">{opening.text}</p>

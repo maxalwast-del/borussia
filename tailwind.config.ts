@@ -1,32 +1,48 @@
 import type { Config } from 'tailwindcss';
 
+/**
+ * Farben laufen über CSS-Variablen (src/app/globals.css), damit dieselbe
+ * Klasse im hellen und im dunklen Erscheinungsbild passt. Der Modus folgt
+ * der Systemeinstellung, wie bei Apple.
+ */
+const v = (name: string) => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: ['./src/**/*.{ts,tsx,mdx}'],
+  darkMode: 'media',
   theme: {
     extend: {
       colors: {
-        // Neutrale Grautöne nach dem Vorbild von apple.com. Sie tragen die
-        // Seite; Farbe kommt nur über den Akzent und die Illustrationen.
+        // Flächen, von hinten nach vorn. Hell sind mehrere davon gleich,
+        // dunkel trennen sie sich, weil dort Tiefe über Helligkeit läuft.
+        page: v('page'), // Seitengrund
+        canvas: v('canvas'), // abgesetzte Abschnitte
+        surface: v('surface'), // Karten auf abgesetzten Abschnitten, Felder
+        well: v('well'), // Kacheln direkt auf dem Seitengrund
+        inset: v('inset'), // Mulden innerhalb einer Karte
+        chip: v('chip'), // kleine Bedienflächen auf Kacheln
+        thumb: v('thumb'), // Schieber der Segmentsteuerung
+        fill: v('fill'), // Spur der Segmentsteuerung
         ink: {
-          DEFAULT: '#1D1D1F',
-          soft: '#424245',
+          DEFAULT: v('ink'),
+          soft: v('ink-soft'),
         },
-        // 5,07:1 auf Weiß, 4,66:1 auf canvas. Darunter nicht für Text verwenden.
-        mute: '#6E6E73',
-        // Nur für Rahmen von Bedienelementen (3,6:1 auf Weiß), nie für Text.
-        faint: '#86868B',
-        line: '#D2D2D7',
-        canvas: '#F5F5F7',
-        fill: '#E8E8ED',
-        // Der Akzent liegt im Farbton des Logoblaus, ist aber satter.
-        // Weiße Schrift darauf und blaue Schrift auf Weiß erreichen je 5,2:1.
+        // Hell 5,07:1 auf Weiß, dunkel 8,2:1 auf Schwarz.
+        mute: v('mute'),
+        // Nur für Rahmen von Bedienelementen, nie für Text.
+        faint: v('faint'),
+        line: v('line'),
+        // Akzent für Text, Symbole und Rahmen. Hell das satte Blau,
+        // dunkel das helle Logoblau, damit es auf Schwarz lesbar bleibt.
         accent: {
-          DEFAULT: '#0A6CCF',
-          hover: '#1677D2',
-          // Das helle Logoblau. Auf Schwarz 7,0:1, auf Weiß nur 2,9:1,
-          // deshalb nur auf dunklem Grund für Text.
+          DEFAULT: v('accent'),
           bright: '#2E9BE8',
-          soft: '#E8F1FB',
+        },
+        // Gefüllte Schaltflächen mit weißer Schrift. Bleibt in beiden
+        // Modi dunkel genug für 5,2:1.
+        action: {
+          DEFAULT: v('action'),
+          hover: v('action-hover'),
         },
         night: {
           DEFAULT: '#000000',
@@ -35,11 +51,11 @@ const config: Config = {
           mute: '#A1A1A6',
         },
         danger: {
-          DEFAULT: '#D70015',
-          soft: '#FFF2F4',
+          DEFAULT: v('danger'),
+          soft: v('danger-soft'),
         },
-        // Marineblau der Wortmarke. Nur für das Logo.
-        navy: '#122C5E',
+        // Wortmarke: hell Marineblau, dunkel fast Weiß.
+        logo: v('logo'),
       },
       fontFamily: {
         sans: ['-apple-system', 'BlinkMacSystemFont', 'var(--font-inter)', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],

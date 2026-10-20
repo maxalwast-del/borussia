@@ -16,7 +16,7 @@ export function ProjectCard({
   return (
     <Link
       href={`/referenzen/${project.slug}`}
-      className="card-link flex h-full flex-col overflow-hidden rounded-card bg-white"
+      className="card-link flex h-full flex-col overflow-hidden rounded-card bg-surface"
     >
       <Artwork
         trade={categoryTrade[project.category]}
@@ -34,7 +34,7 @@ export function ProjectCard({
           <p className="t-caption text-mute">
             {project.area} · {project.duration} · {project.year}
           </p>
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-canvas text-ink-soft" aria-hidden="true">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-inset text-ink-soft" aria-hidden="true">
             <Icon name="chevron-right" className="h-3.5 w-3.5" strokeWidth={2.2} />
           </span>
         </div>

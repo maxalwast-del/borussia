@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }: Params) {
       )}
 
       <section className="container-page py-16 sm:py-20">
-        <div className="tile grid gap-10 bg-canvas p-8 sm:p-12 md:grid-cols-[1fr_auto] md:items-end" data-reveal>
+        <div className="tile grid gap-10 bg-well p-8 sm:p-12 md:grid-cols-[1fr_auto] md:items-end" data-reveal>
           <div>
             <h2 className="t-title">Ausgeführte Arbeiten</h2>
             <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2">

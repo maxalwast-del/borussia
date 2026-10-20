@@ -57,7 +57,7 @@ export function SiteHeader() {
 
   return (
     <header className={`${isHome ? 'sticky' : 'relative'} top-0 z-50`}>
-      <div className={`relative z-10 transition-colors duration-300 ${open ? 'bg-white' : 'material'}`}>
+      <div className={`relative z-10 transition-colors duration-300 ${open ? 'bg-page' : 'material'}`}>
         <nav className="container-page flex h-12 items-center justify-between gap-6" aria-label="Hauptnavigation">
           <Link href="/" aria-label={`${company.name}, Startseite`} className="-ml-1 flex h-11 items-center px-1">
             <Wordmark />
@@ -120,7 +120,7 @@ export function SiteHeader() {
       <div
         id="mobile-menu"
         inert={!open}
-        className={`fixed inset-x-0 bottom-0 top-12 overflow-y-auto bg-white transition-[opacity,visibility] duration-300 ease-apple md:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-12 overflow-y-auto bg-page transition-[opacity,visibility] duration-300 ease-apple md:hidden ${
           open ? 'visible opacity-100' : 'invisible opacity-0'
         }`}
       >

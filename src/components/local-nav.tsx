@@ -35,7 +35,7 @@ export function LocalNav({
       <div ref={sentinel} aria-hidden="true" className="h-px" />
       <div
         className={`material sticky top-0 z-40 -mt-px transition-shadow duration-300 ${
-          stuck ? 'shadow-[inset_0_-1px_0_rgba(0,0,0,0.14)]' : 'shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)]'
+          stuck ? 'shadow-[inset_0_-1px_0_rgb(var(--c-line))]' : 'shadow-[inset_0_-1px_0_rgb(var(--c-line)/0.6)]'
         }`}
       >
         <div className="container-page flex h-[52px] items-center justify-between gap-6">

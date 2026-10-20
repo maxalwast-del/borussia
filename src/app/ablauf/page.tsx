@@ -105,7 +105,7 @@ export default function AblaufPage() {
       <section id="schritte" className="scroll-mt-[52px] bg-canvas py-16 sm:py-24" aria-label="Schritte">
         <ol className="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.title} className="flex flex-col rounded-tile bg-white p-8" data-reveal style={delay((index % 3) * 80)}>
+            <li key={step.title} className="flex flex-col rounded-tile bg-surface p-8" data-reveal style={delay((index % 3) * 80)}>
               <span className="text-gradient text-[3.5rem] font-semibold leading-none tracking-[-0.02em]" aria-hidden="true">
                 {index + 1}
               </span>
@@ -139,7 +139,7 @@ export default function AblaufPage() {
 
       <section className="pb-24 sm:pb-32">
         <div className="container-page">
-          <div className="tile bg-canvas px-8 py-14 text-center sm:px-12 sm:py-20" data-reveal>
+          <div className="tile bg-well px-8 py-14 text-center sm:px-12 sm:py-20" data-reveal>
             <h2 className="t-section text-balance">
               Frage nicht dabei?
               <span className="text-mute"> Rufen Sie an.</span>

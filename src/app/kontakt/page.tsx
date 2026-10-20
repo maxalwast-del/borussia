@@ -39,9 +39,9 @@ export default function KontaktPage() {
             <li key={channel.label} data-reveal style={delay(index * 80)}>
               <a
                 href={channel.href}
-                className="group flex h-full flex-col items-center rounded-tile bg-canvas px-6 py-9 text-center transition-transform duration-300 ease-apple-out hover:scale-[1.01] active:scale-[0.99]"
+                className="group flex h-full flex-col items-center rounded-tile bg-well px-6 py-9 text-center transition-transform duration-300 ease-apple-out hover:scale-[1.01] active:scale-[0.99]"
               >
-                <span className="grid h-14 w-14 place-items-center rounded-full bg-white text-accent shadow-card">
+                <span className="grid h-14 w-14 place-items-center rounded-full bg-chip text-accent shadow-card">
                   <Icon name={channel.icon} className="h-6 w-6" strokeWidth={1.6} />
                 </span>
                 <span className="t-card mt-5">{channel.label}</span>
@@ -58,7 +58,7 @@ export default function KontaktPage() {
       <section className="bg-canvas py-16 sm:py-24">
         <div className="container-page grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div className="grid gap-5">
-            <div className="rounded-tile bg-white p-8" data-reveal>
+            <div className="rounded-tile bg-surface p-8" data-reveal>
               <Icon name="pin" className="h-7 w-7 text-accent" strokeWidth={1.6} />
               <h2 className="t-card mt-4">Anschrift</h2>
               <address className="t-body mt-2 not-italic text-ink-soft">
@@ -73,7 +73,7 @@ export default function KontaktPage() {
               </p>
             </div>
 
-            <div className="rounded-tile bg-white p-8" data-reveal style={delay(80)}>
+            <div className="rounded-tile bg-surface p-8" data-reveal style={delay(80)}>
               <Icon name="clock" className="h-7 w-7 text-accent" strokeWidth={1.6} />
               <h2 className="t-card mt-4">Bürozeiten</h2>
               <dl className="mt-3 divide-y divide-line">
@@ -86,7 +86,7 @@ export default function KontaktPage() {
               </dl>
             </div>
 
-            <div className="rounded-tile bg-black p-8 text-night-text" data-reveal style={delay(160)}>
+            <div className="rounded-tile bg-black p-8 text-night-text dark:ring-1 dark:ring-inset dark:ring-white/10" data-reveal style={delay(160)}>
               <h2 className="t-card">Konkreter Termin?</h2>
               <p className="t-body mt-2 text-night-mute">
                 Über die Online-Anfrage sehen Sie die freien Zeiten sofort und sparen sich das Hin und Her.

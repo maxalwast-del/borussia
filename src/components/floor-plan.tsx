@@ -7,10 +7,12 @@
  * Bei reduzierter Bewegung steht sofort der Endzustand.
  */
 
-const WALL = '#1D1D1F';
-const INNER = '#48484A';
-const FIXTURE = '#AEAEB2';
-const FURNITURE = '#C7C7CC';
+// Strichfarben kommen aus globals.css (--fp-*), damit der Plan im
+// Dunkelmodus hell auf dunkel steht.
+const WALL = { stroke: 'var(--fp-wall)' };
+const INNER = { stroke: 'var(--fp-inner)' };
+const FIXTURE = { stroke: 'var(--fp-fixture)' };
+const FURNITURE = { stroke: 'var(--fp-furniture)' };
 
 export function FloorPlan({ className = '' }: { className?: string }) {
   return (
@@ -22,7 +24,7 @@ export function FloorPlan({ className = '' }: { className?: string }) {
     >
       <g fill="none" strokeLinecap="square">
         {/* Möbel, ganz hinten */}
-        <g stroke={FURNITURE} strokeWidth="2">
+        <g style={FURNITURE} strokeWidth="2">
           <rect x="104" y="78" width="150" height="170" rx="8" />
           <path d="M104 118h150" />
           <rect x="84" y="490" width="120" height="46" rx="16" />
@@ -38,10 +40,10 @@ export function FloorPlan({ className = '' }: { className?: string }) {
         </g>
 
         {/* Küchenzeile */}
-        <path d="M700 62h218v168h-30V92H700Z" stroke={FIXTURE} strokeWidth="2" strokeLinejoin="round" />
+        <path d="M700 62h218v168h-30V92H700Z" style={FIXTURE} strokeWidth="2" strokeLinejoin="round" />
 
         {/* Türen mit Schwenkbereich */}
-        <g stroke={FIXTURE} strokeWidth="2">
+        <g style={FIXTURE} strokeWidth="2">
           <path d="M260 320v-60M260 260a60 60 0 0 1 60 60" />
           <path d="M380 440h60M440 440a60 60 0 0 0-60-60" />
           <path d="M220 460h-60M160 460a60 60 0 0 1 60-60" />
@@ -49,7 +51,7 @@ export function FloorPlan({ className = '' }: { className?: string }) {
         </g>
 
         {/* Bestandswände innen */}
-        <g stroke={INNER} strokeWidth="7">
+        <g style={INNER} strokeWidth="7">
           <path d="M380 50v330M380 440v110" />
           <path d="M70 320h190M320 320h60" />
           <path d="M220 320v80M220 460v90" />
@@ -57,8 +59,8 @@ export function FloorPlan({ className = '' }: { className?: string }) {
 
         {/* Wände, die entfallen: erst massiv, dann nur noch gestrichelt */}
         <g>
-          <path d="M650 50v280M380 330h550" stroke={FIXTURE} strokeWidth="2.5" strokeDasharray="10 8" strokeLinecap="butt" />
-          <path className="fp-remove" d="M650 50v280M380 330h550" stroke={INNER} strokeWidth="7" />
+          <path d="M650 50v280M380 330h550" style={FIXTURE} strokeWidth="2.5" strokeDasharray="10 8" strokeLinecap="butt" />
+          <path className="fp-remove" d="M650 50v280M380 330h550" style={INNER} strokeWidth="7" />
         </g>
 
         {/* Neue Trockenbauwände */}
@@ -67,16 +69,16 @@ export function FloorPlan({ className = '' }: { className?: string }) {
           <path className="fp-new fp-new-2" pathLength={1} d="M880 360h50" />
         </g>
         {/* Schiebetür */}
-        <path className="fp-new fp-new-3" pathLength={1} d="M792 370h96" stroke="#2E9BE8" strokeWidth="3" strokeLinecap="butt" />
+        <path className="fp-new fp-new-3" pathLength={1} d="M792 370h96" style={{ stroke: 'var(--fp-new-b)' }} strokeWidth="3" strokeLinecap="butt" />
 
         {/* Außenwände mit Fensteröffnungen */}
-        <g stroke={WALL} strokeWidth="12">
+        <g style={WALL} strokeWidth="12">
           <path d="M64 50h86M260 50h210M580 50h180M870 50h66" />
           <path d="M930 44v126M930 280v276" />
           <path d="M64 550h236M360 550h160M640 550h296" />
           <path d="M70 44v86M70 230v326" />
         </g>
-        <g stroke={FIXTURE} strokeWidth="2">
+        <g style={FIXTURE} strokeWidth="2">
           <path d="M150 46h110M150 54h110M470 46h110M470 54h110M760 46h110M760 54h110" />
           <path d="M926 170v110M934 170v110" />
           <path d="M520 546h120M520 554h120" />
@@ -86,19 +88,19 @@ export function FloorPlan({ className = '' }: { className?: string }) {
 
       <defs>
         <linearGradient id="fp-new" gradientUnits="userSpaceOnUse" x1="730" y1="560" x2="940" y2="350">
-          <stop offset="0" stopColor="#0A6CCF" />
-          <stop offset="1" stopColor="#2E9BE8" />
+          <stop offset="0" style={{ stopColor: 'var(--fp-new-a)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--fp-new-b)' }} />
         </linearGradient>
       </defs>
 
       {/* Raumbezeichnungen, auf kleinen Bildschirmen ausgeblendet */}
-      <g className="fp-label" fontSize="17" fontWeight="500" fill="#6E6E73" textAnchor="middle" fontFamily="inherit">
+      <g className="fp-label" fontSize="17" fontWeight="500" style={{ fill: 'rgb(var(--c-mute))' }} textAnchor="middle" fontFamily="inherit">
         <text x="180" y="290">Schlafen</text>
         <text x="120" y="372">Bad</text>
         <text x="300" y="414">Flur</text>
         <text x="545" y="380">Wohnen &amp; Essen</text>
         <text x="790" y="170">Küche</text>
-        <text x="830" y="440" fill="#0A6CCF" fontWeight="600">
+        <text x="830" y="440" style={{ fill: 'rgb(var(--c-accent))' }} fontWeight="600">
           Arbeiten
         </text>
       </g>
@@ -110,13 +112,13 @@ export function FloorPlanLegend({ className = '' }: { className?: string }) {
   return (
     <ul className={`flex flex-wrap items-center gap-x-5 gap-y-2 t-caption text-mute ${className}`}>
       <li className="flex items-center gap-2">
-        <span className="h-[3px] w-5 rounded-full bg-[#48484A]" aria-hidden="true" />
+        <span className="h-[3px] w-5 rounded-full" style={{ background: 'var(--fp-inner)' }} aria-hidden="true" />
         Bestand
       </li>
       <li className="flex items-center gap-2">
         <span
           className="h-[2px] w-5"
-          style={{ backgroundImage: 'linear-gradient(90deg, #AEAEB2 60%, transparent 60%)', backgroundSize: '8px 2px' }}
+          style={{ backgroundImage: 'linear-gradient(90deg, var(--fp-fixture) 60%, transparent 60%)', backgroundSize: '8px 2px' }}
           aria-hidden="true"
         />
         entfällt

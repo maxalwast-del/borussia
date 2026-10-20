@@ -57,7 +57,7 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
 
   if (state === 'done') {
     return (
-      <div className="flex flex-col items-center rounded-tile bg-white px-8 py-16 text-center" role="status">
+      <div className="flex flex-col items-center rounded-tile bg-surface px-8 py-16 text-center" role="status">
         <Icon name="check-circle" className="h-14 w-14 text-accent" strokeWidth={1.4} />
         <h3 className="t-title mt-6">Bewerbung ist angekommen.</h3>
         <p className="t-body mx-auto mt-3 max-w-md text-mute">
@@ -69,7 +69,7 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={submit} className="space-y-4 rounded-tile bg-white p-7 sm:p-9" noValidate>
+    <form ref={formRef} onSubmit={submit} className="space-y-4 rounded-tile bg-surface p-7 sm:p-9" noValidate>
       <SelectField label="Stelle" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })}>
         {positions.map((position) => (
           <option key={position}>{position}</option>

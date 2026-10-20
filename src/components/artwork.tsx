@@ -13,25 +13,12 @@ import { TRADE_PATHS } from '@/components/trade-icon';
 
 export type ArtTone = 'light' | 'tint' | 'dark';
 
-const TONES: Record<ArtTone, { background: string; fill: string; grid: string; glow: string }> = {
-  light: {
-    background: 'radial-gradient(120% 120% at 30% 10%, #ffffff 0%, #f4f6f9 45%, #e5eaf1 100%)',
-    fill: 'url(#art-glyph)',
-    grid: 'rgba(18, 44, 94, 0.05)',
-    glow: 'rgba(46, 155, 232, 0.16)',
-  },
-  tint: {
-    background: 'radial-gradient(120% 120% at 70% 0%, #f5faff 0%, #e2eefb 50%, #cfe1f5 100%)',
-    fill: 'url(#art-glyph)',
-    grid: 'rgba(10, 108, 207, 0.07)',
-    glow: 'rgba(255, 255, 255, 0.7)',
-  },
-  dark: {
-    background: 'radial-gradient(120% 120% at 50% 0%, #1c2b47 0%, #0a1222 55%, #000000 100%)',
-    fill: 'url(#art-glyph-dark)',
-    grid: 'rgba(255, 255, 255, 0.05)',
-    glow: 'rgba(46, 155, 232, 0.35)',
-  },
+// Hintergründe, Raster und Lichthof je Tonlage stehen in globals.css
+// (.art-light, .art-tint, .art-dark), weil sie sich im Dunkelmodus ändern.
+const TONE_CLASS: Record<ArtTone, string> = {
+  light: 'art-light',
+  tint: 'art-tint',
+  dark: 'art-dark',
 };
 
 /** Verläufe einmal für die ganze Seite. Nicht `display: none`, sonst greifen die Verweise in manchen Browsern nicht. */
@@ -68,20 +55,19 @@ export function Artwork({
   className?: string;
   glyphClassName?: string;
 }) {
-  const style = TONES[tone];
   return (
     <div
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
-      className={`relative isolate grid place-items-center overflow-hidden ${className}`}
-      style={{ background: style.background }}
+      className={`relative isolate grid place-items-center overflow-hidden ${TONE_CLASS[tone]} ${className}`}
     >
       {/* Feines Aufmaßraster, das zum Rand hin ausläuft */}
       <div
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage: `linear-gradient(${style.grid} 1px, transparent 1px), linear-gradient(90deg, ${style.grid} 1px, transparent 1px)`,
+          backgroundImage:
+            'linear-gradient(var(--art-grid) 1px, transparent 1px), linear-gradient(90deg, var(--art-grid) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
           backgroundPosition: 'center',
           maskImage: 'radial-gradient(60% 60% at 50% 50%, black 0%, transparent 100%)',
@@ -91,12 +77,11 @@ export function Artwork({
       {/* Lichthof hinter dem Symbol */}
       <div
         className="absolute left-1/2 top-1/2 -z-10 aspect-square w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: style.glow }}
+        style={{ background: 'var(--art-glow)' }}
       />
       <svg
         viewBox="0 0 24 24"
-        className={`${glyphClassName} drop-shadow-[0_18px_28px_rgba(10,60,140,0.28)]`}
-        fill={style.fill}
+        className={`art-glyph ${glyphClassName} drop-shadow-[0_18px_28px_rgba(10,60,140,0.28)]`}
         aria-hidden="true"
         focusable="false"
       >
