@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import { PageHeader } from '@/components/page-header';
 import { ApplicationForm } from '@/components/application-form';
+import { Icon, type IconName } from '@/components/icon';
+import { LocalNav } from '@/components/local-nav';
+import { PageHero, SectionTitle, delay } from '@/components/ui';
 import { company, siteUrl } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -43,13 +45,13 @@ const openings = [
   },
 ];
 
-const benefits = [
-  { title: 'Lohn kommt pünktlich', text: 'Zum Ersten ist das Geld da. Über Zuschläge diskutieren wir nicht, die rechnen wir ab.' },
-  { title: 'Freitag ist um 14 Uhr Schluss', text: 'Samstagsarbeit gibt es nur, wenn etwas brennt, und dann mit Zuschlag.' },
-  { title: 'Werkzeug vom Betrieb', text: 'Maschinen, Werkzeug und Arbeitskleidung stellen wir. Sie müssen nichts mitbringen.' },
-  { title: 'Feste Kolonnen', text: 'Sie arbeiten mit denselben Leuten. Das macht auf der Baustelle mehr aus, als man vorher denkt.' },
-  { title: 'Weiterbildung zahlt der Betrieb', text: 'Meisterkurs, Staplerschein oder Brandschutzschulung. Wenn es zum Betrieb passt, übernehmen wir die Kosten.' },
-  { title: 'Baustellen in der Region', text: 'Berlin und Umland. Keine Wochenmontage, abends sind Sie zu Hause.' },
+const benefits: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'euro', title: 'Lohn kommt pünktlich.', text: 'Zum Ersten ist das Geld da. Über Zuschläge diskutieren wir nicht, die rechnen wir ab.' },
+  { icon: 'clock', title: 'Freitag ist um 14 Uhr Schluss.', text: 'Samstagsarbeit gibt es nur, wenn etwas brennt, und dann mit Zuschlag.' },
+  { icon: 'wrench', title: 'Werkzeug vom Betrieb.', text: 'Maschinen, Werkzeug und Arbeitskleidung stellen wir. Sie müssen nichts mitbringen.' },
+  { icon: 'people', title: 'Feste Kolonnen.', text: 'Sie arbeiten mit denselben Leuten. Das macht auf der Baustelle mehr aus, als man vorher denkt.' },
+  { icon: 'graduation', title: 'Weiterbildung zahlt der Betrieb.', text: 'Meisterkurs, Staplerschein oder Brandschutzschulung. Wenn es zum Betrieb passt, übernehmen wir die Kosten.' },
+  { icon: 'pin', title: 'Baustellen in der Region.', text: 'Berlin und Umland. Keine Wochenmontage, abends sind Sie zu Hause.' },
 ];
 
 export default function JobsPage() {
@@ -73,52 +75,75 @@ export default function JobsPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Jobs"
-        title="Wir suchen Leute, die bleiben wollen"
+      <LocalNav
+        title="Jobs"
+        href="/jobs"
+        cta={false}
+        links={[
+          { href: '#vorteile', label: 'Was wir bieten' },
+          { href: '#stellen', label: 'Offene Stellen' },
+          { href: '#bewerben', label: 'Bewerben' },
+        ]}
+      />
+
+      <PageHero
+        title={
+          <>
+            Wir suchen Leute,
+            <br className="hidden sm:block" /> <span className="text-gradient">die bleiben wollen.</span>
+          </>
+        }
         lede="Sie brauchen kein Anschreiben und keinen Portal-Account. Formular ausfüllen oder per WhatsApp schreiben, wir melden uns."
       />
 
-      <section className="container-page py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-          <div>
-            <h2 className="heading-lg">Offene Stellen</h2>
-            <div className="mt-8 space-y-5">
-              {openings.map((opening) => (
-                <article key={opening.title} className="card p-7">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="heading-md text-xl">{opening.title}</h3>
-                    <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-hover">
-                      {opening.type}
-                    </span>
-                  </div>
-                  <p className="prose-body mt-3">{opening.text}</p>
-                  <ul className="mt-4 space-y-2">
+      <section id="vorteile" className="section scroll-mt-[52px] bg-black">
+        <div className="container-page">
+          <h2 className="t-section text-balance text-night-text" data-reveal>
+            Was wir bieten.
+            <span className="text-night-mute"> Und woran wir uns messen lassen.</span>
+          </h2>
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((benefit, index) => (
+              <li key={benefit.title} className="rounded-tile bg-night-tile p-8" data-reveal style={delay((index % 3) * 80)}>
+                <Icon name={benefit.icon} className="h-8 w-8 text-accent-bright" strokeWidth={1.5} />
+                <h3 className="t-card mt-5 text-night-text">{benefit.title}</h3>
+                <p className="t-body mt-2 text-night-mute">{benefit.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-canvas py-20 sm:py-28">
+        <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start lg:gap-10">
+          <div id="stellen" className="scroll-mt-[76px]">
+            <SectionTitle>Offene Stellen.</SectionTitle>
+            <ul className="mt-10 space-y-5">
+              {openings.map((opening, index) => (
+                <li key={opening.title} className="rounded-tile bg-surface p-8" data-reveal style={delay(index * 60)}>
+                  <p className="t-small font-semibold text-accent">{opening.type}</p>
+                  <h3 className="t-card mt-1.5">{opening.title}</h3>
+                  <p className="t-body mt-3 text-mute">{opening.text}</p>
+                  <ul className="mt-5 space-y-2.5 border-t border-line pt-5">
                     {opening.requirements.map((requirement) => (
-                      <li key={requirement} className="flex items-start gap-2.5 text-sm text-navy-soft">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
+                      <li key={requirement} className="flex items-start gap-3 t-small text-ink-soft">
+                        <Icon name="check" className="mt-[2px] h-4 w-4 shrink-0 text-accent" strokeWidth={2.2} />
                         {requirement}
                       </li>
                     ))}
                   </ul>
-                </article>
+                </li>
               ))}
-            </div>
-
-            <h2 className="heading-lg mt-16">Was wir bieten</h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              {benefits.map((benefit) => (
-                <div key={benefit.title}>
-                  <h3 className="font-semibold">{benefit.title}</h3>
-                  <p className="prose-body mt-1.5">{benefit.text}</p>
-                </div>
-              ))}
-            </div>
+            </ul>
           </div>
 
-          <div className="lg:sticky lg:top-24">
-            <h2 className="heading-md">In zwei Minuten bewerben</h2>
-            <p className="prose-body mb-5 mt-2">Zeugnisse und Lebenslauf können Sie nachreichen, wenn es passt.</p>
+          <div id="bewerben" className="scroll-mt-[76px] lg:sticky lg:top-[76px]">
+            <h2 className="t-title" data-reveal>
+              In zwei Minuten bewerben.
+            </h2>
+            <p className="t-body mb-6 mt-2 text-mute" data-reveal>
+              Zeugnisse und Lebenslauf können Sie nachreichen, wenn es passt.
+            </p>
             <ApplicationForm positions={openings.map((opening) => opening.title)} />
           </div>
         </div>

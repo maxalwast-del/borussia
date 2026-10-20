@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PageHeader } from '@/components/page-header';
+import { LegalHeader } from '@/components/legal-header';
 import { company } from '@/config/site';
 
 export const metadata: Metadata = { title: 'Datenschutz', robots: { index: false } };
@@ -13,10 +13,10 @@ export const metadata: Metadata = { title: 'Datenschutz', robots: { index: false
 export default function DatenschutzPage() {
   return (
     <>
-      <PageHeader eyebrow="Rechtliches" title="Datenschutzhinweise" />
-      <section className="container-page grid max-w-3xl gap-8 py-16 text-[15px] leading-relaxed text-navy-soft">
+      <LegalHeader title="Datenschutzhinweise" />
+      <section className="container-text grid gap-10 pb-24 pt-4 text-ink-soft">
         <div>
-          <h2 className="heading-md text-xl text-navy">Verantwortlich</h2>
+          <h2 className="t-card text-ink">Verantwortlich</h2>
           <p className="mt-3">
             {company.legalName}, {company.street}, {company.zip} {company.city}
             <br />
@@ -25,7 +25,7 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Terminanfragen</h2>
+          <h2 className="t-card text-ink">Terminanfragen</h2>
           <p className="mt-3">
             Wenn Sie über das Buchungsformular einen Termin anfragen, verarbeiten wir Name,
             Telefonnummer, E-Mail-Adresse, Objektanschrift und Ihre Nachricht. Diese Daten werden in
@@ -38,7 +38,7 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Kalenderverwaltung</h2>
+          <h2 className="t-card text-ink">Kalenderverwaltung</h2>
           <p className="mt-3">
             Zur Terminverwaltung nutzen wir Google Kalender (Google Ireland Limited). Termindaten
             werden dort gespeichert. Eine Übermittlung in Drittländer kann stattfinden; Google stützt
@@ -48,7 +48,7 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">E-Mail-Versand</h2>
+          <h2 className="t-card text-ink">E-Mail-Versand</h2>
           <p className="mt-3">
             Bestätigungs- und Benachrichtigungsmails versenden wir über einen E-Mail-Dienstleister.
             Dabei werden Ihre E-Mail-Adresse und der Inhalt der Nachricht verarbeitet. Auch hier
@@ -57,7 +57,7 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Kontakt- und Bewerbungsformular</h2>
+          <h2 className="t-card text-ink">Kontakt- und Bewerbungsformular</h2>
           <p className="mt-3">
             Angaben aus dem Kontaktformular verarbeiten wir zur Beantwortung Ihrer Anfrage
             (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO). Bewerbungsdaten verarbeiten wir auf Grundlage
@@ -67,7 +67,7 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Server-Logfiles</h2>
+          <h2 className="t-card text-ink">Server-Logfiles</h2>
           <p className="mt-3">
             Beim Aufruf der Website werden technisch notwendige Zugriffsdaten (IP-Adresse, Zeitpunkt,
             abgerufene Seite, Browsertyp) verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO,
@@ -77,16 +77,16 @@ export default function DatenschutzPage() {
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Schriftarten</h2>
+          <h2 className="t-card text-ink">Schriftarten</h2>
           <p className="mt-3">
-            Diese Website bindet Schriftarten von Google Fonts ein. Dabei wird Ihre IP-Adresse an
-            Google übermittelt. Auf Wunsch liefern wir die Schriften auch lokal aus. Sprechen Sie
-            uns dazu an.
+            Die auf dieser Website verwendeten Schriftarten liefern wir von unserem eigenen Server
+            aus. Beim Laden der Seite wird dafür keine Verbindung zu Google oder anderen
+            Schriftanbietern aufgebaut.
           </p>
         </div>
 
         <div>
-          <h2 className="heading-md text-xl text-navy">Ihre Rechte</h2>
+          <h2 className="t-card text-ink">Ihre Rechte</h2>
           <p className="mt-3">
             Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
             Datenübertragbarkeit und Widerspruch. Außerdem können Sie sich bei einer
@@ -95,7 +95,7 @@ export default function DatenschutzPage() {
           </p>
         </div>
 
-        <p className="rounded-xl bg-brand-soft/50 p-5 text-sm">
+        <p className="t-small rounded-card bg-well p-6 text-ink-soft">
           Hinweis für die Übernahme: Dieser Text beschreibt die technisch umgesetzten Verarbeitungen,
           ersetzt aber keine Rechtsberatung. Vor dem Livegang prüfen lassen und um tatsächlich
           eingesetzte Dienste (Analytics, Kartendienste, Cookie-Banner) ergänzen.

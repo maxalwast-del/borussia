@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { company } from '@/config/site';
 import { Wordmark } from '@/components/logo';
+import { Icon } from '@/components/icon';
 
 const links = [
   { href: '/leistungen', label: 'Leistungen' },
@@ -12,91 +13,151 @@ const links = [
   { href: '/ablauf', label: 'Ablauf' },
   { href: '/jobs', label: 'Jobs' },
   { href: '/kontakt', label: 'Kontakt' },
+  { href: '/termin', label: 'Termin' },
 ];
 
+/**
+ * Globale Navigation nach dem Muster von apple.com: flach, durchscheinend,
+ * kleine Schrift, gleichmäßig über die Breite verteilt.
+ *
+ * Auf der Startseite bleibt sie oben stehen. Auf Unterseiten scrollt sie
+ * weg, dort übernimmt die lokale Navigation mit Seitentitel und
+ * Terminknopf (components/local-nav.tsx).
+ */
 export function SiteHeader() {
   const pathname = usePathname();
+  const isHome = pathname === '/';
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    if (!open) return;
+    const root = document.documentElement;
+    const previous = root.style.overflow;
+    root.style.overflow = 'hidden';
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const onResize = () => {
+      if (window.matchMedia('(min-width: 768px)').matches) setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      root.style.overflow = previous;
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [open]);
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-colors duration-300 ${
-        scrolled ? 'border-b border-navy/10 bg-paper/90 backdrop-blur-md' : 'bg-transparent'
-      }`}
-    >
-      <div className="container-page flex h-[72px] items-center justify-between gap-6">
-        <Link href="/" aria-label={`${company.name} Startseite`}>
-          <Wordmark />
-        </Link>
-
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="Hauptnavigation">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`rounded-lg px-3.5 py-2 text-[15px] transition ${
-                pathname.startsWith(link.href)
-                  ? 'font-semibold text-navy'
-                  : 'text-navy-muted hover:bg-white/70 hover:text-navy'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3 xl:flex">
-          <a href={`tel:${company.phoneHref}`} className="whitespace-nowrap text-[15px] font-medium text-navy-muted hover:text-navy">
-            {company.phone}
-          </a>
-          <Link href="/termin" className="btn-brand whitespace-nowrap px-5 py-2.5 text-sm">
-            Termin anfragen
+    <header className={`${isHome ? 'sticky' : 'relative'} top-0 z-50`}>
+      <div className={`relative z-10 transition-colors duration-300 ${open ? 'bg-page' : 'material'}`}>
+        <nav className="container-page flex h-12 items-center justify-between gap-6" aria-label="Hauptnavigation">
+          <Link href="/" aria-label={`${company.name}, Startseite`} className="-ml-1 flex h-11 items-center px-1">
+            <Wordmark />
           </Link>
-        </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          className="grid h-10 w-10 place-items-center rounded-lg border border-navy/15 bg-white/70 xl:hidden"
-        >
-          <span className="sr-only">Menü {open ? 'schließen' : 'öffnen'}</span>
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            {open ? <path d="m6 6 12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-          </svg>
-        </button>
+          <ul className="hidden flex-1 items-center justify-between md:flex md:max-w-[560px] lg:max-w-[640px]">
+            {links.map((link) => {
+              const active = pathname.startsWith(link.href);
+              return (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`flex h-11 items-center px-2 text-[0.8125rem] tracking-[-0.005em] transition-colors duration-200 ${
+                      active ? 'text-ink' : 'text-ink/75 hover:text-ink'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="-mr-2.5 flex items-center">
+            <a
+              href={`tel:${company.phoneHref}`}
+              className="grid h-11 w-11 place-items-center text-ink/75 transition-colors hover:text-ink"
+              aria-label={`Anrufen: ${company.phone}`}
+            >
+              <Icon name="phone" className="h-[17px] w-[17px]" strokeWidth={1.6} />
+            </a>
+            <button
+              ref={toggleRef}
+              type="button"
+              onClick={() => setOpen((value) => !value)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              className="relative grid h-11 w-11 place-items-center text-ink/80 md:hidden"
+            >
+              <span className="sr-only">Menü {open ? 'schließen' : 'öffnen'}</span>
+              <span aria-hidden="true" className="relative block h-4 w-[17px]">
+                <span
+                  className={`absolute left-0 top-1/2 block h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-apple ${
+                    open ? 'rotate-45' : '-translate-y-[3.5px]'
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-1/2 block h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-apple ${
+                    open ? '-rotate-45' : 'translate-y-[3.5px]'
+                  }`}
+                />
+              </span>
+            </button>
+          </div>
+        </nav>
       </div>
 
-      {open && (
-        <div id="mobile-nav" className="border-t border-navy/10 bg-paper xl:hidden">
-          <nav className="container-page flex flex-col py-3" aria-label="Mobile Navigation">
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} className="rounded-lg px-2 py-3 text-base text-navy-soft">
-                {link.label}
-              </Link>
+      {/* Mobiles Menü: klappt als ganze Fläche auf, die Einträge folgen nacheinander. */}
+      <div
+        id="mobile-menu"
+        inert={!open}
+        className={`fixed inset-x-0 bottom-0 top-12 overflow-y-auto bg-page transition-[opacity,visibility] duration-300 ease-apple md:hidden ${
+          open ? 'visible opacity-100' : 'invisible opacity-0'
+        }`}
+      >
+        <nav aria-label="Mobile Navigation" className="container-page pb-12 pt-4">
+          <ul>
+            {[{ href: '/', label: 'Start' }, ...links].map((link, index) => (
+              <li
+                key={link.href}
+                className={`transition-[opacity,transform] duration-500 ease-apple motion-reduce:translate-y-0 ${
+                  open ? 'translate-y-0 opacity-100' : '-translate-y-3 opacity-0'
+                }`}
+                style={{ transitionDelay: open ? `${60 + index * 28}ms` : '0ms' }}
+              >
+                <Link
+                  href={link.href}
+                  aria-current={pathname === link.href ? 'page' : undefined}
+                  className="block py-2 text-[1.75rem] font-semibold leading-[1.14] tracking-[-0.008em] text-ink"
+                >
+                  {link.label}
+                </Link>
+              </li>
             ))}
-            <div className="mt-3 flex flex-col gap-2 pb-4">
-              <Link href="/termin" className="btn-brand w-full">
-                Termin anfragen
-              </Link>
-              <a href={`tel:${company.phoneHref}`} className="btn-ghost w-full">
-                {company.phone}
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
+          </ul>
+          <div
+            className={`mt-10 flex flex-col gap-3 transition-opacity duration-500 ease-apple ${open ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: open ? '260ms' : '0ms' }}
+          >
+            <p className="t-caption font-semibold text-mute">Direkt erreichbar</p>
+            <a href={`tel:${company.phoneHref}`} className="t-intro font-semibold text-ink">
+              {company.phone}
+            </a>
+            <a href={`mailto:${company.email}`} className="t-body link">
+              {company.email}
+            </a>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

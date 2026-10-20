@@ -1,11 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { appointmentTypes, bookingRules, company, type AppointmentTypeId } from '@/config/site';
 import { matchZone } from '@/lib/zones';
+import { Icon } from '@/components/icon';
+import { CheckField, TextArea, TextField, focusFirstInvalid, rules, useTouched } from '@/components/form-field';
 
 type Slot = { start: string; end: string; label: string };
 type Day = { date: string; slots: Slot[] };
+type FieldKey = 'name' | 'phone' | 'email' | 'address' | 'zip' | 'privacy';
 
 const WEEK_LENGTH = 7;
 
@@ -22,8 +25,8 @@ function shiftIso(iso: string, days: number): string {
 function formatDayLabel(iso: string) {
   const date = new Date(`${iso}T12:00:00Z`);
   return {
-    weekday: new Intl.DateTimeFormat('de-DE', { weekday: 'short', timeZone: 'UTC' }).format(date),
-    day: new Intl.DateTimeFormat('de-DE', { day: '2-digit', timeZone: 'UTC' }).format(date),
+    weekday: new Intl.DateTimeFormat('de-DE', { weekday: 'long', timeZone: 'UTC' }).format(date),
+    day: new Intl.DateTimeFormat('de-DE', { day: 'numeric', timeZone: 'UTC' }).format(date),
     month: new Intl.DateTimeFormat('de-DE', { month: 'short', timeZone: 'UTC' }).format(date),
   };
 }
@@ -32,13 +35,18 @@ function formatSelection(iso: string) {
   return new Intl.DateTimeFormat('de-DE', {
     timeZone: bookingRules.timezone,
     weekday: 'long',
-    day: '2-digit',
+    day: 'numeric',
     month: 'long',
     hour: '2-digit',
     minute: '2-digit',
   }).format(new Date(iso));
 }
 
+/**
+ * Terminanfrage im Aufbau eines Produktkonfigurators: Terminart, Zeitpunkt,
+ * Angaben, rechts eine mitlaufende Zusammenfassung. Die Logik (Abfrage der
+ * freien Zeiten, Sperren des Slots, Konfliktbehandlung) ist unverändert.
+ */
 export function BookingFlow() {
   const [typeId, setTypeId] = useState<AppointmentTypeId>(appointmentTypes[0].id);
   const [weekStart, setWeekStart] = useState(todayIso());
@@ -60,10 +68,22 @@ export function BookingFlow() {
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [success, setSuccess] = useState<{ summary: string; hint: string } | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const touched = useTouched<FieldKey>();
 
   const type = appointmentTypes.find((entry) => entry.id === typeId)!;
   const zone = useMemo(() => (form.zip.length === 5 ? matchZone(form.zip) : null), [form.zip]);
   const isAtStart = weekStart <= todayIso();
+
+  const errors: Record<FieldKey, string | null> = {
+    name: rules.name(form.name),
+    phone: rules.phone(form.phone),
+    email: rules.email(form.email),
+    address: rules.minLength(4, 'Bitte geben Sie Straße und Hausnummer an.')(form.address),
+    zip: rules.zip(form.zip),
+    privacy: rules.privacy(form.privacy),
+  };
+  const shown = (key: FieldKey) => (touched.show(key) ? errors[key] : null);
 
   const loadSlots = useCallback(async () => {
     setLoadingSlots(true);
@@ -98,6 +118,11 @@ export function BookingFlow() {
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!selected) return;
+    if (Object.values(errors).some(Boolean)) {
+      touched.submitAttempt();
+      focusFirstInvalid(formRef.current);
+      return;
+    }
     setSubmitting(true);
     setFormError(null);
 
@@ -116,6 +141,7 @@ export function BookingFlow() {
         throw new Error(payload.error ?? 'Die Anfrage konnte nicht gesendet werden.');
       }
       setSuccess({ summary: payload.summary, hint: payload.hint });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       setFormError(error instanceof Error ? error.message : 'Unbekannter Fehler.');
     } finally {
@@ -125,135 +151,141 @@ export function BookingFlow() {
 
   if (success) {
     return (
-      <div className="card mx-auto max-w-xl p-8 text-center sm:p-12">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-brand-soft">
-          <svg viewBox="0 0 24 24" className="h-6 w-6 text-brand" fill="none" stroke="currentColor" strokeWidth="2.2">
-            <path d="m5 13 4 4 10-10" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <h2 className="heading-md mt-6">Anfrage ist raus</h2>
-        <p className="prose-body mt-3">{success.summary}</p>
-        <p className="prose-body mt-4">
+      <div className="mx-auto max-w-[692px] py-10 text-center sm:py-16" role="status">
+        <svg viewBox="0 0 52 52" className="mx-auto h-16 w-16 text-accent" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+          <circle cx="26" cy="26" r="24" className="success-ring" pathLength={1} />
+          <path d="m16 27 7 7 14-15" strokeLinecap="round" strokeLinejoin="round" className="success-check" pathLength={1} />
+        </svg>
+        <h2 className="t-headline mt-8">Anfrage ist raus.</h2>
+        <p className="t-intro mx-auto mt-5 max-w-[560px] text-mute">{success.summary}</p>
+        <p className="t-body mx-auto mt-6 max-w-[560px] text-ink-soft">
           Der Termin ist vorgemerkt, aber noch nicht verbindlich. Sobald wir zugesagt haben,
           bekommen Sie die Bestätigung per E-Mail. {bookingRules.responseTimePromise}.
         </p>
-        <p className="mt-6 text-sm text-navy-muted">{success.hint}</p>
+        <p className="t-small mt-6 text-mute">{success.hint}</p>
       </div>
     );
   }
 
+  const weekEnd = shiftIso(weekStart, WEEK_LENGTH - 1);
+
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-      <div className="space-y-10">
-        {/* Schritt 1 */}
-        <section>
-          <StepHeading step={1} title="Worum geht es?" />
-          <div className="mt-5 grid gap-3">
-            {appointmentTypes.map((entry) => (
-              <button
-                key={entry.id}
-                type="button"
-                onClick={() => setTypeId(entry.id)}
-                aria-pressed={entry.id === typeId}
-                className={`rounded-card border p-5 text-left transition ${
-                  entry.id === typeId
-                    ? 'border-brand bg-brand-soft/40 shadow-card'
-                    : 'border-navy/12 bg-white hover:border-navy/30'
-                }`}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-semibold">{entry.label}</p>
-                    <p className="prose-body mt-1.5">{entry.description}</p>
-                  </div>
-                  <span className="whitespace-nowrap rounded-full bg-navy/10 px-3 py-1 text-xs font-semibold text-navy-soft">
-                    {entry.durationMinutes} Min.
+    <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-16">
+      <div className="space-y-16 sm:space-y-20">
+        {/* Terminart */}
+        <section aria-labelledby="schritt-art">
+          <StepTitle id="schritt-art" step={1} title="Terminart." sub="Worum geht es?" />
+          <div className="mt-6 grid gap-3">
+            {appointmentTypes.map((entry) => {
+              const active = entry.id === typeId;
+              return (
+                <button
+                  key={entry.id}
+                  type="button"
+                  onClick={() => setTypeId(entry.id)}
+                  aria-pressed={active}
+                  className={`rounded-ctl border bg-surface p-5 text-left transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.99] ${
+                    active
+                      ? 'border-accent shadow-[0_0_0_1px_rgb(var(--c-accent))]'
+                      : 'border-faint/60 hover:border-faint'
+                  }`}
+                >
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="font-semibold">{entry.label}</span>
+                    <span className="t-small shrink-0 text-mute">{entry.durationMinutes} Min.</span>
                   </span>
-                </div>
-                <p className="mt-3 text-sm font-semibold text-brand-hover">{entry.price}</p>
-              </button>
-            ))}
+                  <span className="t-small mt-1.5 block text-mute">{entry.description}</span>
+                  <span className="t-small mt-3 block font-medium text-ink-soft">{entry.price}</span>
+                </button>
+              );
+            })}
           </div>
         </section>
 
-        {/* Schritt 2 */}
-        <section>
-          <StepHeading step={2} title="Wunschtermin wählen" />
-          <p className="prose-body mt-2">
+        {/* Zeitpunkt */}
+        <section aria-labelledby="schritt-zeit">
+          <StepTitle id="schritt-zeit" step={2} title="Termin." sub="Wann passt es Ihnen?" />
+          <p className="t-body mt-3 text-mute">
             Angezeigt werden nur Zeiten, die im Kalender tatsächlich frei sind. Die Fahrzeit
             zwischen den Baustellen ist dabei schon abgezogen.
           </p>
 
-          <div className="mt-5 flex items-center justify-between gap-4">
+          <div className="mt-6 flex items-center justify-between gap-4">
             <button
               type="button"
+              className="paddle"
               onClick={() => setWeekStart(shiftIso(weekStart, -WEEK_LENGTH))}
               disabled={isAtStart}
-              className="btn-ghost px-4 py-2 text-sm"
+              aria-label="Frühere Woche"
             >
-              ← Früher
+              <Icon name="chevron-left" className="h-4 w-4" strokeWidth={2.4} />
             </button>
-            <p className="text-sm font-medium text-navy-muted">
+            <p className="t-body font-semibold" aria-live="polite">
               {formatDayLabel(weekStart).day}. {formatDayLabel(weekStart).month} –{' '}
-              {formatDayLabel(shiftIso(weekStart, WEEK_LENGTH - 1)).day}.{' '}
-              {formatDayLabel(shiftIso(weekStart, WEEK_LENGTH - 1)).month}
+              {formatDayLabel(weekEnd).day}. {formatDayLabel(weekEnd).month}
             </p>
             <button
               type="button"
+              className="paddle"
               onClick={() => setWeekStart(shiftIso(weekStart, WEEK_LENGTH))}
-              className="btn-ghost px-4 py-2 text-sm"
+              aria-label="Spätere Woche"
             >
-              Später →
+              <Icon name="chevron-right" className="h-4 w-4" strokeWidth={2.4} />
             </button>
           </div>
 
           {calendarError ? (
-            <div className="mt-5 rounded-card border border-brand/30 bg-brand-soft/40 p-6">
-              <p className="font-semibold">{calendarError}</p>
-              <p className="prose-body mt-2">
-                Rufen Sie uns bitte direkt an, wir finden sofort einen Termin:{' '}
-                <a href={`tel:${company.phoneHref}`} className="font-semibold text-brand-hover underline">
-                  {company.phone}
-                </a>
+            <div className="mt-6 rounded-card bg-well p-6 sm:p-8" role="alert">
+              <Icon name="calendar" className="h-8 w-8 text-mute" strokeWidth={1.5} />
+              <p className="t-card mt-4">{calendarError}</p>
+              <p className="t-body mt-2 text-mute">
+                Rufen Sie uns bitte direkt an, wir finden sofort einen Termin.
               </p>
+              <a href={`tel:${company.phoneHref}`} className="btn-primary mt-6">
+                <Icon name="phone" className="h-4 w-4" strokeWidth={1.8} />
+                {company.phone}
+              </a>
             </div>
           ) : (
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {loadingSlots
-                ? Array.from({ length: 6 }).map((_, index) => (
-                    <div key={index} className="h-36 animate-pulse rounded-card bg-white/70" />
+                ? Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="skeleton h-40 rounded-card" aria-hidden="true" />
                   ))
                 : days.map((day) => {
                     const label = formatDayLabel(day.date);
                     return (
-                      <div
-                        key={day.date}
-                        className={`rounded-card border p-4 ${
-                          day.slots.length ? 'border-navy/12 bg-white' : 'border-dashed border-navy/12 bg-transparent'
-                        }`}
-                      >
-                        <p className="text-sm font-semibold">
-                          {label.weekday} {label.day}. {label.month}
+                      <div key={day.date} className="rounded-card bg-well p-5">
+                        <p className="font-semibold">
+                          {label.weekday}
+                          <span className="font-normal text-mute">
+                            {' '}
+                            {label.day}. {label.month}
+                          </span>
                         </p>
                         {day.slots.length === 0 ? (
-                          <p className="mt-3 text-sm text-navy-muted/70">keine freien Zeiten</p>
+                          <p className="t-small mt-3 text-mute">Keine freien Zeiten</p>
                         ) : (
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {day.slots.map((slot) => (
-                              <button
-                                key={slot.start}
-                                type="button"
-                                onClick={() => setSelected(slot.start)}
-                                aria-pressed={selected === slot.start}
-                                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-                                  selected === slot.start
-                                    ? 'bg-brand text-white'
-                                    : 'bg-paper text-navy-soft hover:bg-navy hover:text-paper'
-                                }`}
-                              >
-                                {slot.label}
-                              </button>
-                            ))}
+                          <div className="mt-3.5 flex flex-wrap gap-2">
+                            {day.slots.map((slot) => {
+                              const active = selected === slot.start;
+                              return (
+                                <button
+                                  key={slot.start}
+                                  type="button"
+                                  onClick={() => setSelected(slot.start)}
+                                  aria-pressed={active}
+                                  aria-label={`${label.weekday}, ${label.day}. ${label.month}, ${slot.label} Uhr`}
+                                  className={`min-h-[44px] rounded-full px-4 text-[0.9375rem] tabular-nums transition-[background-color,color,border-color,transform] duration-200 active:scale-[0.96] ${
+                                    active
+                                      ? 'border border-action bg-action font-medium text-white'
+                                      : 'border border-line bg-chip text-ink hover:border-accent hover:text-accent'
+                                  }`}
+                                >
+                                  {slot.label}
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -263,88 +295,92 @@ export function BookingFlow() {
           )}
         </section>
 
-        {/* Schritt 3 */}
-        <section>
-          <StepHeading step={3} title="Kontaktdaten" />
-          <form onSubmit={submit} className="mt-5 space-y-5" noValidate>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Name" required>
-                <input
-                  className="field"
-                  required
-                  autoComplete="name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
-              </Field>
-              <Field label="Telefon" required hint="Für kurzfristige Rückfragen">
-                <input
-                  className="field"
-                  required
-                  type="tel"
-                  autoComplete="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                />
-              </Field>
+        {/* Angaben */}
+        <section aria-labelledby="schritt-angaben">
+          <StepTitle id="schritt-angaben" step={3} title="Ihre Angaben." sub="Wohin kommen wir?" />
+          <form ref={formRef} onSubmit={submit} className="mt-6 space-y-4" noValidate>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <TextField
+                label="Name"
+                required
+                autoComplete="name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                onBlur={() => touched.touch('name')}
+                error={shown('name')}
+              />
+              <TextField
+                label="Telefon"
+                required
+                type="tel"
+                autoComplete="tel"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                onBlur={() => touched.touch('phone')}
+                error={shown('phone')}
+                hint="Für kurzfristige Rückfragen"
+              />
             </div>
 
-            <Field label="E-Mail" required hint="Hierhin geht die Bestätigung">
-              <input
-                className="field"
-                required
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-            </Field>
+            <TextField
+              label="E-Mail"
+              required
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onBlur={() => touched.touch('email')}
+              error={shown('email')}
+              hint="Hierhin geht die Bestätigung"
+            />
 
-            <div className="grid gap-5 sm:grid-cols-[1fr_140px]">
-              <Field label="Straße und Hausnummer des Objekts" required>
-                <input
-                  className="field"
-                  required
-                  autoComplete="street-address"
-                  value={form.address}
-                  onChange={(e) => setForm({ ...form, address: e.target.value })}
-                />
-              </Field>
-              <Field label="PLZ" required>
-                <input
-                  className="field"
-                  required
-                  inputMode="numeric"
-                  maxLength={5}
-                  autoComplete="postal-code"
-                  value={form.zip}
-                  onChange={(e) => setForm({ ...form, zip: e.target.value.replace(/\D/g, '').slice(0, 5) })}
-                />
-              </Field>
+            <div className="grid gap-4 sm:grid-cols-[1fr_150px]">
+              <TextField
+                label="Straße und Hausnummer des Objekts"
+                required
+                autoComplete="street-address"
+                value={form.address}
+                onChange={(e) => setForm({ ...form, address: e.target.value })}
+                onBlur={() => touched.touch('address')}
+                error={shown('address')}
+              />
+              <TextField
+                label="PLZ"
+                required
+                inputMode="numeric"
+                maxLength={5}
+                autoComplete="postal-code"
+                value={form.zip}
+                onChange={(e) => setForm({ ...form, zip: e.target.value.replace(/\D/g, '').slice(0, 5) })}
+                onBlur={() => touched.touch('zip')}
+                error={shown('zip')}
+              />
             </div>
 
             {zone && (
-              <div
-                className={`rounded-xl p-4 text-sm leading-relaxed ${
-                  zone.inside ? 'bg-brand-soft/50 text-navy-soft' : 'bg-navy/5 text-navy-soft'
-                }`}
-              >
-                <strong>{zone.label}</strong> · {zone.surcharge}
-                <br />
-                {zone.note}
+              <div className="fade-in flex items-start gap-3 rounded-ctl bg-well p-4 t-small" role="status">
+                <Icon
+                  name={zone.inside ? 'check-circle' : 'pin'}
+                  className={`mt-[1px] h-5 w-5 shrink-0 ${zone.inside ? 'text-accent' : 'text-mute'}`}
+                  strokeWidth={1.7}
+                />
+                <p className="text-ink-soft">
+                  <strong className="font-semibold text-ink">{zone.label}</strong> · {zone.surcharge}
+                  <br />
+                  {zone.note}
+                </p>
               </div>
             )}
 
-            <Field label="Was ist geplant?" hint="Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot">
-              <textarea
-                className="field min-h-[130px] resize-y"
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-              />
-            </Field>
+            <TextArea
+              label="Was ist geplant?"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              hint="Räume, Quadratmeter, Zeitrahmen. Je konkreter, desto genauer das Angebot."
+            />
 
             {/* Honeypot: für Menschen unsichtbar */}
-            <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden opacity-0">
+            <div aria-hidden="true" className="honeypot">
               <label>
                 Website
                 <input
@@ -356,102 +392,96 @@ export function BookingFlow() {
               </label>
             </div>
 
-            <label className="flex items-start gap-3 text-sm leading-relaxed text-navy-muted">
-              <input
-                type="checkbox"
-                required
-                checked={form.privacy}
-                onChange={(e) => setForm({ ...form, privacy: e.target.checked })}
-                className="mt-1 h-4 w-4 rounded border-navy/30 text-brand focus:ring-brand"
-              />
-              <span>
-                Ich habe die <a href="/datenschutz" className="underline hover:text-navy">Datenschutzhinweise</a> gelesen
-                und bin mit der Verarbeitung meiner Angaben zur Terminbearbeitung einverstanden.
-              </span>
-            </label>
+            <CheckField
+              required
+              checked={form.privacy}
+              onChange={(e) => {
+                setForm({ ...form, privacy: e.target.checked });
+                touched.touch('privacy');
+              }}
+              error={shown('privacy')}
+              className="pt-2"
+            >
+              Ich habe die{' '}
+              <a href="/datenschutz" className="link">
+                Datenschutzhinweise
+              </a>{' '}
+              gelesen und bin mit der Verarbeitung meiner Angaben zur Terminbearbeitung einverstanden.
+            </CheckField>
+
+            {/* Zusammenfassung auf kleinen Bildschirmen, direkt über dem Absenden */}
+            <div className="rounded-card bg-well p-5 lg:hidden">
+              <p className="t-caption font-semibold text-mute">Ihre Auswahl</p>
+              <p className="mt-1 font-semibold">{type.label}</p>
+              <p className="t-small mt-0.5 text-ink-soft">
+                {selected ? `${formatSelection(selected)} Uhr` : 'Noch kein Zeitpunkt gewählt'}
+              </p>
+            </div>
 
             {formError && (
-              <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+              <p role="alert" className="flex items-start gap-2 rounded-ctl bg-danger-soft px-4 py-3 t-small font-medium text-danger">
+                <Icon name="alert" className="mt-[1px] h-4 w-4 shrink-0" strokeWidth={1.9} />
                 {formError}
               </p>
             )}
 
-            <button type="submit" disabled={!selected || submitting} className="btn-brand w-full sm:w-auto">
-              {submitting ? 'Wird gesendet …' : 'Termin verbindlich anfragen'}
-            </button>
-            {!selected && (
-              <p className="text-sm text-navy-muted">Bitte oben zuerst einen Zeitpunkt auswählen.</p>
-            )}
+            <div className="pt-2">
+              <button type="submit" disabled={!selected || submitting} className="btn-primary w-full sm:w-auto">
+                {submitting ? 'Wird gesendet …' : 'Termin verbindlich anfragen'}
+              </button>
+              {!selected && (
+                <p className="t-small mt-3 text-mute">Bitte oben zuerst einen Zeitpunkt auswählen.</p>
+              )}
+            </div>
           </form>
         </section>
       </div>
 
-      {/* Zusammenfassung */}
-      <aside className="card sticky top-24 p-7">
-        <p className="eyebrow">Ihre Auswahl</p>
-        <p className="heading-md mt-3 text-xl">{type.label}</p>
-        <p className="prose-body mt-2">{type.description}</p>
+      {/* Mitlaufende Zusammenfassung */}
+      <aside className="hidden lg:block" aria-label="Ihre Auswahl">
+        <div className="sticky top-[76px] rounded-tile bg-well p-7">
+          <p className="t-caption font-semibold text-mute">Ihre Auswahl</p>
+          <p className="t-card mt-2">{type.label}</p>
+          <p className="t-small mt-2 text-mute">{type.description}</p>
 
-        <dl className="mt-6 space-y-3 border-t border-navy/10 pt-6 text-sm">
-          <div className="flex justify-between gap-4">
-            <dt className="text-navy-muted">Dauer</dt>
-            <dd className="font-medium">{type.durationMinutes} Minuten</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-navy-muted">Kosten</dt>
-            <dd className="font-medium">{type.price}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-navy-muted">Zeitpunkt</dt>
-            <dd className="text-right font-medium">
-              {selected ? formatSelection(selected) : 'noch nicht gewählt'}
-            </dd>
-          </div>
-        </dl>
+          <dl className="mt-6 divide-y divide-line border-y border-line t-small">
+            <div className="flex justify-between gap-4 py-3">
+              <dt className="text-mute">Dauer</dt>
+              <dd className="font-medium">{type.durationMinutes} Minuten</dd>
+            </div>
+            <div className="flex justify-between gap-4 py-3">
+              <dt className="text-mute">Kosten</dt>
+              <dd className="text-right font-medium">{type.price}</dd>
+            </div>
+            <div className="flex justify-between gap-4 py-3">
+              <dt className="text-mute">Zeitpunkt</dt>
+              <dd className={`text-right font-medium ${selected ? 'text-ink' : 'text-mute'}`}>
+                {selected ? `${formatSelection(selected)} Uhr` : 'noch nicht gewählt'}
+              </dd>
+            </div>
+          </dl>
 
-        <div className="mt-6 rounded-xl bg-paper p-4 text-sm leading-relaxed text-navy-muted">
-          Die gewählte Zeit ist ab sofort für andere gesperrt. Verbindlich wird der Termin mit
-          unserer Bestätigungsmail. {bookingRules.responseTimePromise}.
+          <p className="t-small mt-5 text-ink-soft">
+            Die gewählte Zeit ist ab sofort für andere gesperrt. Verbindlich wird der Termin mit
+            unserer Bestätigungsmail. {bookingRules.responseTimePromise}.
+          </p>
+
+          <a href={`tel:${company.phoneHref}`} className="link mt-5 inline-flex items-center gap-1.5 t-small">
+            <Icon name="phone" className="h-3.5 w-3.5" strokeWidth={1.9} />
+            Lieber telefonisch: {company.phone}
+          </a>
         </div>
-
-        <a href={`tel:${company.phoneHref}`} className="btn-ghost mt-5 w-full">
-          Lieber telefonisch: {company.phone}
-        </a>
       </aside>
     </div>
   );
 }
 
-function StepHeading({ step, title }: { step: number; title: string }) {
+function StepTitle({ id, step, title, sub }: { id: string; step: number; title: string; sub: string }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="grid h-8 w-8 place-items-center rounded-full bg-navy text-sm font-semibold text-paper">
-        {step}
-      </span>
-      <h2 className="heading-md text-xl">{title}</h2>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  hint,
-  required,
-  children,
-}: {
-  label: string;
-  hint?: string;
-  required?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="field-label">
-        {label}
-        {required && <span className="text-brand"> *</span>}
-      </span>
-      {children}
-      {hint && <span className="mt-1.5 block text-xs text-navy-muted">{hint}</span>}
-    </label>
+    <h2 id={id} className="t-title">
+      <span className="sr-only">Schritt {step}: </span>
+      {title}
+      <span className="text-mute"> {sub}</span>
+    </h2>
   );
 }

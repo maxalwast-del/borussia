@@ -9,6 +9,36 @@ Bestätigungsmail an den Kunden schickt.
 
 ---
 
+## Gestaltung
+
+Die Oberfläche folgt der Gestaltungssprache von apple.com, übersetzt aus Apples
+WWDC-Vorträgen (*Designing Fluid Interfaces*, *The Details of UI Typography*) und den
+Human Interface Guidelines. Kein Apple-Logo, keine Apple-Grafiken, nur die Prinzipien.
+
+- **Schrift:** Auf Apple-Geräten die Systemschrift (SF Pro), sonst Inter mit optischer
+  Größenanpassung. Laufweite und Zeilenabstand hängen an der Schriftgröße
+  (`.t-hero` bis `.t-caption` in `src/app/globals.css`). Beide Schriften liefert
+  `next/font` vom eigenen Server aus, es gibt keine Verbindung zu Google Fonts.
+- **Farbe:** Neutrale Grautöne tragen die Seite, Farbe kommt nur über einen Akzent im
+  Farbton des Logos (`accent` in `tailwind.config.ts`). Alle Textfarben erreichen
+  WCAG AA, geprüft mit `npm run check:contrast` in beiden Erscheinungsbildern.
+- **Dunkelmodus:** Folgt der Systemeinstellung, ohne Schalter auf der Seite. Die Farben
+  sind semantische Tokens (`page`, `canvas`, `surface`, `well`, `inset`, `chip` …), deren
+  Werte in `src/app/globals.css` für hell und dunkel getrennt stehen. Dunkel gelten die
+  Systemfarben von iOS und macOS: Tiefe entsteht über Helligkeit statt über Schatten.
+  Grundriss, Illustrationen, Logo und Favicon haben eigene dunkle Fassungen.
+- **Navigation:** Durchscheinende globale Leiste, auf Unterseiten eine lokale Leiste
+  mit Seitentitel und Terminknopf, die beim Scrollen stehen bleibt. Fußzeile mit
+  Brotkrumen und Verzeichnis.
+- **Bewegung:** Rückmeldung beim Drücken (nicht erst beim Loslassen), Einblenden beim
+  Scrollen, unterbrechbare Übergänge. Bei *Bewegung reduzieren* bleiben nur kurze
+  Überblendungen, bei *Transparenz reduzieren* werden die Leisten deckend.
+- **Formulare:** Beschriftung im Feld, Prüfung direkt am Feld nach dem Verlassen, beim
+  Absenden springt der Fokus auf das erste fehlerhafte Feld. Die Regeln entsprechen
+  den Zod-Schemata der API-Routen.
+
+---
+
 ## Wie die Terminbuchung funktioniert
 
 ```
@@ -106,7 +136,8 @@ Alle inhaltlichen Platzhalter sind im Code mit `[PLATZHALTER]` markiert.
 | `src/app/jobs/page.tsx` | Offene Stellen und Benefits |
 | `src/app/impressum/page.tsx` | Pflichtangaben nach § 5 DDG |
 | `src/app/datenschutz/page.tsx` | Datenschutzhinweise |
-| `src/components/visual.tsx` | Platzhaltergrafiken durch echte Fotos (`next/image`) ersetzen |
+| `src/components/artwork.tsx` | Symbolgrafiken in Leistungen und Referenzen durch echte Fotos (`next/image`) ersetzen |
+| `src/components/logo.tsx` | Wortmarke durch die echte Logodatei ersetzen |
 
 **Rechtstexte:** Impressum und Datenschutzerklärung sind fachlich vorbereitete Gerüste,
 die die tatsächlich implementierten Verarbeitungen beschreiben. Sie ersetzen keine

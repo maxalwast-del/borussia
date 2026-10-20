@@ -1,91 +1,163 @@
 import Link from 'next/link';
-import { company, serviceZones } from '@/config/site';
-import { SloganRule } from '@/components/logo';
+import { company, serviceZones, trades } from '@/config/site';
+import { FooterBreadcrumb } from '@/components/footer-breadcrumb';
+import { Icon } from '@/components/icon';
 
+type Column = {
+  title: string;
+  items: { label: string; href?: string }[];
+};
+
+const columns: Column[] = [
+  {
+    title: 'Leistungen',
+    items: trades.map((trade) => ({ label: trade.label, href: `/leistungen#${trade.id}` })),
+  },
+  {
+    title: 'Unternehmen',
+    items: [
+      { label: 'Referenzen', href: '/referenzen' },
+      { label: 'Ablauf', href: '/ablauf' },
+      { label: 'Jobs', href: '/jobs' },
+    ],
+  },
+  {
+    title: 'Kontakt',
+    items: [
+      { label: 'Termin anfragen', href: '/termin' },
+      { label: 'Kontaktformular', href: '/kontakt' },
+      { label: company.phone, href: `tel:${company.phoneHref}` },
+      { label: company.email, href: `mailto:${company.email}` },
+    ],
+  },
+  {
+    title: 'Einsatzgebiet',
+    items: serviceZones.map((zone) => ({ label: zone.label })),
+  },
+  {
+    title: 'Bürozeiten',
+    items: company.openingHours.map((entry) => ({ label: `${entry.days}: ${entry.time}` })),
+  },
+];
+
+/**
+ * Fußzeile nach dem Muster von apple.com: hellgrau, kleine Schrift,
+ * Hinweise oben, Brotkrumen, Verzeichnis in Spalten. Auf dem Handy werden
+ * die Spalten zu aufklappbaren Gruppen.
+ */
 export function SiteFooter() {
   return (
-    <footer className="mt-24 bg-navy text-paper">
-      <div className="container-page grid gap-12 py-16 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <p className="font-wordmark text-3xl uppercase leading-none tracking-[0.01em]">Borussia</p>
-          <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-bright">
-            Baudienstleistungen
-          </p>
-          <div className="mt-5"><SloganRule tone="dark" /></div>
-          <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-paper/65">{company.tagline}</p>
-          <p className="mt-4 font-display text-lg italic text-paper/85">{company.claim}</p>
-          <div className="mt-6 space-y-1 text-[15px] text-paper/80">
-            <p>{company.street}</p>
-            <p>
-              {company.zip} {company.city}
-            </p>
-            <p className="pt-3">
-              <a href={`tel:${company.phoneHref}`} className="hover:text-brand">
-                {company.phone}
-              </a>
-            </p>
-            <p>
-              <a href={`mailto:${company.email}`} className="hover:text-brand">
-                {company.email}
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Seiten</p>
-          <ul className="mt-4 space-y-2.5 text-[15px] text-paper/80">
-            {[
-              ['/leistungen', 'Leistungen'],
-              ['/referenzen', 'Referenzen'],
-              ['/ablauf', 'Ablauf'],
-              ['/termin', 'Termin anfragen'],
-              ['/jobs', 'Jobs'],
-              ['/kontakt', 'Kontakt'],
-            ].map(([href, label]) => (
-              <li key={href}>
-                <Link href={href} className="hover:text-brand">
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Einsatzgebiet</p>
-          <ul className="mt-4 space-y-2.5 text-[15px] text-paper/80">
-            {serviceZones.map((zone) => (
-              <li key={zone.id}>{zone.label}</li>
-            ))}
-          </ul>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-paper/70">Öffnungszeiten</p>
-          <ul className="mt-4 space-y-1.5 text-[15px] text-paper/80">
-            {company.openingHours.map((entry) => (
-              <li key={entry.days}>
-                <span className="inline-block w-20 text-paper/55">{entry.days}</span>
-                {entry.time}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="border-t border-white/10">
-        <div className="container-page flex flex-col gap-3 py-6 text-sm text-paper/55 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="bg-canvas text-[0.75rem] leading-[1.33] text-mute">
+      <div className="container-page pb-6 pt-5">
+        <div className="space-y-2 border-b border-line pb-4">
           <p>
-            © {new Date().getFullYear()} {company.legalName}
+            Das Aufmaß vor Ort ist im Einsatzgebiet kostenfrei. Für die Anfahrt gilt:{' '}
+            {serviceZones.map((zone) => `${zone.label} ${zone.surcharge}`).join(', ')}.
           </p>
-          <div className="flex gap-6">
-            <Link href="/impressum" className="hover:text-paper">
-              Impressum
-            </Link>
-            <Link href="/datenschutz" className="hover:text-paper">
-              Datenschutz
-            </Link>
+          <p>
+            Handwerkerleistungen in Privathaushalten sind nach § 35a EStG anteilig steuerlich
+            begünstigt, Materialkosten zählen nicht dazu. Unsere Rechnungen weisen den Lohnanteil
+            deshalb getrennt aus.
+          </p>
+        </div>
+
+        <FooterBreadcrumb />
+
+        {/* Verzeichnis ab Tablet: Spalten */}
+        <nav aria-label="Verzeichnis" className="hidden grid-cols-5 gap-6 pt-1 md:grid">
+          {columns.map((column) => (
+            <div key={column.title}>
+              <h3 className="mb-2.5 font-semibold text-ink">{column.title}</h3>
+              <ul className="space-y-2.5">
+                {column.items.map((item) => (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <FooterLink href={item.href}>{item.label}</FooterLink>
+                    ) : (
+                      <span className="text-ink-soft">{item.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        {/* Verzeichnis auf dem Handy: aufklappbar */}
+        <nav aria-label="Verzeichnis" className="md:hidden">
+          {columns.map((column) => (
+            <details key={column.title} className="faq group border-b border-line">
+              <summary className="flex cursor-pointer items-center justify-between py-3 text-[0.875rem] text-ink">
+                {column.title}
+                <Icon
+                  name="chevron-down"
+                  className="h-3.5 w-3.5 text-mute transition-transform duration-300 group-open:rotate-180"
+                  strokeWidth={2}
+                />
+              </summary>
+              <ul className="space-y-3 pb-4 pl-3 text-[0.875rem]">
+                {column.items.map((item) => (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <FooterLink href={item.href}>{item.label}</FooterLink>
+                    ) : (
+                      <span className="text-ink-soft">{item.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </nav>
+
+        <p className="mt-8">
+          Weitere Wege zu uns: Rufen Sie an unter{' '}
+          <a href={`tel:${company.phoneHref}`} className="text-accent hover:underline">
+            {company.phone}
+          </a>{' '}
+          oder schreiben Sie an{' '}
+          <a href={`mailto:${company.email}`} className="text-accent hover:underline">
+            {company.email}
+          </a>
+          .
+        </p>
+
+        <div className="mt-3 flex flex-col gap-2 border-t border-line pt-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+            <p className="md:mr-7">
+              Copyright © {new Date().getFullYear()} {company.legalName}. Alle Rechte vorbehalten.
+            </p>
+            <ul className="flex">
+              {[
+                ['/impressum', 'Impressum'],
+                ['/datenschutz', 'Datenschutz'],
+                ['/jobs', 'Karriere'],
+              ].map(([href, label], index) => (
+                <li key={href} className={index > 0 ? 'border-l border-line pl-2.5 ml-2.5' : ''}>
+                  <FooterLink href={href}>{label}</FooterLink>
+                </li>
+              ))}
+            </ul>
           </div>
+          <p className="text-ink-soft">Berlin und Brandenburg</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const className = 'text-ink-soft hover:underline';
+  if (href.startsWith('tel:') || href.startsWith('mailto:')) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
   );
 }

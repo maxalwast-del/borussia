@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <style>
+    .bg { fill: #fbfbfd; }
+    .roof { fill: #122c5e; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1d1d1f; }
+      .roof { fill: #f5f5f7; }
+    }
+  </style>
+  <rect class="bg" width="40" height="40" rx="9"/>
+  <g transform="translate(2 2) scale(0.9)">
+    <path d="M2 20 11 9.5 20 20v9H2v-9Z" fill="#2E9BE8"/>
+    <path class="roof" d="M13 20 25 5.5 37 20v9H13v-9ZM22.5 15h4.6v7h-4.6Z" fill-rule="evenodd"/>
+    <path d="M1.5 32.5c7 3.4 13.2 4.6 18.5 3.6 5.3-1 11-3.6 18.5-8" fill="none" stroke="#2E9BE8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
