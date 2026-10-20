@@ -4,102 +4,614 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-display: 'Archivo', system-ui, sans-serif;
-    --font-wordmark: 'Archivo Black', Impact, sans-serif;
+    --gutter: 24px;
+    --content: 1024px;
+    /* Abstand vom Fensterrand bis zur Inhaltskante. Galerien, die bis an den
+       Rand laufen, beginnen damit trotzdem bündig mit dem Text darüber. */
+    --edge: max(var(--gutter), calc((100vw - var(--content)) / 2));
+    --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+    /* Erlaubt der Akkordeon-Animation, von 0 auf "auto" zu laufen. */
+    interpolate-size: allow-keywords;
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    /* Die Seite hat bewusst nur ein Erscheinungsbild. Ohne diese Angabe
-       zeichnet der Browser Formularelemente im Farbschema des Besuchers,
-       was zu heller Schrift auf hellem Grund führen kann. */
+    scroll-behavior: smooth;
+    /* Die Seite hat bewusst nur ein Erscheinungsbild, wie apple.com auch.
+       Ohne diese Angabe zeichnet der Browser Formularelemente im
+       Farbschema des Besuchers, was zu heller Schrift auf hellem Grund
+       führen kann. */
     color-scheme: light;
   }
 
   body {
-    @apply bg-paper text-navy antialiased;
+    @apply bg-white font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.47059;
+    letter-spacing: -0.01em;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
   }
 
   ::selection {
-    @apply bg-brand/20;
+    background: rgba(10, 108, 207, 0.2);
+  }
+
+  /* Lange Komposita wie „Wohnungszusammenlegung" passen auf dem Handy nicht
+     in eine Zeile. Getrennt wird nur dort und nur bei langen Wörtern. */
+  h1,
+  h2,
+  h3,
+  blockquote {
+    overflow-wrap: break-word;
+  }
+  @media (max-width: 639px) {
+    h1,
+    h2,
+    h3,
+    blockquote {
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      hyphenate-limit-chars: 12 5 5;
+    }
   }
 
   :focus-visible {
-    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-paper;
+    outline: 3px solid rgba(10, 108, 207, 0.6);
+    outline-offset: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
+    html {
+      scroll-behavior: auto;
     }
   }
 }
 
 @layer components {
+  /* ------------------------------------------------------------------ */
+  /* Raster                                                              */
+  /* ------------------------------------------------------------------ */
+
   .container-page {
-    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+    margin-inline: auto;
+    width: min(var(--content), calc(100% - 2 * var(--gutter)));
   }
 
-  .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand;
+  .container-wide {
+    margin-inline: auto;
+    width: min(1260px, calc(100% - 2 * var(--gutter)));
   }
 
-  .heading-xl {
-    @apply font-display text-[2.6rem] font-bold leading-[1.05] tracking-[-0.025em] sm:text-6xl;
+  .container-text {
+    margin-inline: auto;
+    width: min(692px, calc(100% - 2 * var(--gutter)));
   }
 
-  .heading-lg {
-    @apply font-display text-3xl font-bold leading-[1.12] tracking-[-0.022em] sm:text-[2.5rem];
+  .section {
+    @apply py-20 sm:py-28;
   }
 
-  .heading-md {
-    @apply font-display text-xl font-semibold leading-snug tracking-[-0.015em] sm:text-2xl;
+  /* ------------------------------------------------------------------ */
+  /* Typografie                                                          */
+  /* Laufweite und Zeilenabstand hängen an der Größe: große Schrift läuft */
+  /* enger und mit knappem Durchschuss, kleine bleibt neutral.           */
+  /* ------------------------------------------------------------------ */
+
+  .t-hero {
+    @apply text-[3rem] font-semibold leading-[1.05] tracking-[-0.015em] sm:text-[4rem] lg:text-[5rem] lg:tracking-[-0.02em];
   }
 
-  .lede {
-    @apply text-lg leading-relaxed text-navy-soft sm:text-xl;
+  .t-headline {
+    @apply text-[2.25rem] font-semibold leading-[1.11] tracking-[-0.012em] sm:text-[3.5rem] sm:leading-[1.07] sm:tracking-[-0.015em];
   }
 
-  .prose-body {
-    @apply text-[15px] leading-relaxed text-navy-muted sm:text-base;
+  .t-section {
+    @apply text-[2rem] font-semibold leading-[1.125] tracking-[-0.01em] sm:text-[3rem] sm:leading-[1.08] sm:tracking-[-0.012em];
   }
+
+  .t-title {
+    @apply text-[1.5rem] font-semibold leading-[1.17] tracking-[-0.008em] sm:text-[1.75rem] sm:leading-[1.14];
+  }
+
+  .t-card {
+    @apply text-[1.3125rem] font-semibold leading-[1.19] tracking-[-0.005em];
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 12 5 5;
+  }
+
+  .t-intro {
+    @apply text-[1.1875rem] leading-[1.42] tracking-[-0.005em] sm:text-[1.3125rem] sm:leading-[1.38];
+  }
+
+  .t-eyebrow {
+    @apply text-[1.0625rem] font-semibold leading-[1.24] sm:text-[1.3125rem] sm:leading-[1.19];
+  }
+
+  .t-body {
+    @apply text-[1.0625rem] leading-[1.47] tracking-[-0.01em];
+  }
+
+  .t-small {
+    @apply text-[0.875rem] leading-[1.43] tracking-[-0.005em];
+  }
+
+  .t-caption {
+    @apply text-[0.75rem] leading-[1.33] tracking-normal;
+  }
+
+  /* Verlauf im Farbton des Logos. `color` bleibt als deckende Rückfalllage
+     stehen, falls background-clip: text nicht greift. */
+  .text-gradient {
+    color: #0a6ccf;
+    background: linear-gradient(100deg, #1a78c8 0%, #0a6ccf 40%, #122c5e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Schaltflächen und Links                                             */
+  /* Rückmeldung beim Drücken, nicht erst beim Loslassen.                */
+  /* ------------------------------------------------------------------ */
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-[15px] font-semibold
-           transition duration-200 disabled:cursor-not-allowed disabled:opacity-55;
+    @apply relative inline-flex min-h-[44px] select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-[22px] text-[1.0625rem] leading-none tracking-[-0.01em];
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease,
+      transform 120ms ease-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+    transition-duration: 60ms;
+  }
+
+  .btn:disabled {
+    @apply cursor-not-allowed opacity-40;
   }
 
   .btn-primary {
-    @apply btn bg-navy text-paper hover:bg-navy-soft hover:shadow-lift;
+    @apply btn bg-accent text-white;
+  }
+  .btn-primary:hover:not(:disabled) {
+    @apply bg-accent-hover;
   }
 
-  .btn-brand {
-    @apply btn bg-brand text-white hover:bg-brand-hover hover:shadow-lift;
+  .btn-secondary {
+    @apply btn border border-accent text-accent;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-accent text-white;
   }
 
-  .btn-ghost {
-    @apply btn border border-navy/15 bg-white/70 text-navy hover:border-navy/35 hover:bg-white;
+  .btn-secondary-dark {
+    @apply btn border border-accent-bright text-accent-bright;
+  }
+  .btn-secondary-dark:hover {
+    @apply bg-accent-bright text-black;
   }
 
-  .card {
-    @apply rounded-card border border-navy/10 bg-white shadow-card;
+  .btn-quiet {
+    @apply btn bg-fill text-ink;
+  }
+  .btn-quiet:hover:not(:disabled) {
+    @apply bg-line;
   }
 
-  .field-label {
-    @apply mb-1.5 block text-sm font-medium text-navy-soft;
+  /* Kleine Pille wie in der lokalen Navigation. Die Trefferfläche wird per
+     Pseudo-Element auf 44 px erweitert, ohne die Optik zu vergrößern. */
+  .btn-sm {
+    @apply min-h-[28px] px-3 text-[0.8125rem];
+  }
+  .btn-sm::after {
+    content: '';
+    position: absolute;
+    inset: -8px -4px;
   }
 
-  .field {
-    @apply w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-[15px] text-navy
-           placeholder:text-navy-muted/60 transition focus:border-brand focus:outline-none
-           focus:ring-2 focus:ring-brand/25;
+  .link {
+    @apply text-accent underline-offset-2 hover:underline;
+  }
+
+  .link-dark {
+    @apply text-accent-bright underline-offset-2 hover:underline;
+  }
+
+  /* Rund, grau, mit Pfeil: wie die Blätter-Knöpfe in Apples Galerien. */
+  .paddle {
+    @apply relative grid h-9 w-9 shrink-0 place-items-center rounded-full text-black/60;
+    background: rgba(210, 210, 215, 0.64);
+    transition:
+      background-color 200ms ease,
+      opacity 200ms ease,
+      transform 120ms ease-out;
+  }
+  .paddle::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+  .paddle:hover:not(:disabled) {
+    background: rgba(223, 223, 227, 0.9);
+    @apply text-black/70;
+  }
+  .paddle:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+  .paddle:disabled {
+    @apply cursor-default opacity-40;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Flächen                                                             */
+  /* ------------------------------------------------------------------ */
+
+  .tile {
+    @apply overflow-hidden rounded-tile;
+  }
+
+  /* Karten, die als Ganzes verlinken: heben sich leicht an, statt die
+     Farbe zu wechseln. */
+  .card-link {
+    @apply block shadow-card;
+    transition:
+      transform 300ms cubic-bezier(0, 0, 0.5, 1),
+      box-shadow 300ms cubic-bezier(0, 0, 0.5, 1);
+  }
+  @media (hover: hover) {
+    .card-link:hover {
+      @apply shadow-card-hover;
+      transform: scale(1.01);
+    }
+  }
+  .card-link:active {
+    transform: scale(0.99);
+    transition-duration: 100ms;
   }
 
   .hairline {
-    @apply border-t border-navy/10;
+    @apply border-t border-line;
+  }
+
+  /* Durchscheinende Materialschicht für Navigationsleisten. */
+  .material {
+    background: rgba(251, 251, 253, 0.8);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .material {
+      background: rgba(251, 251, 253, 0.97);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .material {
+      background: #fbfbfd;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  @media (prefers-contrast: more) {
+    .material {
+      background: #ffffff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: inset 0 -1px 0 #6e6e73;
+    }
+  }
+
+  .material-chip {
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    backdrop-filter: saturate(180%) blur(24px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 12px 32px -12px rgba(0, 0, 0, 0.22);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .material-chip {
+      background: #ffffff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  /* Horizontale Galerie: natürliches Scrollen mit Einrasten. Der Browser
+     übernimmt Schwung, Abbremsen und Gummiband am Rand. */
+  .scroller {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--edge);
+    padding-inline: var(--edge);
+    scrollbar-width: none;
+  }
+  .scroller::-webkit-scrollbar {
+    display: none;
+  }
+  .scroller > * {
+    scroll-snap-align: start;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Formulare: Beschriftung im Feld, die beim Ausfüllen nach oben rückt  */
+  /* ------------------------------------------------------------------ */
+
+  .field {
+    @apply block h-14 w-full rounded-ctl border border-faint bg-white px-4 pb-2 pt-[26px] text-[1.0625rem] leading-[1.24] text-ink;
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+  .field:focus {
+    outline: none;
+    border-color: #0a6ccf;
+    box-shadow: 0 0 0 4px rgba(10, 108, 207, 0.22);
+  }
+  .field[aria-invalid='true'] {
+    @apply border-danger bg-danger-soft;
+  }
+  .field[aria-invalid='true']:focus {
+    box-shadow: 0 0 0 4px rgba(215, 0, 21, 0.18);
+  }
+
+  textarea.field {
+    @apply h-auto min-h-[140px] resize-y pt-7;
+  }
+
+  select.field {
+    appearance: none;
+    padding-right: 44px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+  }
+
+  .field-label {
+    @apply pointer-events-none absolute left-[17px] top-[17px] origin-top-left text-[1.0625rem] leading-[1.24] text-mute;
+    transition: transform 125ms ease-in;
+  }
+  .field:focus + .field-label,
+  .field:not(:placeholder-shown) + .field-label,
+  .field-label-fixed {
+    transform: translateY(-9px) scale(0.706);
+    transition-timing-function: ease-out;
+  }
+  .field[aria-invalid='true'] + .field-label {
+    @apply text-danger;
+  }
+
+  .field-note {
+    @apply mt-2 flex items-start gap-1.5 px-1 text-[0.875rem] leading-[1.43] text-mute;
+  }
+  .field-error {
+    @apply mt-2 flex items-start gap-1.5 px-1 text-[0.875rem] leading-[1.43] text-danger;
+  }
+
+  .check {
+    @apply grid h-[22px] w-[22px] shrink-0 cursor-pointer appearance-none place-content-center rounded-[6px] border border-faint bg-white;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+  .check::before {
+    content: '';
+    width: 13px;
+    height: 13px;
+    background: #fff;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    transform: scale(0);
+    transition: transform 150ms ease-out;
+  }
+  .check:checked {
+    @apply border-accent bg-accent;
+  }
+  .check:checked::before {
+    transform: scale(1);
+  }
+  .check[aria-invalid='true'] {
+    @apply border-danger;
+  }
+
+  /* Honeypot: für Menschen unsichtbar, für Bots ein normales Feld. */
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Akkordeon                                                           */
+  /* ------------------------------------------------------------------ */
+
+  .faq summary {
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 320ms var(--ease-apple),
+      content-visibility 320ms allow-discrete;
+  }
+  .faq[open]::details-content {
+    block-size: auto;
+  }
+  .faq .faq-icon {
+    transition: transform 320ms var(--ease-apple);
+  }
+  .faq[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+}
+
+@layer utilities {
+  /* ------------------------------------------------------------------ */
+  /* Einblenden beim Scrollen                                            */
+  /* Der Ausgangszustand greift nur, wenn das Skript im <head> gelaufen  */
+  /* ist. Ohne JavaScript bleibt alles sichtbar.                         */
+  /* ------------------------------------------------------------------ */
+
+  [data-reveal] {
+    transition:
+      opacity 900ms var(--ease-apple),
+      transform 900ms var(--ease-apple);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js-reveal [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      transition: opacity 300ms ease;
+      transition-delay: 0ms;
+    }
+    .js-reveal [data-reveal]:not([data-shown]) {
+      transform: none;
+    }
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #f5f5f7 0%, #ebebef 50%, #f5f5f7 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+}
+
+@layer utilities {
+  /* ------------------------------------------------------------------ */
+  /* Grundriss auf der Startseite                                        */
+  /* ------------------------------------------------------------------ */
+
+  .fp-new {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: fp-draw 1.2s var(--ease-apple) 1s forwards;
+  }
+  .fp-new-2 {
+    animation-delay: 1.75s;
+    animation-duration: 0.45s;
+  }
+  .fp-new-3 {
+    animation-delay: 2.05s;
+    animation-duration: 0.5s;
+  }
+  .fp-remove {
+    animation: fp-fade 0.9s ease 0.35s forwards;
+  }
+  .fp-label {
+    display: none;
+  }
+  @media (min-width: 640px) {
+    .fp-label {
+      display: inline;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-new {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+    .fp-remove {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fp-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes fp-fade {
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    animation: fade-in 450ms var(--ease-apple) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      animation-name: fade-in-plain;
+      animation-duration: 200ms;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes fade-in-plain {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+@layer utilities {
+  .success-ring,
+  .success-check {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: fp-draw 600ms var(--ease-apple) 100ms forwards;
+  }
+  .success-check {
+    animation-delay: 500ms;
+    animation-duration: 400ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .success-ring,
+    .success-check {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { PageHeader } from '@/components/page-header';
+import { LocalNav } from '@/components/local-nav';
 import { ProjectGallery } from '@/components/project-gallery';
+import { PageHero } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Referenzen',
@@ -11,13 +12,20 @@ export const metadata: Metadata = {
 export default function ReferenzenPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Referenzen"
-        title="Projekte, die wir vorzeigen dürfen"
+      <LocalNav title="Referenzen" href="/referenzen" />
+      <PageHero
+        title={
+          <>
+            Projekte, die wir
+            <br className="hidden sm:block" /> <span className="text-gradient">vorzeigen dürfen.</span>
+          </>
+        }
         lede="Zu jedem Projekt steht dabei, was daran schwierig war."
       />
-      <section className="container-page py-16">
-        <ProjectGallery />
+      <section className="bg-canvas py-16 sm:py-20">
+        <div className="container-page">
+          <ProjectGallery />
+        </div>
       </section>
     </>
   );

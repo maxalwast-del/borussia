@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { PageHeader } from '@/components/page-header';
+import { company } from '@/config/site';
+import { Icon } from '@/components/icon';
+import { LocalNav } from '@/components/local-nav';
+import { PageHero, SectionTitle, delay } from '@/components/ui';
 
 export const metadata: Metadata = {
   title: 'Ablauf',
@@ -80,51 +83,80 @@ export default function AblaufPage() {
 
   return (
     <>
-      <PageHeader
-        eyebrow="Ablauf"
-        title="Von der Anfrage bis zur Abnahme"
+      <LocalNav
+        title="Ablauf"
+        href="/ablauf"
+        links={[
+          { href: '#schritte', label: 'Schritte' },
+          { href: '#fragen', label: 'Häufige Fragen' },
+        ]}
+      />
+
+      <PageHero
+        title={
+          <>
+            Von der Anfrage
+            <br className="hidden sm:block" /> <span className="text-gradient">bis zur Abnahme.</span>
+          </>
+        }
         lede="Sie wissen zu jedem Zeitpunkt, was als Nächstes passiert und wer dafür zuständig ist."
       />
 
-      <section className="container-page py-16">
-        <ol className="relative space-y-10 border-l border-navy/15 pl-8 sm:pl-10">
+      <section id="schritte" className="scroll-mt-[52px] bg-canvas py-16 sm:py-24" aria-label="Schritte">
+        <ol className="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.title} className="relative">
-              <span className="absolute -left-[41px] grid h-8 w-8 place-items-center rounded-full bg-navy text-sm font-semibold text-paper sm:-left-[49px]">
+            <li key={step.title} className="flex flex-col rounded-tile bg-white p-8" data-reveal style={delay((index % 3) * 80)}>
+              <span className="text-gradient text-[3.5rem] font-semibold leading-none tracking-[-0.02em]" aria-hidden="true">
                 {index + 1}
               </span>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">{step.duration}</p>
-              <h2 className="heading-md mt-1.5 text-xl">{step.title}</h2>
-              <p className="prose-body mt-2 max-w-2xl">{step.text}</p>
+              <h2 className="t-title mt-6">
+                <span className="sr-only">Schritt {index + 1}: </span>
+                {step.title}
+              </h2>
+              <p className="t-small mt-1.5 font-semibold text-accent">{step.duration}</p>
+              <p className="t-body mt-3 text-mute">{step.text}</p>
             </li>
           ))}
         </ol>
       </section>
 
-      <section className="container-page pb-20">
-        <h2 className="heading-lg">Häufige Fragen</h2>
-        <div className="mt-8 divide-y divide-navy/10 overflow-hidden rounded-card border border-navy/10 bg-white">
-          {faqs.map((faq) => (
-            <details key={faq.q} className="group p-6 sm:p-7">
-              <summary className="flex cursor-pointer items-start justify-between gap-6 font-semibold marker:content-['']">
-                {faq.q}
-                <span className="mt-1 shrink-0 text-brand transition group-open:rotate-45" aria-hidden="true">
-                  +
-                </span>
-              </summary>
-              <p className="prose-body mt-3 max-w-3xl">{faq.a}</p>
-            </details>
-          ))}
+      <section id="fragen" className="section scroll-mt-[52px]">
+        <div className="container-text">
+          <SectionTitle>Häufige Fragen.</SectionTitle>
+          <div className="mt-10 border-t border-line" data-reveal style={delay(80)}>
+            {faqs.map((faq) => (
+              <details key={faq.q} className="faq group border-b border-line">
+                <summary className="flex cursor-pointer items-start justify-between gap-6 py-6 text-[1.1875rem] font-semibold leading-[1.3] tracking-[-0.005em] transition-colors hover:text-accent sm:text-[1.3125rem]">
+                  {faq.q}
+                  <Icon name="plus" className="faq-icon mt-1 h-5 w-5 shrink-0 text-ink-soft" strokeWidth={1.8} />
+                </summary>
+                <p className="t-body -mt-1 pb-7 pr-10 text-ink-soft">{faq.a}</p>
+              </details>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <div className="card mt-14 p-8 text-center sm:p-12">
-          <h2 className="heading-lg">Frage nicht dabei?</h2>
-          <p className="prose-body mx-auto mt-3 max-w-lg">
-            Rufen Sie an oder buchen Sie eine kostenfreie telefonische Erstberatung.
-          </p>
-          <Link href="/termin" className="btn-brand mt-7">
-            Termin anfragen
-          </Link>
+      <section className="pb-24 sm:pb-32">
+        <div className="container-page">
+          <div className="tile bg-canvas px-8 py-14 text-center sm:px-12 sm:py-20" data-reveal>
+            <h2 className="t-section text-balance">
+              Frage nicht dabei?
+              <span className="text-mute"> Rufen Sie an.</span>
+            </h2>
+            <p className="t-intro mx-auto mt-5 max-w-[560px] text-pretty text-mute">
+              Oder buchen Sie eine kostenfreie telefonische Erstberatung.
+            </p>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <Link href="/termin" className="btn-primary">
+                Termin anfragen
+              </Link>
+              <a href={`tel:${company.phoneHref}`} className="btn-secondary">
+                <Icon name="phone" className="h-4 w-4" strokeWidth={1.8} />
+                {company.phone}
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import type { TradeId } from '@/config/site';
  * Symbole für die sechs Gewerke, angelehnt an die Icon-Reihe des
  * Firmenschilds: Kelle, Fliesen, Rolle, Haus, Mauerwerk, Dielen.
  */
-const PATHS: Record<TradeId, React.ReactNode> = {
+export const TRADE_PATHS: Record<TradeId, React.ReactNode> = {
   // Ständerwerk mit Beplankung, angelehnt an das Fenstermotiv des Logos
   trockenbau: <path d="M2.5 3h8.2v7.2H2.5zM13.3 3h8.2v7.2h-8.2zM2.5 12.8h5.2V21H2.5zM10.3 12.8h11.2V21H10.3z" />,
   // Drei Fliesen auf der Spitze
@@ -30,7 +30,7 @@ const PATHS: Record<TradeId, React.ReactNode> = {
 export function TradeIcon({ id, className = '' }: { id: TradeId; className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
-      {PATHS[id]}
+      {TRADE_PATHS[id]}
     </svg>
   );
 }

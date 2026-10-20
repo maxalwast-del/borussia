@@ -1,7 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { company } from '@/config/site';
+import { Icon } from '@/components/icon';
+import { CheckField, SelectField, TextArea, TextField, focusFirstInvalid, rules, useTouched } from '@/components/form-field';
+
+type FieldKey = 'name' | 'phone' | 'email' | 'privacy';
 
 export function ApplicationForm({ positions }: { positions: string[] }) {
   const [form, setForm] = useState({
@@ -16,9 +20,24 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
   });
   const [state, setState] = useState<'idle' | 'sending' | 'done'>('idle');
   const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const touched = useTouched<FieldKey>();
+
+  const errors: Record<FieldKey, string | null> = {
+    name: rules.name(form.name),
+    phone: rules.phone(form.phone),
+    email: rules.email(form.email),
+    privacy: rules.privacy(form.privacy),
+  };
+  const shown = (key: FieldKey) => (touched.show(key) ? errors[key] : null);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (Object.values(errors).some(Boolean)) {
+      touched.submitAttempt();
+      focusFirstInvalid(formRef.current);
+      return;
+    }
     setState('sending');
     setError(null);
     try {
@@ -38,9 +57,10 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
 
   if (state === 'done') {
     return (
-      <div className="card p-8 text-center">
-        <h3 className="heading-md">Bewerbung ist angekommen</h3>
-        <p className="prose-body mx-auto mt-3 max-w-md">
+      <div className="flex flex-col items-center rounded-tile bg-white px-8 py-16 text-center" role="status">
+        <Icon name="check-circle" className="h-14 w-14 text-accent" strokeWidth={1.4} />
+        <h3 className="t-title mt-6">Bewerbung ist angekommen.</h3>
+        <p className="t-body mx-auto mt-3 max-w-md text-mute">
           Wir melden uns innerhalb weniger Tage. Zeugnisse brauchen wir erst, wenn wir uns
           kennengelernt haben.
         </p>
@@ -49,114 +69,103 @@ export function ApplicationForm({ positions }: { positions: string[] }) {
   }
 
   return (
-    <form onSubmit={submit} className="card space-y-5 p-7 sm:p-8" noValidate>
-      <div>
-        <span className="field-label">Stelle</span>
-        <select
-          className="field"
-          value={form.position}
-          onChange={(e) => setForm({ ...form, position: e.target.value })}
-        >
-          {positions.map((position) => (
-            <option key={position}>{position}</option>
-          ))}
-          <option>Initiativbewerbung</option>
-        </select>
-      </div>
+    <form ref={formRef} onSubmit={submit} className="space-y-4 rounded-tile bg-white p-7 sm:p-9" noValidate>
+      <SelectField label="Stelle" value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })}>
+        {positions.map((position) => (
+          <option key={position}>{position}</option>
+        ))}
+        <option>Initiativbewerbung</option>
+      </SelectField>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <label className="block">
-          <span className="field-label">Name *</span>
-          <input
-            className="field"
-            required
-            autoComplete="name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-          />
-        </label>
-        <label className="block">
-          <span className="field-label">Telefon *</span>
-          <input
-            className="field"
-            required
-            type="tel"
-            autoComplete="tel"
-            value={form.phone}
-            onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          />
-        </label>
-      </div>
+      <TextField
+        label="Name"
+        required
+        autoComplete="name"
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        onBlur={() => touched.touch('name')}
+        error={shown('name')}
+      />
+      <TextField
+        label="Telefon"
+        required
+        type="tel"
+        autoComplete="tel"
+        value={form.phone}
+        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+        onBlur={() => touched.touch('phone')}
+        error={shown('phone')}
+      />
+      <TextField
+        label="E-Mail"
+        required
+        type="email"
+        autoComplete="email"
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+        onBlur={() => touched.touch('email')}
+        error={shown('email')}
+      />
+      <TextField
+        label="Berufserfahrung (optional)"
+        maxLength={60}
+        value={form.experience}
+        onChange={(e) => setForm({ ...form, experience: e.target.value })}
+        hint="z. B. 5 Jahre Trockenbau, davon 2 als Vorarbeiter"
+      />
+      <TextArea
+        label="Kurz zu Ihnen (optional)"
+        value={form.message}
+        onChange={(e) => setForm({ ...form, message: e.target.value })}
+        hint="Ein paar Sätze reichen. Den Lebenslauf können Sie später nachreichen."
+      />
 
-      <label className="block">
-        <span className="field-label">E-Mail *</span>
-        <input
-          className="field"
-          required
-          type="email"
-          autoComplete="email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-      </label>
-
-      <label className="block">
-        <span className="field-label">Berufserfahrung</span>
-        <input
-          className="field"
-          placeholder="z. B. 5 Jahre Trockenbau, davon 2 als Vorarbeiter"
-          value={form.experience}
-          onChange={(e) => setForm({ ...form, experience: e.target.value })}
-        />
-      </label>
-
-      <label className="block">
-        <span className="field-label">Kurz zu Ihnen</span>
-        <textarea
-          className="field min-h-[110px] resize-y"
-          placeholder="Ein paar Sätze reichen. Den Lebenslauf können Sie später nachreichen."
-          value={form.message}
-          onChange={(e) => setForm({ ...form, message: e.target.value })}
-        />
-      </label>
-
-      <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden opacity-0">
+      <div aria-hidden="true" className="honeypot">
         <label>
           Website
           <input tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} />
         </label>
       </div>
 
-      <label className="flex items-start gap-3 text-sm leading-relaxed text-navy-muted">
-        <input
-          type="checkbox"
-          required
-          checked={form.privacy}
-          onChange={(e) => setForm({ ...form, privacy: e.target.checked })}
-          className="mt-1 h-4 w-4 rounded border-navy/30 text-brand focus:ring-brand"
-        />
-        <span>
-          Ich bin mit der Verarbeitung meiner Angaben im Bewerbungsverfahren einverstanden
-          (<a href="/datenschutz" className="underline hover:text-navy">Datenschutz</a>).
-        </span>
-      </label>
+      <CheckField
+        required
+        checked={form.privacy}
+        onChange={(e) => {
+          setForm({ ...form, privacy: e.target.checked });
+          touched.touch('privacy');
+        }}
+        error={shown('privacy')}
+        className="pt-2"
+      >
+        Ich bin mit der Verarbeitung meiner Angaben im Bewerbungsverfahren einverstanden (
+        <a href="/datenschutz" className="link">
+          Datenschutz
+        </a>
+        ).
+      </CheckField>
 
       {error && (
-        <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+        <p role="alert" className="flex items-start gap-2 rounded-ctl bg-danger-soft px-4 py-3 t-small font-medium text-danger">
+          <Icon name="alert" className="mt-[1px] h-4 w-4 shrink-0" strokeWidth={1.9} />
           {error}
         </p>
       )}
 
-      <button type="submit" disabled={state === 'sending'} className="btn-brand w-full">
-        {state === 'sending' ? 'Wird gesendet …' : 'Bewerbung senden'}
-      </button>
+      <div className="pt-2">
+        <button type="submit" disabled={state === 'sending'} className="btn-primary w-full">
+          {state === 'sending' ? 'Wird gesendet …' : 'Bewerbung senden'}
+        </button>
+      </div>
 
-      <p className="text-center text-sm text-navy-muted">
+      <p className="t-small text-center text-mute">
         Lieber direkt?{' '}
-        <a href={`https://wa.me/${company.whatsapp}`} className="font-medium text-brand hover:underline">
+        <a href={`https://wa.me/${company.whatsapp}`} className="link">
           Per WhatsApp melden
         </a>{' '}
-        oder anrufen: {company.phone}
+        oder anrufen:{' '}
+        <a href={`tel:${company.phoneHref}`} className="link whitespace-nowrap">
+          {company.phone}
+        </a>
       </p>
     </form>
   );

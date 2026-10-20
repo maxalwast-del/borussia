@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { PageHeader } from '@/components/page-header';
-import { Visual } from '@/components/visual';
+import { Artwork } from '@/components/artwork';
+import { Icon } from '@/components/icon';
+import { LocalNav } from '@/components/local-nav';
 import { TradeIcon } from '@/components/trade-icon';
+import { PageHero, delay } from '@/components/ui';
 import { trades, type TradeId } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -81,76 +83,125 @@ const services: Service[] = [
   },
 ];
 
+const shortLabels: Record<TradeId, string> = {
+  trockenbau: 'Trockenbau',
+  fliesen: 'Fliesen',
+  maler: 'Maler',
+  innenausbau: 'Innenausbau',
+  sanierung: 'Sanierung',
+  boden: 'Boden',
+};
+
+/** Erster Satz fett und schwarz, der Rest grau: das Muster der Produktseiten von apple.com. */
+function splitLead(text: string) {
+  const index = text.indexOf('. ');
+  return index === -1 ? [text, ''] : [text.slice(0, index + 1), text.slice(index + 2)];
+}
+
 export default function LeistungenPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Leistungen"
-        title="Sechs Gewerke aus einer Hand"
+      <LocalNav
+        title="Leistungen"
+        href="/leistungen"
+        links={trades.map((trade) => ({ href: `#${trade.id}`, label: shortLabels[trade.id] }))}
+      />
+
+      <PageHero
+        title={
+          <>
+            Sechs Gewerke.
+            <br />
+            <span className="text-gradient">Aus einer Hand.</span>
+          </>
+        }
         lede="Schwerpunkt ist Sanierung und Renovierung im bewohnten Bestand. Wir sagen Ihnen vorher, was sinnvoll ist und was Sie sich sparen können."
       />
 
-      <div className="container-page py-16">
-        {/* Übersicht der Gewerke, in derselben Reihenfolge wie auf dem Firmenschild */}
-        <nav aria-label="Gewerke" className="grid gap-px overflow-hidden rounded-card border border-navy/10 bg-navy/10 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Kapitelleiste wie auf den Produktseiten von apple.com */}
+      <nav aria-label="Gewerke" className="border-b border-line" data-reveal style={delay(200)}>
+        <ul className="mx-auto flex w-max max-w-full gap-2 overflow-x-auto px-6 pb-6 [scrollbar-width:none] sm:gap-6 [&::-webkit-scrollbar]:hidden">
           {trades.map((trade) => (
-            <a
-              key={trade.id}
-              href={`#${trade.id}`}
-              className="group flex items-center gap-4 bg-white p-5 transition hover:bg-paper"
-            >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand-soft text-brand transition group-hover:bg-brand group-hover:text-white">
-                <TradeIcon id={trade.id} className="h-5 w-5" />
-              </span>
-              <span className="font-semibold">{trade.label}</span>
-            </a>
-          ))}
-        </nav>
-
-        <div className="mt-20 space-y-20">
-          {services.map((service, index) => {
-            const trade = trades.find((entry) => entry.id === service.id)!;
-            return (
-              <section
-                key={service.id}
-                id={service.id}
-                className={`grid scroll-mt-24 gap-10 lg:grid-cols-2 lg:items-center ${
-                  index % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''
-                }`}
+            <li key={trade.id} className="shrink-0">
+              <a
+                href={`#${trade.id}`}
+                className="group flex w-[84px] flex-col items-center gap-2.5 rounded-ctl py-2 text-center text-ink-soft transition-colors hover:text-accent"
               >
-                <Visual variant={index} label={trade.label} className="aspect-[5/4] rounded-card shadow-card" />
-                <div>
-                  <span className="grid h-12 w-12 place-items-center rounded-full bg-brand text-white">
-                    <TradeIcon id={service.id} className="h-6 w-6" />
-                  </span>
-                  <h2 className="heading-lg mt-5 text-3xl">{trade.label}</h2>
-                  <p className="mt-3 text-lg font-medium text-brand">{service.lede}</p>
-                  <p className="prose-body mt-4">{service.body}</p>
-                  <ul className="mt-6 space-y-2.5">
-                    {service.facts.map((fact) => (
-                      <li key={fact} className="flex items-start gap-3 text-[15px] text-navy-soft">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true" />
-                        {fact}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            );
-          })}
-        </div>
+                <span className="grid h-12 w-12 place-items-center">
+                  <TradeIcon id={trade.id} className="h-8 w-8 transition-transform duration-300 ease-apple group-hover:-translate-y-0.5" />
+                </span>
+                <span className="text-[0.75rem] leading-tight">{trade.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-        <div className="card mt-20 p-8 text-center sm:p-12">
-          <h2 className="heading-lg">Mehrere Gewerke gleichzeitig?</h2>
-          <p className="prose-body mx-auto mt-4 max-w-xl">
+      {services.map((service, index) => {
+        const trade = trades.find((entry) => entry.id === service.id)!;
+        const [lead, rest] = splitLead(service.body);
+        const onCanvas = index % 2 === 1;
+        return (
+          <section
+            key={service.id}
+            id={service.id}
+            aria-labelledby={`${service.id}-titel`}
+            className={`section scroll-mt-[52px] ${onCanvas ? 'bg-canvas' : 'bg-white'}`}
+          >
+            <div className="container-page">
+              <p className="t-eyebrow flex items-center gap-2 text-accent" data-reveal>
+                <TradeIcon id={service.id} className="h-5 w-5" />
+                {trade.label}
+              </p>
+              <h2 id={`${service.id}-titel`} className="t-headline mt-3 max-w-[820px] text-balance" data-reveal style={delay(60)}>
+                {service.lede}
+              </h2>
+
+              <Artwork
+                trade={service.id}
+                tone={onCanvas ? 'dark' : 'tint'}
+                label={`Symbolgrafik ${trade.label}`}
+                className="tile mt-12 aspect-[4/3] sm:aspect-[16/7]"
+                glyphClassName="w-[24%] max-w-[200px]"
+              />
+
+              <div className="mt-12 grid gap-10 md:grid-cols-[1.45fr_1fr] md:gap-16">
+                <p className="t-intro text-mute" data-reveal>
+                  <strong className="font-semibold text-ink">{lead}</strong> {rest}
+                </p>
+                <ul className="divide-y divide-line border-y border-line" data-reveal style={delay(80)}>
+                  {service.facts.map((fact) => (
+                    <li key={fact} className="flex items-start gap-3 py-4">
+                      <Icon name="check-circle" className="mt-[2px] h-5 w-5 shrink-0 text-accent" strokeWidth={1.7} />
+                      {fact}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      <section className="section text-center">
+        <div className="container-page">
+          <h2 className="t-headline text-balance" data-reveal>
+            Mehrere Gewerke gleichzeitig?
+          </h2>
+          <p className="t-intro mx-auto mt-5 max-w-[600px] text-pretty text-mute" data-reveal style={delay(80)}>
             Genau dafür ist der Betrieb aufgestellt. Das Aufmaß vor Ort ist kostenfrei, und Sie
             bekommen ein Angebot, das alle beteiligten Arbeiten abdeckt.
           </p>
-          <Link href="/termin" className="btn-accent mt-8">
-            Aufmaßtermin anfragen
-          </Link>
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4" data-reveal style={delay(160)}>
+            <Link href="/termin" className="btn-primary">
+              Aufmaßtermin anfragen
+            </Link>
+            <Link href="/referenzen" className="btn-secondary">
+              Referenzen ansehen
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -5,51 +5,64 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Marineblau aus der Wortmarke. Trägt Fließtext und dunkle Flächen.
-        navy: {
-          DEFAULT: '#122C5E',
-          deep: '#0B1D40',
-          soft: '#2C4478',
-          muted: '#4F5E78',
+        // Neutrale Grautöne nach dem Vorbild von apple.com. Sie tragen die
+        // Seite; Farbe kommt nur über den Akzent und die Illustrationen.
+        ink: {
+          DEFAULT: '#1D1D1F',
+          soft: '#424245',
         },
-        // Das helle Blau des Logos. Der DEFAULT ist so weit abgedunkelt,
-        // dass weiße Schrift darauf 5,0:1 erreicht und blaue Schrift auf
-        // Weiß denselben Wert. Beides erfüllt WCAG AA.
-        brand: {
-          DEFAULT: '#1A72BC',
-          hover: '#145C99',
+        // 5,07:1 auf Weiß, 4,66:1 auf canvas. Darunter nicht für Text verwenden.
+        mute: '#6E6E73',
+        // Nur für Rahmen von Bedienelementen (3,6:1 auf Weiß), nie für Text.
+        faint: '#86868B',
+        line: '#D2D2D7',
+        canvas: '#F5F5F7',
+        fill: '#E8E8ED',
+        // Der Akzent liegt im Farbton des Logoblaus, ist aber satter.
+        // Weiße Schrift darauf und blaue Schrift auf Weiß erreichen je 5,2:1.
+        accent: {
+          DEFAULT: '#0A6CCF',
+          hover: '#1677D2',
+          // Das helle Logoblau. Auf Schwarz 7,0:1, auf Weiß nur 2,9:1,
+          // deshalb nur auf dunklem Grund für Text.
           bright: '#2E9BE8',
-          soft: '#DCEBF8',
+          soft: '#E8F1FB',
         },
-        // Kühles Papierweiß, angelehnt an den Untergrund des Firmenschilds.
-        paper: {
-          DEFAULT: '#F4F7FA',
-          deep: '#E3EBF3',
+        night: {
+          DEFAULT: '#000000',
+          tile: '#1D1D1F',
+          text: '#F5F5F7',
+          mute: '#A1A1A6',
         },
+        danger: {
+          DEFAULT: '#D70015',
+          soft: '#FFF2F4',
+        },
+        // Marineblau der Wortmarke. Nur für das Logo.
+        navy: '#122C5E',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'var(--font-inter)', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
         wordmark: ['var(--font-wordmark)', 'Impact', 'sans-serif'],
       },
       maxWidth: {
-        content: '1180px',
+        content: '1024px',
+        wide: '1260px',
+        text: '692px',
       },
       borderRadius: {
-        card: '14px',
+        tile: '28px',
+        card: '18px',
+        ctl: '12px',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(23,33,43,0.04), 0 8px 28px -12px rgba(23,33,43,0.16)',
-        lift: '0 2px 4px rgba(23,33,43,0.05), 0 18px 44px -16px rgba(31,111,178,0.22)',
+        card: '2px 4px 12px rgba(0,0,0,0.08)',
+        'card-hover': '2px 4px 16px rgba(0,0,0,0.16)',
+        float: '0 10px 40px -10px rgba(0,0,0,0.25)',
       },
-      keyframes: {
-        'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-      },
-      animation: {
-        'fade-up': 'fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both',
+      transitionTimingFunction: {
+        apple: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+        'apple-out': 'cubic-bezier(0, 0, 0.5, 1)',
       },
     },
   },

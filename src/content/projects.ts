@@ -1,3 +1,5 @@
+import type { TradeId } from '@/config/site';
+
 /**
  * Portfolio / Referenzen.
  * [PLATZHALTER] Alle Einträge durch echte Projekte ersetzen. Struktur beibehalten,
@@ -171,3 +173,13 @@ export const projects: Project[] = [
 ];
 
 export const projectCategories = Array.from(new Set(projects.map((p) => p.category)));
+
+/** Welches Gewerk-Symbol eine Referenz in ihrer Illustration zeigt. */
+export const categoryTrade: Record<Project['category'], TradeId> = {
+  Trockenbau: 'trockenbau',
+  Fliesenarbeiten: 'fliesen',
+  Malerarbeiten: 'maler',
+  Innenausbau: 'innenausbau',
+  Sanierung: 'sanierung',
+  Bodenlegerarbeiten: 'boden',
+};

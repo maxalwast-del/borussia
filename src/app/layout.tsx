@@ -1,8 +1,29 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Archivo_Black, Inter } from 'next/font/google';
 import './globals.css';
 import { company, siteUrl } from '@/config/site';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { ArtDefs } from '@/components/artwork';
+import { RevealObserver } from '@/components/reveal';
+
+// Auf Apple-Geräten greift die Systemschrift (SF Pro) zuerst. Inter ist die
+// Rückfalllage für alle anderen Systeme, mit optischer Größenanpassung für
+// große Überschriften. next/font liefert beide Schriften vom eigenen Server
+// aus, der Browser baut keine Verbindung zu Google auf.
+const inter = Inter({
+  subsets: ['latin'],
+  axes: ['opsz'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const wordmark = Archivo_Black({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-wordmark',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -20,6 +41,16 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
 };
+
+export const viewport: Viewport = {
+  themeColor: '#fbfbfd',
+};
+
+// Setzt den Ausgangszustand für das Einblenden beim Scrollen, bevor die
+// Seite gezeichnet wird. Meldet sich der Beobachter nicht innerhalb von vier
+// Sekunden, wird alles sichtbar geschaltet, damit nichts unsichtbar hängen
+// bleibt.
+const revealBootstrap = `(function(){var d=document.documentElement;if(!('IntersectionObserver' in window))return;d.classList.add('js-reveal');setTimeout(function(){if(!window.__revealReady){d.classList.remove('js-reveal');}},4000);})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const localBusiness = {
@@ -43,25 +74,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="de">
+    <html lang="de" className={`${inter.variable} ${wordmark.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Archivo:wght@500;600;700&family=Archivo+Black&display=swap"
-        />
+        <script dangerouslySetInnerHTML={{ __html: revealBootstrap }} />
       </head>
       <body>
         <a
           href="#inhalt"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2 focus:text-paper"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-white"
         >
           Zum Inhalt springen
         </a>
+        <ArtDefs />
         <SiteHeader />
         <main id="inhalt">{children}</main>
         <SiteFooter />
+        <RevealObserver />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}

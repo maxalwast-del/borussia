@@ -41,7 +41,7 @@ if (mode === 'demo') {
   console.log('termin gewählt'.padEnd(12), bad.length ? JSON.stringify(bad.slice(0, 4)) : 'ok');
   
 } else {
-  for (const path of ['/', '/termin', '/leistungen', '/referenzen', '/ablauf', '/jobs', '/kontakt']) {
+  for (const path of ['/', '/termin', '/leistungen', '/referenzen', '/referenzen/altbau-prenzlauer-berg', '/ablauf', '/jobs', '/kontakt', '/impressum', '/datenschutz']) {
     await p.goto(mode + path, { waitUntil: 'networkidle' });
     await p.waitForTimeout(900);
     const bad = await p.evaluate(findLowContrast);
